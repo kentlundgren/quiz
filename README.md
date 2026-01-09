@@ -26,15 +26,15 @@ Typiskt innehåller varje undermapp:
 
 Fredagsquizen finns tillgänglig på två ställen:
 
-1. **På webben** (rekommenderat): [https://kentlundgren.se/program/quiz/0/](https://kentlundgren.se/program/quiz/0/)
-   - Den aktiva, uppdaterade versionen av alla quiz
+1. **GitHub Pages** (live-version): [https://kentlundgren.github.io/quiz/](https://kentlundgren.github.io/quiz/)
+   - Den aktiva versionen som körs direkt från detta repository
+   - Uppdateras automatiskt när ändringar pushas till GitHub
    - Översikt över alla fredagsquiz med beskrivningar
+   - *(Ursprungligen publicerad på [kentlundgren.se/program/quiz/0/](https://kentlundgren.se/program/quiz/0/))*
 
-2. **GitHub Pages**: [https://kentlundgren.github.io/quiz/](https://kentlundgren.github.io/quiz/)
-   - Redirectar för närvarande till huvudsajten ovan
-
-3. **Källkoden**: Du tittar på den just nu! 
+2. **Källkoden**: Du tittar på den just nu! 
    - Repository: [https://github.com/kentlundgren/quiz](https://github.com/kentlundgren/quiz)
+   - Öppen källkod - klona, forka eller bidra!
 
 ## 🚀 Hur man använder (för utvecklare)
 

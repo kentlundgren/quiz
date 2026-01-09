@@ -22,7 +22,21 @@ Typiskt innehåller varje undermapp:
 - Eventuella PDF-filer med bakgrundsmaterial
 - I vissa mappar finns även dokumentation (`.docx`, `.pdf`, `.md`)
 
-## 🚀 Hur man använder
+## 🌐 Var hittar du Fredagsquizen?
+
+Fredagsquizen finns tillgänglig på två ställen:
+
+1. **På webben** (rekommenderat): [https://kentlundgren.se/program/quiz/0/](https://kentlundgren.se/program/quiz/0/)
+   - Den aktiva, uppdaterade versionen av alla quiz
+   - Översikt över alla fredagsquiz med beskrivningar
+
+2. **GitHub Pages**: [https://kentlundgren.github.io/quiz/](https://kentlundgren.github.io/quiz/)
+   - Redirectar för närvarande till huvudsajten ovan
+
+3. **Källkoden**: Du tittar på den just nu! 
+   - Repository: [https://github.com/kentlundgren/quiz](https://github.com/kentlundgren/quiz)
+
+## 🚀 Hur man använder (för utvecklare)
 
 1. Klona detta repository:
    ```bash

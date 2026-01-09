@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hur GitHub Pages fungerar - Fredagsquiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #E6F2FF 0%, #FFE6E6 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 102, 179, 0.2);
+        }
+
+        h1 {
+            color: #0066B3;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #0066B3;
+            font-size: 1.8em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-left: 5px solid #FFB81C;
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: #E3000F;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .intro {
+            background: linear-gradient(135deg, #F0F8FF 0%, #E6F2FF 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #0066B3;
+        }
+
+        .code-block {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-left: 4px solid #FFB81C;
+        }
+
+        .info-box {
+            background: #FFF5E6;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #FFB81C;
+        }
+
+        .warning-box {
+            background: #FFE6E6;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #E3000F;
+        }
+
+        .success-box {
+            background: #E6F9E6;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #28a745;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: #0066B3;
+            text-decoration: none;
+            font-weight: bold;
+            border-bottom: 2px solid #FFB81C;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: #E3000F;
+            border-bottom-color: #E3000F;
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #E6F2FF;
+            color: #666;
+        }
+
+        strong {
+            color: #0066B3;
+        }
+
+        code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #E3000F;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">📘</div>
+        <h1>Hur GitHub Pages fungerar</h1>
+        
+        <div class="intro">
+            <p><strong>GitHub Pages</strong> är en gratis hosting-tjänst från GitHub som låter dig publicera webbsidor direkt från ditt GitHub-repository. Det är perfekt för projekt-dokumentation, portfolios, och interaktiva applikationer som våra fredagsquiz!</p>
+        </div>
+
+        <h2>🎯 Vad är GitHub Pages?</h2>
+        <p>GitHub Pages är en statisk webbplatshosting-tjänst som tar HTML, CSS och JavaScript-filer direkt från ett repository på GitHub och publicerar dem som en webbplats. Tjänsten är:</p>
+        <ul>
+            <li><strong>Gratis</strong> - Ingen kostnad för hosting</li>
+            <li><strong>Enkel</strong> - Aktiveras med några klick i repository-inställningarna</li>
+            <li><strong>Snabb</strong> - Använder GitHubs Content Delivery Network (CDN)</li>
+            <li><strong>Versionshantererad</strong> - Eftersom den kör direkt från Git har du full versionshistorik</li>
+            <li><strong>Automatisk uppdatering</strong> - När du pushar ändringar till GitHub uppdateras webbplatsen automatiskt</li>
+        </ul>
+
+        <h2>🔧 Hur aktiverar man GitHub Pages?</h2>
+        <p>För fredagsquiz-projektet aktiverades GitHub Pages så här:</p>
+        <ol>
+            <li>Gå till ditt repository på GitHub: <code>https://github.com/kentlundgren/quiz</code></li>
+            <li>Klicka på <strong>Settings</strong> (Inställningar)</li>
+            <li>Scrolla ner till <strong>Pages</strong> i vänstermenyn</li>
+            <li>Under <strong>Source</strong> välj:
+                <ul>
+                    <li><strong>Branch:</strong> main (eller master)</li>
+                    <li><strong>Folder:</strong> / (root) eller /docs</li>
+                </ul>
+            </li>
+            <li>Klicka på <strong>Save</strong></li>
+            <li>Efter några minuter blir din webbplats tillgänglig på:<br>
+                <code>https://användarnamn.github.io/repository-namn/</code></li>
+        </ol>
+
+        <div class="success-box">
+            <h3>✅ För detta projekt:</h3>
+            <p><strong>GitHub Pages URL:</strong> <a href="https://kentlundgren.github.io/quiz/" target="_blank">https://kentlundgren.github.io/quiz/</a></p>
+            <p><strong>Huvudsajt URL:</strong> <a href="https://kentlundgren.se/program/quiz/0/" target="_blank">https://kentlundgren.se/program/quiz/0/</a></p>
+        </div>
+
+        <h2>📂 Hur fungerar filstrukturen?</h2>
+        <p>GitHub Pages letar efter dessa filer i prioritetsordning:</p>
+        <ol>
+            <li><code>index.html</code> - Startsidan för webbplatsen</li>
+            <li><code>README.md</code> - Om ingen index.html finns, konverteras denna till HTML</li>
+        </ol>
+
+        <p>För fredagsquiz-projektet betyder detta:</p>
+        <div class="code-block">
+/quiz/                          → https://kentlundgren.github.io/quiz/<br>
+/quiz/index.html                → Startsida<br>
+/quiz/0/index.html              → https://kentlundgren.github.io/quiz/0/<br>
+/quiz/1/index.html              → https://kentlundgren.github.io/quiz/1/<br>
+/quiz/2/index.html              → https://kentlundgren.github.io/quiz/2/<br>
+...och så vidare
+        </div>
+
+        <h2>🔄 Redirect vs Dubbla versioner</h2>
+        
+        <div class="info-box">
+            <h3>📌 Nuvarande situation:</h3>
+            <p>Just nu redirectar GitHub Pages (<code>kentlundgren.github.io/quiz/</code>) till huvudsajten (<code>kentlundgren.se/program/quiz/0/</code>). Detta sker troligen genom:</p>
+            <ul>
+                <li>En <code>&lt;meta&gt;</code> redirect i index.html</li>
+                <li>Eller JavaScript som omdirigerar besökare</li>
+            </ul>
+        </div>
+
+        <h3>📊 Fördelar och nackdelar med redirect:</h3>
+        
+        <p><strong>FÖRDELAR med redirect:</strong></p>
+        <ul>
+            <li>✅ En enda källa för innehåll (enklare att uppdatera)</li>
+            <li>✅ Alla besökare hamnar på samma plats</li>
+            <li>✅ SEO: Undviker duplicerat innehåll</li>
+            <li>✅ Statistik samlas på en plats</li>
+        </ul>
+
+        <p><strong>NACKDELAR med redirect:</strong></p>
+        <ul>
+            <li>❌ GitHub Pages-URL blir meningslös (bara en omdirigerare)</li>
+            <li>❌ Förlorar fördelen med GitHubs snabba CDN</li>
+            <li>❌ Använder inte den gratis hosting som GitHub erbjuder</li>
+        </ul>
+
+        <h3>🎯 Alternativa lösningar:</h3>
+
+        <div class="warning-box">
+            <p><strong>ALTERNATIV 1: Behåll redirect (rekommenderat om huvudsajten är viktigast)</strong></p>
+            <p>Om kentlundgren.se är din primära webbplats och du vill att alla besökare hamnar där, är redirect bra!</p>
+            <p>Lägg bara till en tydlig förklaring i GitHub README.md att den aktiva versionen finns på kentlundgren.se</p>
+        </div>
+
+        <div class="info-box">
+            <p><strong>ALTERNATIV 2: Ta bort redirect och använd båda</strong></p>
+            <p>Låt GitHub Pages vara en "live demo" direkt från källkoden:</p>
+            <ul>
+                <li>kentlundgren.se = Den officiella, produktionsversionen</li>
+                <li>github.io = Demo/utvecklingsversion som alltid matchar senaste commit</li>
+            </ul>
+            <p>Detta är bra om du vill visa utvecklare hur projektet fungerar direkt från Git!</p>
+        </div>
+
+        <div class="success-box">
+            <p><strong>ALTERNATIV 3: Skapa en special "GitHub-version"</strong></p>
+            <p>Gör GitHub Pages-versionen till en "meta-sida" som:</p>
+            <ul>
+                <li>Visar information om projektet</li>
+                <li>Länka till både huvudsajten OCH GitHub-repot</li>
+                <li>Visa utvecklingsstatus, senaste commits, etc.</li>
+                <li>Ge utvecklare en ingång till projektet</li>
+            </ul>
+        </div>
+
+        <h2>⚙️ Tekniska detaljer</h2>
+
+        <h3>📡 Deployment Process:</h3>
+        <ol>
+            <li>Du gör ändringar lokalt i dina filer</li>
+            <li>Du commitar och pushar till GitHub: <code>git push origin main</code></li>
+            <li>GitHub Pages upptäcker ändringen automatiskt</li>
+            <li>Efter ~1-5 minuter är ändringarna live på github.io-adressen</li>
+        </ol>
+
+        <h3>🌐 Custom Domain (om du vill):</h3>
+        <p>Du kan koppla en egen domän till GitHub Pages:</p>
+        <ol>
+            <li>Skapa en fil som heter <code>CNAME</code> i repository root</li>
+            <li>Lägg till din domän i filen, t.ex.: <code>quiz.kentlundgren.se</code></li>
+            <li>Konfigurera DNS hos din domänleverantör att peka på GitHub Pages</li>
+        </ol>
+
+        <div class="info-box">
+            <p><strong>💡 Tips för Fredagsquiz-projektet:</strong></p>
+            <p>Om du skapar en subdomän som <code>quiz.kentlundgren.se</code> som pekar på GitHub Pages får du:</p>
+            <ul>
+                <li>Automatisk deployment när du pushar kod</li>
+                <li>Snabb CDN-leverans från GitHub</li>
+                <li>Egen domän istället för github.io</li>
+                <li>Gratis HTTPS-certifikat</li>
+            </ul>
+        </div>
+
+        <h2>🔍 Vanliga problem och lösningar</h2>
+
+        <h3>Problem: 404 på länkar</h3>
+        <p><strong>Orsak:</strong> Relativa sökvägar fungerar olika på GitHub Pages vs lokal utveckling</p>
+        <p><strong>Lösning:</strong> Använd alltid relativa sökvägar som börjar med <code>./</code> eller <code>../</code></p>
+
+        <h3>Problem: Ändringar syns inte</h3>
+        <p><strong>Orsak:</strong> GitHub Pages cachar sidor i 10 minuter</p>
+        <p><strong>Lösning:</strong> Vänta 10 minuter, eller force-refresha webbläsaren (Ctrl+F5)</p>
+
+        <h3>Problem: CSS/JS laddas inte</h3>
+        <p><strong>Orsak:</strong> Absoluta sökvägar från root fungerar inte alltid</p>
+        <p><strong>Lösning:</strong> Använd relativa sökvägar eller konfigurera <code>base</code> i HTML</p>
+
+        <h2>📚 Resurser</h2>
+        <ul>
+            <li><a href="https://docs.github.com/en/pages" target="_blank">GitHub Pages officiella dokumentation</a></li>
+            <li><a href="https://pages.github.com/" target="_blank">GitHub Pages Guide</a></li>
+            <li><a href="https://github.com/kentlundgren/quiz" target="_blank">Fredagsquiz på GitHub</a></li>
+            <li><a href="https://kentlundgren.se/program/quiz/0/" target="_blank">Fredagsquiz på kentlundgren.se</a></li>
+        </ul>
+
+        <div class="footer">
+            <p><strong>Skapad 2026-01-09 för Fredagsquiz-projektet</strong></p>
+            <p>Del av <a href="https://kentlundgren.se/program/quiz/0/">Fredagsquiz - Kent Lundgren</a></p>
+        </div>
+    </div>
+</body>
+</html>

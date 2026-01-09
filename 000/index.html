@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Så skapas Fredagsquiz med AI - En pedagogisk genomgång</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header med navigation -->
+    <header>
+        <div class="container">
+            <h1>🎯 Fredagsquiz med AI</h1>
+            <p class="subtitle">En levande beskrivning av processen att skapa pedagogiska quiz tillsammans med generativ AI</p>
+            <button id="techModalBtn" class="tech-btn" aria-label="Läs om tekniken bakom detta program">
+                ⚙️ Teknik & Filformat
+            </button>
+        </div>
+    </header>
+
+    <!-- Introduktion -->
+    <section class="intro-section">
+        <div class="container">
+            <div class="intro-content">
+                <h2>Varför AI för quiz-skapande?</h2>
+                <p>Sedan mitten av augusti 2025 har ekonom <strong>Kent Lundgren</strong> varje vecka skapat pedagogiska och engagerande fredagsquiz med hjälp av generativ AI. Denna sida beskriver den kreativa processen bakom veckans quiz - från idé till färdig produkt.</p>
+                
+                <div class="reference-box">
+                    <h3>📚 Referensmaterial</h3>
+                    <ul>
+                        <li><a href="https://kentlundgren.se/program/quiz/0/" target="_blank">Exempel på fredagsquiz (sedan augusti 2025)</a></li>
+                        <li><a href="https://kentlundgren.se/program/quiz/00/" target="_blank">Processbeskrivning för quizskapande</a></li>
+                        <li><a href="https://kentlundgren.se/program/quiz/13/" target="_blank">Veckans fredagsquiz (vecka 47, 2025)</a></li>
+                        <li><a href="https://kentlundgren.se/program/ekonom/" target="_blank">Kent Lundgrens arbete med generativ AI</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Två-stegs processen -->
+    <section class="process-section">
+        <div class="container">
+            <h2>📝 En tvåstegsprocess med två AI-verktyg</h2>
+            <p class="section-intro">Skapandet av veckans fredagsquiz bygger på en genomtänkt arbetsprocess där två olika AI-verktyg används i samarbete - vardera med sina styrkor.</p>
+
+            <!-- Steg 1: Claude -->
+            <div class="step-card step-1">
+                <div class="step-header">
+                    <span class="step-number">Steg 1</span>
+                    <h3>🤖 Claude - Innehållsskaparen</h3>
+                </div>
+                <div class="step-content">
+                    <div class="prompt-info">
+                        <h4>Prompt 1: Konceptualisering och innehållsgenerering</h4>
+                        
+                        <div class="file-formats-section">
+                            <p><strong>📂 Prompten finns i tre format - välj det som passar dig:</strong></p>
+                            
+                            <div class="format-links">
+                                <div class="format-link-item">
+                                    <span class="format-icon">📄</span>
+                                    <div class="format-details">
+                                        <a href="promt1_till_251121.pdf" target="_blank" class="format-link-main">
+                                            <strong>PDF-format</strong>
+                                        </a>
+                                        <p class="format-description">
+                                            <strong>Bäst för läsning:</strong> Bevarar all formatering, ser likadant ut överallt. 
+                                            Perfekt om du vill läsa igenom prompten för att förstå innehållet.
+                                        </p>
+                                        <span class="recommended-for">👥 Rekommenderad för människor som vill läsa</span>
+                                    </div>
+                                </div>
+
+                                <div class="format-link-item">
+                                    <span class="format-icon">📝</span>
+                                    <div class="format-details">
+                                        <a href="promt1_till_251121.docx" target="_blank" class="format-link-main">
+                                            <strong>Word-format (.docx)</strong>
+                                        </a>
+                                        <p class="format-description">
+                                            <strong>Bäst för redigering:</strong> Lätt att öppna, kopiera delar av texten, göra ändringar och 
+                                            återanvända i andra sammanhang. Perfekt om du vill skapa din egen variant.
+                                        </p>
+                                        <span class="recommended-for">✏️ Rekommenderad för människor som vill redigera</span>
+                                    </div>
+                                </div>
+
+                                <div class="format-link-item">
+                                    <span class="format-icon">💻</span>
+                                    <div class="format-details">
+                                        <a href="promt1_till_251121.md" target="_blank" class="format-link-main">
+                                            <strong>Markdown-format (.md)</strong>
+                                        </a>
+                                        <p class="format-description">
+                                            <strong>Bäst för AI:</strong> Ren text med enkel formatering som AI-verktyg kan läsa direkt. 
+                                            Detta är formatet som gjorde att Cursor kunde läsa och analysera prompten.
+                                        </p>
+                                        <span class="recommended-for">🤖 Rekommenderad för AI-verktyg</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="format-summary">
+                                <p><strong>💡 Viktigt att förstå:</strong> Samma innehåll i alla tre format, men varje format har sitt syfte:</p>
+                                <ul>
+                                    <li><strong>PDF</strong> = Vacker läsning för människor</li>
+                                    <li><strong>Word</strong> = Flexibel redigering för människor</li>
+                                    <li><strong>Markdown</strong> = Optimal bearbetning för AI</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <p style="margin-top: 20px;">Den första prompten skickas till <strong>Claude</strong> för att skapa quiz-innehåll. Här är ett faktiskt exempel från veckans fredagsquiz:</p>
+                    </div>
+
+                    <div class="real-prompt-example">
+                        <h5>📋 Utdrag från den verkliga prompten (promt1_till_251121.md):</h5>
+                        <div class="prompt-excerpt">
+                            <p><strong>Ämne:</strong> Årsbokslut och årsredovisning 2025</p>
+                            <p><strong>Roll:</strong> "Du är en ekonom, controller, som är bra på ekonomistyrning, årsbokslut och årsredovisning, i en svensk kommun - Simrishamns kommun."</p>
+                            <p><strong>Analysbehov:</strong> "Du ska analysera och beskriva årsbokslut och årsredovisning väl och utförligt för dem som inte tydligt ser skillnaden mellan årsbokslut och årsredovisning."</p>
+                            <p><strong>Slutprodukt:</strong> "Dessa fem slides, ska sen i sin tur vara underlag till ett quiz bestående av fem frågor med fyra alternativa svar. Detta quiz ska vara klurigt, spännande, kul och lärorikt."</p>
+                            <p><strong>Källor:</strong> "Du ska referera till källor enligt Harvadformatet, dvs med Harvardstil."</p>
+                        </div>
+                    </div>
+
+                    <div class="process-detail">
+                        <h5>Vad händer i detta steg?</h5>
+                        <ol>
+                            <li><strong>Temaval:</strong> Kent definierar ämnet (t.ex. årsbokslut vs årsredovisning)</li>
+                            <li><strong>Kontext:</strong> Bifogade dokument och specifika krav anges (Harvardstil, 5 frågor, etc.)</li>
+                            <li><strong>Strukturering:</strong> Claude skapar:
+                                <ul>
+                                    <li>Utförlig bloggtext (faktabas)</li>
+                                    <li>5 koncentrerade slides</li>
+                                    <li>5 quiz-frågor med 4 svarsalternativ var</li>
+                                    <li>Utförliga motiveringar med källhänvisningar</li>
+                                </ul>
+                            </li>
+                            <li><strong>Output:</strong> Komplett innehåll i Markdown-format, klart för steg 2</li>
+                        </ol>
+                    </div>
+
+                    <div class="prompt-specifics">
+                        <h5>🎯 Specifika krav i denna prompt:</h5>
+                        <ul>
+                            <li><strong>Målgrupp:</strong> Enhetschefer och ekonomer i kommunal verksamhet</li>
+                            <li><strong>Pedagogik:</strong> "Klurigt, spännande, kul och lärorikt"</li>
+                            <li><strong>Struktur:</strong> Blogg → Slides → Quiz (trattformad pedagogik)</li>
+                            <li><strong>Källor:</strong> Internet-research + bifogade dokument</li>
+                            <li><strong>Format:</strong> Harvardstil för referenser</li>
+                            <li><strong>Viktiga datum:</strong> Tidplan från Simrishamns kommun inkluderad</li>
+                        </ul>
+                    </div>
+
+                    <div class="ai-strength">
+                        <h5>💪 Claudes styrkor för detta arbete:</h5>
+                        <ul>
+                            <li>Kan läsa och analysera bifogade dokument (när de är i Markdown!)</li>
+                            <li>Omfattande kunskapsbas inom ekonomi och kommunal förvaltning</li>
+                            <li>Söker information på internet för jämförelser</li>
+                            <li>Skapar strukturerat innehåll i flera lager (blogg → slides → quiz)</li>
+                            <li>Hanterar komplexa instruktioner om format och källhänvisning</li>
+                            <li>Kvalitetssäkrad svensk språkbehandling</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Steg 2: Cursor -->
+            <div class="step-card step-2">
+                <div class="step-header">
+                    <span class="step-number">Steg 2</span>
+                    <h3>💻 Cursor - Kodutvecklaren</h3>
+                </div>
+                <div class="step-content">
+                    <div class="prompt-info">
+                        <h4>Prompt 2: Implementation och webbdesign</h4>
+                        
+                        <div class="file-formats-section">
+                            <p><strong>📂 Prompten finns i tre format - välj det som passar dig:</strong></p>
+                            
+                            <div class="format-links">
+                                <div class="format-link-item">
+                                    <span class="format-icon">📄</span>
+                                    <div class="format-details">
+                                        <a href="promt2_till_251121.pdf" target="_blank" class="format-link-main">
+                                            <strong>PDF-format</strong>
+                                        </a>
+                                        <p class="format-description">
+                                            <strong>Bäst för läsning:</strong> Alla 475 rader med perfekt formatering. Utmärkt om du vill 
+                                            läsa igenom de 5 slides och 5 quiz-frågor som finns i prompten.
+                                        </p>
+                                        <span class="recommended-for">👥 Rekommenderad för människor som vill läsa</span>
+                                    </div>
+                                </div>
+
+                                <div class="format-link-item">
+                                    <span class="format-icon">📝</span>
+                                    <div class="format-details">
+                                        <a href="promt2_till_251121.docx" target="_blank" class="format-link-main">
+                                            <strong>Word-format (.docx)</strong>
+                                        </a>
+                                        <p class="format-description">
+                                            <strong>Bäst för redigering:</strong> Vill du skapa ett liknande quiz om ett annat ämne? 
+                                            Öppna Word-filen, ändra frågorna, spara och skicka till Cursor!
+                                        </p>
+                                        <span class="recommended-for">✏️ Rekommenderad för människor som vill anpassa</span>
+                                    </div>
+                                </div>
+
+                                <div class="format-link-item">
+                                    <span class="format-icon">💻</span>
+                                    <div class="format-details">
+                                        <a href="promt2_till_251121.md" target="_blank" class="format-link-main">
+                                            <strong>Markdown-format (.md)</strong>
+                                        </a>
+                                        <p class="format-description">
+                                            <strong>Bäst för AI:</strong> Detta är formatet som Cursor faktiskt läser. Alla 475 rader 
+                                            är direkt läsbara och tolkningsbara för AI-verktyget.
+                                        </p>
+                                        <span class="recommended-for">🤖 Rekommenderad för AI-verktyg (Cursor, Claude, etc.)</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="format-summary">
+                                <p><strong>💡 Praktiskt exempel:</strong></p>
+                                <ul>
+                                    <li><strong>Vill du förstå processen?</strong> → Öppna PDF och läs</li>
+                                    <li><strong>Vill du skapa eget quiz?</strong> → Öppna Word, ändra, spara som .md</li>
+                                    <li><strong>Vill du att AI ska läsa?</strong> → Använd Markdown direkt</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <p style="margin-top: 20px;">Den andra prompten skickas till <strong>Cursor</strong> för att omvandla innehållet till en interaktiv webbapplikation. Här är faktiska instruktioner från prompten:</p>
+                    </div>
+
+                    <div class="real-prompt-example">
+                        <h5>📋 Utdrag från den verkliga prompten (promt2_till_251121.md):</h5>
+                        <div class="prompt-excerpt">
+                            <p><strong>Filstruktur:</strong> "Du skapar ett nytt quiz i: index.html, script.js och styles.css"</p>
+                            <p><strong>Återanvändning:</strong> "Jag vill att du i princip återanvänder samma programmeringsteknik som finns i quiz.html-filen"</p>
+                            <p><strong>Innehåll:</strong> "Jag vill att du läser igenom den texten först [bloggen]. Förslag på fem frågor finns nedan (men jag vill att du analyserar frågorna, och om du finner det möjligt och önskvärt ska du göra frågorna än bättre, tydligare och roligare)"</p>
+                            <p><strong>Bilder:</strong> "Jag vill att du i stället för den bild som finns i quiz.html har bilderna: arsredovisning_2021.jpg och arsredovisning_2024.jpg"</p>
+                            <p><strong>Källor:</strong> "Referenser och källor ska anges med Harvardstil, dvs i Harvardformat. Se till att källorna i största möjliga mån är klickbara"</p>
+                        </div>
+                    </div>
+
+                    <div class="process-detail">
+                        <h5>Vad händer i detta steg?</h5>
+                        <ol>
+                            <li><strong>Input från Claude:</strong> De 5 slides och 5 quiz-frågor från steg 1</li>
+                            <li><strong>Återanvändning:</strong> Cursor använder existerande quiz.html som mall för struktur</li>
+                            <li><strong>Anpassning:</strong> 
+                                <ul>
+                                    <li>Byter ut innehåll till nytt ämne (årsbokslut/årsredovisning)</li>
+                                    <li>Uppdaterar bilder (arsredovisning_2021.jpg, arsredovisning_2024.jpg)</li>
+                                    <li>Implementerar klickbara källor i Harvardformat</li>
+                                    <li>Säkerställer responsiv design för mobil och desktop</li>
+                                </ul>
+                            </li>
+                            <li><strong>Funktionalitet:</strong> Slides → Quiz → Poängräkning → Resultat med motiveringar</li>
+                            <li><strong>Output:</strong> Tre separata filer (index.html, script.js, styles.css)</li>
+                        </ol>
+                    </div>
+
+                    <div class="prompt-specifics">
+                        <h5>🎯 Specifika tekniska krav i denna prompt:</h5>
+                        <ul>
+                            <li><strong>Separering:</strong> HTML, CSS och JavaScript i olika filer</li>
+                            <li><strong>Bevara original:</strong> "quiz.html, script_quiz.js och styles_quiz.css ska hela tiden vara oförändrade"</li>
+                            <li><strong>Responsivitet:</strong> "Anpassar slides och frågor så att de passar både på dator och mobil"</li>
+                            <li><strong>Interaktivitet:</strong> Användare trycker på knapp för att gå vidare till quiz</li>
+                            <li><strong>Källor:</strong> Klickbara länkar i Harvardformat</li>
+                            <li><strong>Komplexitet:</strong> Prompten innehåller alla 5 slides OCH alla 5 frågor med utförliga motiveringar (475 rader!)</li>
+                        </ul>
+                    </div>
+
+                    <div class="ai-strength">
+                        <h5>💪 Cursors styrkor för detta arbete:</h5>
+                        <ul>
+                            <li>Kan läsa existerande quiz.html och återanvända struktur</li>
+                            <li>Kan läsa Markdown-prompten direkt (inte PDF/Word!)</li>
+                            <li>Ser hela projektet - vet vilka filer som finns och ska bevaras</li>
+                            <li>Genererar ren kod uppdelad i HTML, CSS och JavaScript</li>
+                            <li>Implementerar responsiv design automatiskt</li>
+                            <li>Skapar interaktiva element med moderna webbstandarder</li>
+                            <li>Följer best practices för tillgänglighet</li>
+                        </ul>
+                    </div>
+
+                    <div class="workflow-insight">
+                        <h5>💡 En viktig insikt om Markdown:</h5>
+                        <p>Eftersom prompten är i <strong>Markdown-format</strong> kan Cursor:</p>
+                        <ul>
+                            <li>✅ Läsa hela prompten direkt (475 rader)</li>
+                            <li>✅ Se strukturen tydligt (rubriker, listor, kodblock)</li>
+                            <li>✅ Extrahera de 5 slides och 5 frågorna korrekt</li>
+                            <li>✅ Förstå formateringen (fetstil, kursiv, länkar)</li>
+                        </ul>
+                        <p><strong>Om det hade varit PDF:</strong> ❌ Endast binär data → omöjligt att läsa → processen hade inte fungerat!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Varför två verktyg? -->
+    <section class="why-section">
+        <div class="container">
+            <h2>🤔 Varför två olika AI-verktyg?</h2>
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <h3>Claude</h3>
+                    <p class="role">Innehållsexpert</p>
+                    <ul>
+                        <li>Djup förståelse för ämnesområden</li>
+                        <li>Pedagogisk formuleringsförmåga</li>
+                        <li>Kontextuell faktakontroll</li>
+                        <li>Kreativ problemlösning</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3>Cursor</h3>
+                    <p class="role">Utvecklingsexpert</p>
+                    <ul>
+                        <li>Specialiserad på kodutveckling</li>
+                        <li>Ser hela projektstrukturen</li>
+                        <li>Genererar optimerad kod</li>
+                        <li>Följer webbutvecklingsprinciper</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="synergy-box">
+                <h3>🎯 Synergin mellan verktygen</h3>
+                <p>Genom att använda rätt verktyg för rätt uppgift uppnås:</p>
+                <ul>
+                    <li><strong>Högre kvalitet:</strong> Varje AI används där den är starkast</li>
+                    <li><strong>Effektivitet:</strong> Snabbare process än att använda ett verktyg för allt</li>
+                    <li><strong>Flexibilitet:</strong> Lätt att iterera och förbättra varje del separat</li>
+                    <li><strong>Lärandefokus:</strong> Kent kan lära sig båda verktygens styrkor och begränsningar</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Arbetsflödet visualiserat -->
+    <section class="workflow-section">
+        <div class="container">
+            <h2>🔄 Det kompletta arbetsflödet</h2>
+            <div class="workflow-diagram">
+                <div class="workflow-step">
+                    <div class="step-icon">💡</div>
+                    <h4>Idé</h4>
+                    <p>Kent väljer tema för veckans quiz</p>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">
+                    <div class="step-icon">📝</div>
+                    <h4>Prompt 1</h4>
+                    <p>Skrivs och skickas till Claude</p>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">
+                    <div class="step-icon">🤖</div>
+                    <h4>Claude</h4>
+                    <p>Genererar quiz-innehåll</p>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">
+                    <div class="step-icon">✅</div>
+                    <h4>Granskning</h4>
+                    <p>Kent kvalitetssäkrar innehållet</p>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">
+                    <div class="step-icon">📝</div>
+                    <h4>Prompt 2</h4>
+                    <p>Skrivs och skickas till Cursor</p>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">
+                    <div class="step-icon">💻</div>
+                    <h4>Cursor</h4>
+                    <p>Skapar webbapplikation</p>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">
+                    <div class="step-icon">🧪</div>
+                    <h4>Testning</h4>
+                    <p>Kent testar funktionalitet</p>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">
+                    <div class="step-icon">🚀</div>
+                    <h4>Publicering</h4>
+                    <p>Quiz publiceras på webbplatsen</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lärdomar och insikter -->
+    <section class="insights-section">
+        <div class="container">
+            <h2>💡 Lärdomar från processen</h2>
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <h3>🎯 Tydliga instruktioner</h3>
+                    <p>Ju mer specifik och strukturerad prompten är, desto bättre resultat. Kent har lärt sig att vara tydlig med:</p>
+                    <ul>
+                        <li>Antal frågor och svarsalternativ</li>
+                        <li>Svårighetsgrad och målgrupp</li>
+                        <li>Önskat format för output</li>
+                        <li>Stilistiska preferenser</li>
+                    </ul>
+                </div>
+                <div class="insight-card">
+                    <h3>🔄 Iterativ process</h3>
+                    <p>Sällan blir det perfekt första gången. Arbetsflödet innebär ofta:</p>
+                    <ul>
+                        <li>Förfining av frågor efter Claudes första förslag</li>
+                        <li>Justering av design och layout i Cursor</li>
+                        <li>A/B-testning av olika formuleringar</li>
+                        <li>Kontinuerlig förbättring av prompterna</li>
+                    </ul>
+                </div>
+                <div class="insight-card">
+                    <h3>🤝 Människa och AI</h3>
+                    <p>AI är ett kraftfullt verktyg, men människan är central:</p>
+                    <ul>
+                        <li>Kent avgör tema och pedagogisk målsättning</li>
+                        <li>Kvalitetssäkring av fakta och formuleringar</li>
+                        <li>Slutgiltiga designbeslut</li>
+                        <li>Utvärdering av användarupplevelsen</li>
+                    </ul>
+                </div>
+                <div class="insight-card">
+                    <h3>⚡ Effektivitet</h3>
+                    <p>Tidsvinsten är betydande jämfört med manuellt arbete:</p>
+                    <ul>
+                        <li>Från idé till färdigt quiz på ~1-2 timmar</li>
+                        <li>Tidigare: Flera dagars arbete</li>
+                        <li>Mer tid för kreativt tänkande</li>
+                        <li>Möjlighet att producera fler quiz</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRAKTISK GUIDE: Konvertera till Markdown -->
+    <section class="conversion-guide-section">
+        <div class="container">
+            <h2>🔧 Praktisk guide: Konvertera PDF/Word till Markdown</h2>
+            <p class="guide-intro">Eftersom både PDF och Word är binära format som är svåra för AI att läsa, behöver du konvertera dem till Markdown. Här är flera sätt att göra det:</p>
+
+            <!-- Metod 1: Online verktyg -->
+            <div class="conversion-method">
+                <h3>Metod 1: Online-konverterare (Enklast)</h3>
+                <div class="method-content">
+                    <h4>📄 PDF till Markdown:</h4>
+                    <ul>
+                        <li><strong><a href="https://pdf2md.morethan.io/" target="_blank">PDF2MD</a></strong> - Dra och släpp PDF, få Markdown tillbaka</li>
+                        <li><strong><a href="https://www.convertio.co/sv/pdf-md/" target="_blank">Convertio</a></strong> - Stöder många format inklusive PDF → MD</li>
+                        <li><strong><a href="https://products.aspose.app/pdf/sv/conversion/pdf-to-md" target="_blank">Aspose</a></strong> - Gratis online-konvertering</li>
+                    </ul>
+
+                    <h4>📝 Word (.docx) till Markdown:</h4>
+                    <ul>
+                        <li><strong><a href="https://word2md.com/" target="_blank">Word2MD</a></strong> - Specialiserad på Word till Markdown</li>
+                        <li><strong><a href="https://cloudconvert.com/docx-to-md" target="_blank">CloudConvert</a></strong> - Stöder DOCX → MD med bra formatering</li>
+                        <li><strong>Pandoc Online</strong> - Via webbgränssnitt (se metod 2)</li>
+                    </ul>
+
+                    <div class="step-by-step">
+                        <h5>Steg-för-steg:</h5>
+                        <ol>
+                            <li>Gå till någon av webbplatserna ovan</li>
+                            <li>Ladda upp din PDF eller Word-fil</li>
+                            <li>Välj "Markdown" (.md) som utformat</li>
+                            <li>Klicka "Konvertera"</li>
+                            <li>Ladda ner den färdiga Markdown-filen</li>
+                        </ol>
+                    </div>
+
+                    <div class="pro-tip">
+                        💡 <strong>Tips:</strong> Online-verktyg är snabbast för enstaka filer, men tänk på att inte ladda upp känsliga dokument till okända tjänster!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Metod 2: Pandoc (Professionellt) -->
+            <div class="conversion-method">
+                <h3>Metod 2: Pandoc (Rekommenderat för många filer)</h3>
+                <div class="method-content">
+                    <p><strong>Pandoc</strong> är ett kraftfullt kommandoradsverktyg som kallas "den schweiziska armékniven för dokumentkonvertering".</p>
+
+                    <h4>Installation i PowerShell (Windows):</h4>
+                    <div class="code-block">
+                        <code>
+# Med Chocolatey (om du har det installerat)<br>
+choco install pandoc<br>
+<br>
+# Eller ladda ner från:<br>
+# https://pandoc.org/installing.html
+                        </code>
+                    </div>
+
+                    <h4>Användning:</h4>
+                    <div class="code-block">
+                        <code>
+# Konvertera Word till Markdown<br>
+pandoc promt1_till_251121.docx -o promt1_till_251121.md<br>
+<br>
+# Konvertera PDF till Markdown (kräver extra installation)<br>
+pandoc promt1_till_251121.pdf -o promt1_till_251121.md<br>
+<br>
+# Konvertera alla Word-filer i en mapp<br>
+Get-ChildItem *.docx | ForEach-Object { pandoc $_.Name -o "$($_.BaseName).md" }
+                        </code>
+                    </div>
+
+                    <div class="pro-tip">
+                        💡 <strong>Tips:</strong> Pandoc är perfekt om du har många filer att konvertera eller vill automatisera processen!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Metod 3: Manuell kopiering -->
+            <div class="conversion-method">
+                <h3>Metod 3: Manuell kopiering (För kortare dokument)</h3>
+                <div class="method-content">
+                    <p>För kortare dokument kan det vara snabbast att manuellt skapa en Markdown-fil:</p>
+
+                    <div class="step-by-step">
+                        <h5>Steg-för-steg:</h5>
+                        <ol>
+                            <li>Öppna din PDF/Word-fil och kopiera texten</li>
+                            <li>Öppna en texteditor (t.ex. Notepad, VS Code, Cursor)</li>
+                            <li>Klistra in texten</li>
+                            <li>Lägg till Markdown-formatering manuellt:
+                                <ul>
+                                    <li><code># Rubrik 1</code> för huvudrubriker</li>
+                                    <li><code>## Rubrik 2</code> för underrubriker</li>
+                                    <li><code>**fetstil**</code> för fetstil</li>
+                                    <li><code>*kursiv*</code> för kursiv</li>
+                                    <li><code>- punkt</code> för punktlistor</li>
+                                    <li><code>1. punkt</code> för numrerade listor</li>
+                                </ul>
+                            </li>
+                            <li>Spara filen med ändelsen <code>.md</code></li>
+                        </ol>
+                    </div>
+
+                    <div class="markdown-example">
+                        <h5>Exempel på Markdown-formatering:</h5>
+                        <div class="code-block">
+                            <code>
+# Prompt 1: Skapa Fredagsquiz<br>
+<br>
+## Syfte<br>
+Skapa ett engagerande quiz om ekonomi med **10 frågor**.<br>
+<br>
+## Krav<br>
+- Varierande svårighetsgrad<br>
+- Pedagogiska förklaringar<br>
+- Svenska språket<br>
+<br>
+### Målgrupp<br>
+Quizet riktar sig till *allmänheten* med intresse för ekonomi.
+                            </code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Metod 4: Claude eller ChatGPT -->
+            <div class="conversion-method">
+                <h3>Metod 4: Använd AI för konvertering (Smart!)</h3>
+                <div class="method-content">
+                    <p>Moderna AI-verktyg som <strong>Claude</strong> och <strong>ChatGPT</strong> kan ofta läsa PDF och Word-filer direkt!</p>
+
+                    <h4>Hur det fungerar:</h4>
+                    <div class="step-by-step">
+                        <ol>
+                            <li>Gå till Claude.ai eller ChatGPT</li>
+                            <li>Ladda upp din PDF eller Word-fil (använd 📎-ikonen)</li>
+                            <li>Skriv prompt: <em>"Konvertera detta dokument till Markdown-format"</em></li>
+                            <li>Kopiera resultatet till en ny .md-fil</li>
+                        </ol>
+                    </div>
+
+                    <div class="comparison-box">
+                        <h5>🤖 AI-verktyg som kan läsa dokument:</h5>
+                        <ul>
+                            <li><strong>Claude (Anthropic)</strong> - Läser PDF och bilder direkt</li>
+                            <li><strong>ChatGPT Plus</strong> - Stöder många filformat</li>
+                            <li><strong>Google Gemini</strong> - Kan analysera PDF-filer</li>
+                        </ul>
+                        <p class="note">⚠️ Obs: Gratis-versionerna har ofta begränsningar för filuppladdning.</p>
+                    </div>
+
+                    <div class="pro-tip">
+                        💡 <strong>Tips:</strong> Detta är ofta den bästa metoden eftersom AI:n kan behålla struktur och till och med förbättra formateringen!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sammanfattning -->
+            <div class="conversion-summary">
+                <h3>📊 Vilken metod ska du välja?</h3>
+                <div class="method-comparison-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Metod</th>
+                                <th>Bäst för</th>
+                                <th>Svårighetsgrad</th>
+                                <th>Kvalitet</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1. Online-verktyg</td>
+                                <td>Enstaka filer, snabbt</td>
+                                <td>⭐ Lätt</td>
+                                <td>⭐⭐⭐ Bra</td>
+                            </tr>
+                            <tr>
+                                <td>2. Pandoc</td>
+                                <td>Många filer, automation</td>
+                                <td>⭐⭐ Medel</td>
+                                <td>⭐⭐⭐⭐ Mycket bra</td>
+                            </tr>
+                            <tr>
+                                <td>3. Manuellt</td>
+                                <td>Korta dokument, full kontroll</td>
+                                <td>⭐ Lätt</td>
+                                <td>⭐⭐⭐⭐⭐ Perfekt</td>
+                            </tr>
+                            <tr>
+                                <td>4. AI (Claude/ChatGPT)</td>
+                                <td>Komplex formatering, smart konvertering</td>
+                                <td>⭐ Lätt</td>
+                                <td>⭐⭐⭐⭐⭐ Utmärkt</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="recommendation-box">
+                    <h4>🎯 Min rekommendation för dig, Kent:</h4>
+                    <p><strong>Använd Claude eller ChatGPT Plus</strong> för att konvertera dina prompts till Markdown!</p>
+                    <p>Eftersom du redan använder Claude för quiz-skapande kan du enkelt:</p>
+                    <ol>
+                        <li>Ladda upp <code>promt1_till_251121.pdf</code> till Claude</li>
+                        <li>Be Claude: <em>"Konvertera detta till välformaterad Markdown"</em></li>
+                        <li>Spara resultatet som <code>promt1_till_251121.md</code></li>
+                        <li>Upprepa för den andra prompten</li>
+                    </ol>
+                    <p>Sedan kan Cursor läsa Markdown-filerna direkt utan problem! 🎉</p>
+                </div>
+            </div>
+
+            <!-- Praktiskt exempel -->
+            <div class="practical-example">
+                <h3>💼 Praktiskt exempel med dina filer</h3>
+                <p>För att konvertera dina två prompt-filer skulle du göra så här:</p>
+
+                <div class="example-steps">
+                    <div class="example-step">
+                        <h4>Alternativ A: Med Claude (Rekommenderat)</h4>
+                        <ol>
+                            <li>Gå till <a href="https://claude.ai" target="_blank">claude.ai</a></li>
+                            <li>Starta en ny konversation</li>
+                            <li>Ladda upp <code>promt1_till_251121.pdf</code></li>
+                            <li>Skriv: "Konvertera detta dokument till Markdown-format. Behåll all struktur och formatering."</li>
+                            <li>Kopiera resultatet och spara som <code>promt1_till_251121.md</code></li>
+                            <li>Upprepa för <code>promt2_till_251121.pdf</code></li>
+                        </ol>
+                    </div>
+
+                    <div class="example-step">
+                        <h4>Alternativ B: Med Pandoc i PowerShell</h4>
+                        <div class="code-block">
+                            <code>
+# Navigera till mappen<br>
+cd "D:\VåraFiler_primära_på_SSD\Kent_dokument\Data\HTML\kentlundgren_se\program\quiz\000"<br>
+<br>
+# Konvertera båda Word-filerna (om du har .docx-versioner)<br>
+pandoc promt1_till_251121.docx -o promt1_till_251121.md<br>
+pandoc promt2_till_251121.docx -o promt2_till_251121.md<br>
+<br>
+# Nu har du två nya .md-filer som Cursor kan läsa!
+                            </code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Framtiden -->
+    <section class="future-section">
+        <div class="container">
+            <h2>🚀 Framtiden för AI-assisterad pedagogik</h2>
+            <p>Kent Lundgrens arbete med fredagsquiz är ett exempel på hur generativ AI kan:</p>
+            <ul>
+                <li><strong>Demokratisera innehållsskapande</strong> - Fler kan skapa högkvalitativt pedagogiskt material</li>
+                <li><strong>Frigöra tid för kreativitet</strong> - Mindre tid på rutinarbete, mer tid för innovation</li>
+                <li><strong>Personalisera lärande</strong> - Möjlighet att snabbt skapa material för olika målgrupper</li>
+                <li><strong>Sänka trösklar</strong> - Man behöver inte vara expert på webbutveckling för att skapa interaktiva quiz</li>
+            </ul>
+            
+            <!-- Samarbete mellan Claude och Cursor -->
+            <div class="collaboration-image-section">
+                <a href="samarbete_med_Claude_och_Cursor.jpg" target="_blank">
+                    <img src="samarbete_med_Claude_och_Cursor.jpg" alt="Samarbete med Claude och Cursor" class="collaboration-image">
+                </a>
+                <p class="image-caption">Samarbete mellan Claude och Cursor i praktiken</p>
+            </div>
+
+            <div class="future-vision">
+                <h3>Vad är nästa steg?</h3>
+                <p>Möjliga utvecklingsområden inkluderar:</p>
+                <ul>
+                    <li>Automatisk anpassning av svårighetsgrad baserat på användarens svar</li>
+                    <li>Integrering med learning management systems (LMS)</li>
+                    <li>Flerspråkigt stöd för internationell räckvidd</li>
+                    <li>Dataanalys av användarnas resultat för kontinuerlig förbättring</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>Skapad av Kent Lundgren med hjälp av Claude och Cursor | November 2025</p>
+            <p><a href="https://kentlundgren.se" target="_blank">kentlundgren.se</a></p>
+        </div>
+    </footer>
+
+    <!-- Teknik-modal -->
+    <div id="techModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>⚙️ Teknik bakom detta program</h2>
+            
+            <div class="tech-section">
+                <h3>Hur detta program skapades</h3>
+                <p>Denna webbsida är själv ett exempel på den tvåstegsprocess som beskrivs! Den skapades genom:</p>
+                <ol>
+                    <li><strong>Konceptualisering:</strong> Analys av processen för att skapa fredagsquiz</li>
+                    <li><strong>Implementation:</strong> Cursor användes för att generera HTML, CSS och JavaScript</li>
+                </ol>
+                <p class="tech-note">Notera: Cursor är den AI som skapade själva webbsidan du läser just nu - en meta-upplevelse av AI-assisterad utveckling!</p>
+            </div>
+
+            <div class="tech-section breakthrough-section">
+                <h3>🎉 GENOMBROTT: När filerna konverterades till Markdown</h3>
+                
+                <div class="before-after-comparison">
+                    <div class="before-state">
+                        <h4>❌ FÖRE: PDF/Word-format (2025-11-21 08:00)</h4>
+                        <div class="state-content">
+                            <p><strong>Situation:</strong> Kent hade två filer:</p>
+                            <ul>
+                                <li><code>promt1_till_251121.pdf</code> (53 rader text)</li>
+                                <li><code>promt2_till_251121.pdf</code> (475 rader text)</li>
+                            </ul>
+                            
+                            <p><strong>Vad Cursor såg när den försökte läsa:</strong></p>
+                            <div class="code-block">
+                                <code>
+%PDF-1.7<br>
+%����<br>
+1 0 obj<br>
+<</Type/Catalog/Pages 2 0 R/Lang(sv)...<br>
+<br>
+❌ OLÅSBART! Bara binär data och PDF-struktur
+                                </code>
+                            </div>
+
+                            <p><strong>Konsekvenser:</strong></p>
+                            <ul>
+                                <li>❌ Cursor kunde inte läsa prompterna</li>
+                                <li>❌ Ingen tillgång till de faktiska frågorna</li>
+                                <li>❌ Ingen tillgång till slides-innehållet</li>
+                                <li>❌ Ingen tillgång till specifika krav (Harvardstil, bilder, etc.)</li>
+                                <li>❌ Kunde bara skapa en GENERELL beskrivning</li>
+                            </ul>
+
+                            <p class="error-message">💔 Resultat: Webbsidan beskrev processen i allmänna termer utan specifikt innehåll från de faktiska prompterna.</p>
+                        </div>
+                    </div>
+
+                    <div class="after-state">
+                        <h4>✅ EFTER: Markdown-format (2025-11-21 14:30)</h4>
+                        <div class="state-content">
+                            <p><strong>Kent konverterade filerna:</strong></p>
+                            <ul>
+                                <li><code>promt1_till_251121.md</code> (53 rader)</li>
+                                <li><code>promt2_till_251121.md</code> (475 rader)</li>
+                            </ul>
+                            
+                            <p><strong>Vad Cursor nu såg:</strong></p>
+                            <div class="code-block">
+                                <code>
+# Instruktioner för årsbokslut och årsredovisning 2025<br>
+<br>
+## Roll och uppdrag<br>
+<br>
+Du är en ekonom, controller, som är bra på ekonomistyrning...<br>
+<br>
+✅ PERFEKT LÄSBART! Ren text med tydlig struktur
+                                </code>
+                            </div>
+
+                            <p><strong>Konsekvenser:</strong></p>
+                            <ul>
+                                <li>✅ Cursor kunde läsa HELA prompten</li>
+                                <li>✅ Direkt tillgång till alla 5 frågor med motiveringar</li>
+                                <li>✅ Direkt tillgång till alla 5 slides</li>
+                                <li>✅ Alla specifika krav synliga (bilder, Harvardstil, etc.)</li>
+                                <li>✅ Kunde citera VERKLIGT innehåll från prompterna</li>
+                            </ul>
+
+                            <p class="success-message">💚 Resultat: Webbsidan kunde uppdateras med faktiska citat, exempel och specifikt innehåll från Kents riktiga prompts!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="concrete-examples">
+                    <h4>📊 Konkreta exempel på vad som blev möjligt:</h4>
+                    
+                    <div class="example-item">
+                        <h5>Exempel 1: Från promt1_till_251121.md</h5>
+                        <p><strong>Nu kunde Cursor citera:</strong></p>
+                        <blockquote>
+                            "Du är en ekonom, controller, som är bra på ekonomistyrning, årsbokslut och årsredovisning, i en svensk kommun - Simrishamns kommun."
+                        </blockquote>
+                        <p>Detta gav tydlig kontext om vad quizet skulle handla om!</p>
+                    </div>
+
+                    <div class="example-item">
+                        <h5>Exempel 2: Specifika krav från promt1_till_251121.md</h5>
+                        <p><strong>Nu kunde Cursor se:</strong></p>
+                        <ul>
+                            <li>"Detta quiz ska vara klurigt, spännande, kul och lärorikt"</li>
+                            <li>"Du ska referera till källor enligt Harvadformatet"</li>
+                            <li>"Upplägget ska inledningsvis vara utförligt så att texten passar på min blogg"</li>
+                        </ul>
+                    </div>
+
+                    <div class="example-item">
+                        <h5>Exempel 3: Från promt2_till_251121.md (475 rader!)</h5>
+                        <p><strong>Nu kunde Cursor läsa:</strong></p>
+                        <ul>
+                            <li>Alla 5 slides med komplett innehåll</li>
+                            <li>Alla 5 quiz-frågor med 4 svarsalternativ vardera</li>
+                            <li>Utförliga motiveringar för varje fråga</li>
+                            <li>Specifika bildnamn: "arsredovisning_2021.jpg" och "arsredovisning_2024.jpg"</li>
+                            <li>Krav på att bevara originalfiler: "quiz.html, script_quiz.js och styles_quiz.css ska hela tiden vara oförändrade"</li>
+                        </ul>
+                    </div>
+
+                    <div class="example-item">
+                        <h5>Exempel 4: Strukturförståelse</h5>
+                        <p><strong>Markdown-strukturen gjorde att Cursor förstod:</strong></p>
+                        <ul>
+                            <li><code># Rubrik 1</code> = Huvudavsnitt</li>
+                            <li><code>## Rubrik 2</code> = Underavsnitt</li>
+                            <li><code>**fetstil**</code> = Viktiga begrepp</li>
+                            <li><code>- listpunkt</code> = Uppräkningar</li>
+                            <li>Tabeller med tidplaner</li>
+                            <li>Kodblock för exempel</li>
+                        </ul>
+                        <p>Detta gör att AI:n kan extrahera och organisera information korrekt!</p>
+                    </div>
+                </div>
+
+                <div class="metrics-comparison">
+                    <h4>📈 Mätbara förbättringar:</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Aspekt</th>
+                                <th>FÖRE (PDF)</th>
+                                <th>EFTER (Markdown)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Läsbar för AI</td>
+                                <td>❌ 0%</td>
+                                <td>✅ 100%</td>
+                            </tr>
+                            <tr>
+                                <td>Specifika citat</td>
+                                <td>❌ 0 st</td>
+                                <td>✅ 8+ st</td>
+                            </tr>
+                            <tr>
+                                <td>Faktiskt innehåll från prompts</td>
+                                <td>❌ Generellt</td>
+                                <td>✅ Exakt innehåll</td>
+                            </tr>
+                            <tr>
+                                <td>Strukturförståelse</td>
+                                <td>❌ Ingen</td>
+                                <td>✅ Fullständig</td>
+                            </tr>
+                            <tr>
+                                <td>Tid för Cursor att läsa</td>
+                                <td>❌ Omöjligt</td>
+                                <td>✅ < 1 sekund</td>
+                            </tr>
+                            <tr>
+                                <td>Kvalitet på output</td>
+                                <td>⭐⭐ Generell</td>
+                                <td>⭐⭐⭐⭐⭐ Specifik</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="lesson-learned">
+                    <h4>🎓 Den viktigaste lärdomen:</h4>
+                    <p class="highlight-box">
+                        <strong>PDF och Word är utmärkta för människor att läsa.</strong><br>
+                        <strong>Markdown är utmärkt för både människor OCH AI att läsa.</strong>
+                    </p>
+                    <p>När du arbetar med AI-verktyg som ska läsa och förstå ditt innehåll:</p>
+                    <ul>
+                        <li>✅ Använd Markdown (.md) för arbetsunderlag</li>
+                        <li>✅ Konvertera till PDF när du ska dela med slutanvändare</li>
+                        <li>✅ Spara både Markdown OCH PDF för olika syften</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tech-section">
+                <h3>Filformat: PDF vs Word - En teknisk analys</h3>
+                
+                <h4>🔍 Utmaningen</h4>
+                <p>När underlagsfiler behöver bifogas och analyseras av AI-verktyg uppstår frågan: Vilket filformat är bäst - PDF eller Word (.docx)?</p>
+
+                <div class="format-comparison">
+                    <div class="format-card">
+                        <h4>📄 PDF (Portable Document Format)</h4>
+                        <div class="pros-cons">
+                            <div class="pros">
+                                <h5>Fördelar:</h5>
+                                <ul>
+                                    <li>✅ <strong>Universell kompatibilitet</strong> - Ser likadant ut överallt</li>
+                                    <li>✅ <strong>Bevarar formatering</strong> - Layout och typografi bibehålls exakt</li>
+                                    <li>✅ <strong>Säkerhet</strong> - Svårare att oavsiktligt ändra innehåll</li>
+                                    <li>✅ <strong>Mindre filstorlek</strong> - Ofta mer komprimerad</li>
+                                    <li>✅ <strong>Professionell standard</strong> - Accepterat format för publicering</li>
+                                </ul>
+                            </div>
+                            <div class="cons">
+                                <h5>Nackdelar:</h5>
+                                <ul>
+                                    <li>❌ <strong>Svår textextraktion</strong> - AI har svårare att läsa innehållet</li>
+                                    <li>❌ <strong>Binärt format</strong> - Inte direkt läsbar som text</li>
+                                    <li>❌ <strong>Komplex struktur</strong> - Kräver specialiserade verktyg för parsing</li>
+                                    <li>❌ <strong>Begränsad redigerbarhet</strong> - Svårt att göra snabba ändringar</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="format-card">
+                        <h4>📝 Word (.docx)</h4>
+                        <div class="pros-cons">
+                            <div class="pros">
+                                <h5>Fördelar:</h5>
+                                <ul>
+                                    <li>✅ <strong>Lätt att redigera</strong> - Kan enkelt ändras och uppdateras</li>
+                                    <li>✅ <strong>Strukturerad data</strong> - XML-baserat format</li>
+                                    <li>✅ <strong>Metadata</strong> - Innehåller trackad information om ändringar</li>
+                                    <li>✅ <strong>Samarbetsvänligt</strong> - Enkel att dela och kommentera</li>
+                                </ul>
+                            </div>
+                            <div class="cons">
+                                <h5>Nackdelar:</h5>
+                                <ul>
+                                    <li>❌ <strong>Fortfarande binärt</strong> - Inte direkt läsbar som ren text</li>
+                                    <li>❌ <strong>Versionsproblem</strong> - Olika Word-versioner kan visa olika resultat</li>
+                                    <li>❌ <strong>Större filstorlek</strong> - Ofta mer data än nödvändigt</li>
+                                    <li>❌ <strong>Proprietärt</strong> - Kräver Microsoft-ekosystem för bästa upplevelse</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tech-reality">
+                    <h4>💡 Den tekniska verkligheten</h4>
+                    <p><strong>Problemet:</strong> Både PDF och Word (.docx) är <em>binära format</em> som inte kan läsas direkt som text av många AI-verktyg, inklusive de som används i Cursor.</p>
+                    
+                    <p><strong>Vad innebär det?</strong></p>
+                    <ul>
+                        <li>När man försöker läsa en PDF eller Word-fil med standard read-verktyg får man binär data (1:or och 0:or) istället för läsbar text</li>
+                        <li>Specialiserade parsers krävs för att extrahera text från dessa format</li>
+                        <li>Formatering, bilder och layout komplicerar textextraktion ytterligare</li>
+                    </ul>
+                </div>
+
+                <h4>🎯 Vad är då bäst?</h4>
+                <div class="recommendation">
+                    <h5>Rekommendation för AI-arbete:</h5>
+                    <p><strong>MARKDOWN (.md) eller REN TEXT (.txt)</strong> är klart bäst när filer ska analyseras av AI!</p>
+                    
+                    <div class="why-markdown">
+                        <h6>Varför Markdown/Text?</h6>
+                        <ul>
+                            <li>✨ <strong>Direkt läsbar</strong> - AI kan läsa innehållet utan specialverktyg</li>
+                            <li>✨ <strong>Enkel struktur</strong> - Formatering med enkla tecken (# för rubriker, * för listor)</li>
+                            <li>✨ <strong>Versionshantering</strong> - Perfekt för Git och samarbete</li>
+                            <li>✨ <strong>Liten filstorlek</strong> - Minimal overhead</li>
+                            <li>✨ <strong>Plattformsoberoende</strong> - Fungerar överallt</li>
+                            <li>✨ <strong>Framtidssäker</strong> - Kommer alltid kunna läsas</li>
+                        </ul>
+                    </div>
+
+                    <h6>När PDF/Word ändå är relevant:</h6>
+                    <ul>
+                        <li>📊 <strong>För publicering:</strong> PDF för dokument som ska delas med slutanvändare</li>
+                        <li>📝 <strong>För redigering:</strong> Word när många personer ska samarbeta</li>
+                        <li>🎨 <strong>För design:</strong> När layout och visuell presentation är kritisk</li>
+                    </ul>
+                </div>
+
+                <div class="best-practice">
+                    <h4>✅ Best Practice för AI-projekt</h4>
+                    <ol>
+                        <li><strong>Arbetsformat:</strong> Använd Markdown för dokument som AI ska läsa</li>
+                        <li><strong>Publiceringsformat:</strong> Konvertera till PDF för slutanvändare</li>
+                        <li><strong>Redigeringsformat:</strong> Använd Word endast när mänsklig samarbete kräver det</li>
+                        <li><strong>Versionskontroll:</strong> Lagra alltid en textbaserad version (Markdown) i Git</li>
+                    </ol>
+                </div>
+
+                <div class="three-formats-philosophy">
+                    <h4>🎯 Filosofin om tre format: Ett innehåll, tre användningsområden</h4>
+                    
+                    <p>I detta projekt finns prompterna i alla tre format - inte för att vara överflödiga, utan för att varje format tjänar ett specifikt syfte:</p>
+
+                    <div class="format-use-cases">
+                        <div class="use-case-card">
+                            <h5>📄 PDF - För människor som vill LÄSA</h5>
+                            <p><strong>När du ska:</strong></p>
+                            <ul>
+                                <li>Förstå vad som står i prompten</li>
+                                <li>Dela med kollegor för genomläsning</li>
+                                <li>Skriva ut och anteckna på</li>
+                                <li>Arkivera för framtida referens</li>
+                            </ul>
+                            <p class="use-case-benefit"><strong>Fördel:</strong> Perfekt formatering, ser exakt likadant ut överallt, professionell presentation</p>
+                        </div>
+
+                        <div class="use-case-card">
+                            <h5>📝 Word - För människor som vill REDIGERA</h5>
+                            <p><strong>När du ska:</strong></p>
+                            <ul>
+                                <li>Skapa en variant av prompten för ett annat ämne</li>
+                                <li>Kopiera delar av texten till andra dokument</li>
+                                <li>Göra ändringar och uppdateringar</li>
+                                <li>Samarbeta med andra som inte använder Markdown</li>
+                            </ul>
+                            <p class="use-case-benefit"><strong>Fördel:</strong> Bekant verktyg, lätt att redigera, alla kan använda Word</p>
+                        </div>
+
+                        <div class="use-case-card">
+                            <h5>💻 Markdown - För AI som vill FÖRSTÅ</h5>
+                            <p><strong>När du ska:</strong></p>
+                            <ul>
+                                <li>Skicka prompten till Cursor, Claude eller annan AI</li>
+                                <li>Versionshantera i Git</li>
+                                <li>Automatisera bearbetning av innehållet</li>
+                                <li>Säkerställa att AI kan läsa strukturen korrekt</li>
+                            </ul>
+                            <p class="use-case-benefit"><strong>Fördel:</strong> Direkt läsbar för AI, enkel struktur, framtidssäker</p>
+                        </div>
+                    </div>
+
+                    <div class="workflow-all-formats">
+                        <h5>🔄 Ett smart arbetsflöde med alla tre format:</h5>
+                        <ol>
+                            <li><strong>SKRIV</strong> i Word (bekvämt, välkänt verktyg)</li>
+                            <li><strong>SPARA</strong> som Word (.docx) för backup och framtida redigering</li>
+                            <li><strong>KONVERTERA</strong> till Markdown (.md) för AI-arbete</li>
+                            <li><strong>EXPORTERA</strong> till PDF för delning och presentation</li>
+                        </ol>
+                        <p class="workflow-note">💡 <strong>Resultat:</strong> Ett innehåll i tre format, varje format optimerat för sitt syfte!</p>
+                    </div>
+
+                    <div class="real-world-example">
+                        <h5>📊 Praktiskt exempel från Kents fredagsquiz:</h5>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Situation</th>
+                                    <th>Använd format</th>
+                                    <th>Varför?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Kent vill läsa sin prompt för kontroll</td>
+                                    <td>📄 PDF</td>
+                                    <td>Snygg formatering, lätt att läsa</td>
+                                </tr>
+                                <tr>
+                                    <td>Kent vill ändra en fråga i nästa quiz</td>
+                                    <td>📝 Word</td>
+                                    <td>Lätt att redigera, bekant verktyg</td>
+                                </tr>
+                                <tr>
+                                    <td>Kent ska skicka till Cursor för kodning</td>
+                                    <td>💻 Markdown</td>
+                                    <td>Cursor kan läsa och förstå direkt</td>
+                                </tr>
+                                <tr>
+                                    <td>Kent vill dela med chef för godkännande</td>
+                                    <td>📄 PDF</td>
+                                    <td>Professionell, ser bra ut via e-post</td>
+                                </tr>
+                                <tr>
+                                    <td>Kent vill ha i Git för versionshantering</td>
+                                    <td>💻 Markdown</td>
+                                    <td>Textbaserad, perfekt för Git</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="key-insight">
+                        <h5>💎 Nyckeln till framgång:</h5>
+                        <p class="highlight-message">
+                            Det handlar inte om att välja ETT format och förkasta de andra. 
+                            Det handlar om att <strong>ha alla tre format tillgängliga</strong> och 
+                            <strong>använda rätt format för rätt situation</strong>.
+                        </p>
+                        <ul>
+                            <li>🧑 <strong>Människor älskar PDF och Word</strong> - för läsning och redigering</li>
+                            <li>🤖 <strong>AI älskar Markdown</strong> - för parsing och förståelse</li>
+                            <li>🎯 <strong>Tillsammans ger de flexibilitet</strong> - för alla användningsfall</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tech-insight">
+                    <h4>🔮 Framtida lösningar</h4>
+                    <p>Nya AI-verktyg utvecklas som kan:</p>
+                    <ul>
+                        <li>Läsa och förstå PDF/Word direkt med OCR och dokumentparsing</li>
+                        <li>Extrahera text med bevarad struktur och formatering</li>
+                        <li>Tolka bilder, diagram och tabeller i dokument</li>
+                        <li>Förstå dokumentlayout och visuell hierarki</li>
+                    </ul>
+                    <p class="future-note">Men idag (november 2025) är textbaserade format fortfarande överlägset för AI-arbete!</p>
+                </div>
+            </div>
+
+            <!-- UPPDATERING 2025-11-24: PDF-parsing med Python i Cursor -->
+            <div class="tech-section pdf-parsing-section">
+                <h3>🐍 PRAKTISK LÖSNING: Läsa PDF-filer direkt i Cursor med Python</h3>
+                
+                <div class="solution-intro">
+                    <p><strong>Nyhet!</strong> Även om Cursor inte kan läsa PDF-filer direkt, kan vi använda en <em>parser</em> för att göra dem läsbara!</p>
+                </div>
+
+                <div class="what-is-parser">
+                    <h4>🔍 Vad är en "parser"?</h4>
+                    <p>En <strong>parser</strong> är ett program som:</p>
+                    <ol>
+                        <li><strong>Läser</strong> en fil med komplex struktur (som PDF)</li>
+                        <li><strong>Tolkar</strong> och förstår strukturen (text, bilder, layout)</li>
+                        <li><strong>Extraherar</strong> den information som behövs (t.ex. bara texten)</li>
+                        <li><strong>Ger tillbaka</strong> datan i ett användbart, läsbart format</li>
+                    </ol>
+                    
+                    <div class="parser-analogy">
+                        <p><strong>💡 Analogi:</strong> Tänk dig en PDF som en täckt chokladkaka. Parsern är verktyget som tar bort papperet och folien så du kan komma åt chokladen (texten) inuti.</p>
+                    </div>
+                </div>
+
+                <div class="implementation-steps">
+                    <h4>⚙️ Hur vi implementerade PDF-läsning i detta projekt</h4>
+                    
+                    <div class="step-by-step-implementation">
+                        <div class="impl-step">
+                            <h5>Steg 1: Kontrollera Python</h5>
+                            <div class="code-block">
+                                <code>python --version</code>
+                            </div>
+                            <p class="step-result">✅ Resultat: Python 3.13.2 installerat</p>
+                        </div>
+
+                        <div class="impl-step">
+                            <h5>Steg 2: Installera PyPDF2 (parsern)</h5>
+                            <div class="code-block">
+                                <code>pip install PyPDF2</code>
+                            </div>
+                            <p class="step-result">✅ PyPDF2 är en Python-modul specialiserad på att läsa PDF-filer</p>
+                        </div>
+
+                        <div class="impl-step">
+                            <h5>Steg 3: Skapa Python-skript (read_pdf.py)</h5>
+                            <p>Ett enkelt skript som:</p>
+                            <ul>
+                                <li>Tar emot en PDF-fil som argument</li>
+                                <li>Använder PyPDF2 för att öppna och läsa filen</li>
+                                <li>Extraherar text från alla sidor</li>
+                                <li>Visar texten i terminalen</li>
+                            </ul>
+                        </div>
+
+                        <div class="impl-step">
+                            <h5>Steg 4: Använd skriptet</h5>
+                            <div class="code-block">
+                                <code>python read_pdf.py promt1_till_251121.pdf</code>
+                            </div>
+                            <p class="step-result">✅ Resultat: Läsbar text från PDF:en!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="before-after-parsing">
+                    <h4>📊 Före och efter parsing</h4>
+                    
+                    <div class="parsing-comparison">
+                        <div class="before-parsing">
+                            <h5>❌ FÖRE parsing (direkt läsning)</h5>
+                            <div class="code-block">
+                                <code>
+%PDF-1.7<br>
+%����<br>
+1 0 obj<br>
+x��[[k$7~7�?�ch���}Y6�dyyp&g�N&ޅ<br>
+<br>
+<span style="color: #dc2626;">→ Totalt oläsbart! Bara binär data och PDF-struktur</span>
+                                </code>
+                            </div>
+                        </div>
+
+                        <div class="after-parsing">
+                            <h5>✅ EFTER parsing (med PyPDF2)</h5>
+                            <div class="code-block">
+                                <code>
+--- Sida 1 ---<br>
+Du är en ekonom, controller, som är bra på<br>
+ekonomistyrning, årsbokslut och årsredovisning,<br>
+i en svensk kommun - Simrishamns kommun...<br>
+<br>
+<span style="color: #16a34a;">→ Perfekt läsbart! Ren text som AI kan förstå</span>
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="prompt-for-future">
+                    <h4>📝 Prompt för att skapa detta i framtida projekt</h4>
+                    <p>Om du vill att Cursor skapar ett liknande PDF-läsarskript i ett nytt projekt, använd denna prompt:</p>
+                    
+                    <div class="prompt-box">
+                        <pre><code>"Jag behöver kunna läsa PDF-filer i Cursor. Kan du:
+
+1. Kontrollera om jag har Python installerat
+2. Installera PyPDF2 (en PDF-parser)
+3. Skapa ett Python-skript (read_pdf.py) som:
+   - Tar en PDF-fil som argument
+   - Extraherar all text från alla sidor
+   - Visar texten i terminalen
+4. Förklara vad en parser är
+5. Ge exempel på hur jag använder skriptet
+
+Lägg till tydliga kommentarer i koden som förklarar 
+hur allt fungerar."</code></pre>
+                    </div>
+                    
+                    <p class="prompt-note">💡 <strong>Tips:</strong> Cursor kommer då att guida dig genom hela processen steg för steg!</p>
+                </div>
+
+                <div class="limitations-and-alternatives">
+                    <h4>⚠️ Begränsningar och alternativ</h4>
+                    
+                    <div class="limitations">
+                        <h5>Begränsningar med PyPDF2:</h5>
+                        <ul>
+                            <li>Fungerar bäst med textbaserade PDF:er</li>
+                            <li>Tabeller kan bli missformade</li>
+                            <li>Bilder extraheras inte (endast text)</li>
+                            <li>Komplexa layouter kan bli svåra att tolka</li>
+                        </ul>
+                    </div>
+
+                    <div class="alternatives">
+                        <h5>Alternativa Python-parsers:</h5>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Parser</th>
+                                    <th>Styrka</th>
+                                    <th>Användning</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>PyPDF2</strong></td>
+                                    <td>Enkel, grundläggande</td>
+                                    <td><code>pip install PyPDF2</code></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>pdfplumber</strong></td>
+                                    <td>Bättre för tabeller</td>
+                                    <td><code>pip install pdfplumber</code></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>PyMuPDF (fitz)</strong></td>
+                                    <td>Snabb, kraftfull</td>
+                                    <td><code>pip install PyMuPDF</code></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Camelot</strong></td>
+                                    <td>Specialiserad på tabeller</td>
+                                    <td><code>pip install camelot-py</code></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="recommendation-parsing">
+                    <h4>🎯 Rekommendation för Kents arbetsflöde</h4>
+                    
+                    <div class="workflow-options">
+                        <div class="option-card">
+                            <h5>🥇 Primärt: Markdown</h5>
+                            <p><strong>Varför:</strong> Enklast, säkrast, bäst stöd i Cursor</p>
+                            <ul>
+                                <li>Behöver ingen parser</li>
+                                <li>Direkt läsbar</li>
+                                <li>Perfekt för Git</li>
+                            </ul>
+                        </div>
+
+                        <div class="option-card">
+                            <h5>🥈 Sekundärt: Python-parser</h5>
+                            <p><strong>Varför:</strong> När du redan har PDF och vill läsa den snabbt</p>
+                            <ul>
+                                <li>Snabb omvandling</li>
+                                <li>Ingen manuell konvertering</li>
+                                <li>Användbart för många PDF:er</li>
+                            </ul>
+                        </div>
+
+                        <div class="option-card">
+                            <h5>🥉 Tertiärt: PDF för delning</h5>
+                            <p><strong>Varför:</strong> Bäst för presentation och arkivering</p>
+                            <ul>
+                                <li>Professionell</li>
+                                <li>Universell</li>
+                                <li>Bevarar formatering</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="parsing-summary">
+                    <h4>📌 Sammanfattning</h4>
+                    <ul>
+                        <li>✅ <strong>Parser</strong> = Verktyg som gör komplex data (PDF) läsbar</li>
+                        <li>✅ <strong>PyPDF2</strong> = Python-modul för PDF-parsing</li>
+                        <li>✅ <strong>read_pdf.py</strong> = Skript i detta projekt som läser PDF:er</li>
+                        <li>✅ <strong>Användning:</strong> <code>python read_pdf.py &lt;filnamn.pdf&gt;</code></li>
+                        <li>✅ <strong>Begränsningar:</strong> Tabeller och bilder kan bli missformade</li>
+                        <li>✅ <strong>Bäst praksis:</strong> Använd fortfarande Markdown som primärt format</li>
+                    </ul>
+                </div>
+
+                <div class="file-reference">
+                    <p><strong>📂 Fil i detta projekt:</strong> <code>read_pdf.py</code> - Fullständigt fungerande PDF-parser med utförliga kommentarer</p>
+                </div>
+            </div>
+
+            <div class="tech-section">
+                <h3>Teknisk implementation av denna sida</h3>
+                <div class="tech-stack">
+                    <div class="tech-item">
+                        <h4>HTML5</h4>
+                        <p>Semantisk markup för struktur och tillgänglighet</p>
+                    </div>
+                    <div class="tech-item">
+                        <h4>CSS3</h4>
+                        <p>Modern styling med Flexbox, Grid och CSS-variabler</p>
+                    </div>
+                    <div class="tech-item">
+                        <h4>JavaScript (ES2023)</h4>
+                        <p>Interaktivitet för modal och användarupplevelse</p>
+                    </div>
+                </div>
+                <p class="tech-comment">Kommentar: Denna applikation använder ES2023-funktionalitet inklusive moderna eventhanterare och DOM-manipulation.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

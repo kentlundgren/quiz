@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Komma igång med Generativ AI – Samhällsbyggnadsförvaltningen</title>
+    
+    <!-- 
+    ============================================================================
+    PRESENTATION: ATT KOMMA IGÅNG MED GENERATIV AI I SAMHÄLLSBYGGNADSFÖRVALTNINGEN
+    ============================================================================
+    
+    Denna presentation är skapad för tjänstemän inom samhällsbyggnad i svenska 
+    kommuner. Den innehåller praktisk vägledning för att använda generativ AI 
+    i planprocesser, bygglov och medborgarkontakt.
+    
+    Tekniska val:
+    - Ren HTML/CSS/JavaScript utan externa ramverk för maximal portabilitet
+    - CSS Custom Properties för enhetlig färghantering
+    - Intersection Observer API för animerade övergångar
+    - Responsiv design med CSS Grid och Flexbox
+    - Tillgänglighetsanpassad med ARIA-attribut och semantisk HTML
+    
+    Skapad: December 2025
+    Författare: Kent Lundgren, Controller utan gränser
+    AI-assistans: Claude (Anthropic)
+    ============================================================================
+    -->
+    
+    <!-- Google Fonts - Crimson Pro för eleganta rubriker, Source Sans 3 för brödtext -->
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ===========================================================================
+           CSS CUSTOM PROPERTIES (VARIABLER)
+           Centraliserad färghantering för enkel tematisering
+           =========================================================================== */
+        :root {
+            /* Primära färger - inspirerade av svenska naturlandskap */
+            --color-primary: #1a365d;        /* Djupblå - förtroende och stabilitet */
+            --color-primary-light: #2c5282;  /* Ljusare primär för hover-effekter */
+            --color-secondary: #276749;      /* Skogsgrön - hållbarhet */
+            --color-accent: #c05621;         /* Varm terrakotta - energi */
+            
+            /* Bakgrundsfärger */
+            --color-bg: #f8fafc;             /* Ljusgrå bakgrund */
+            --color-bg-card: #ffffff;        /* Vit för kort/sektioner */
+            --color-bg-dark: #1a202c;        /* Mörk bakgrund för kontrast */
+            
+            /* Textfärger */
+            --color-text: #2d3748;           /* Mörkgrå huvudtext */
+            --color-text-light: #718096;     /* Ljusare sekundärtext */
+            --color-text-inverse: #f7fafc;   /* Vit text på mörk bakgrund */
+            
+            /* Gradienter */
+            --gradient-hero: linear-gradient(135deg, #1a365d 0%, #2c5282 50%, #276749 100%);
+            --gradient-card: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+            
+            /* Skuggor med olika intensitet */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1), 0 6px 10px rgba(0, 0, 0, 0.08);
+            --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.15);
+            
+            /* Typografi */
+            --font-heading: 'Crimson Pro', Georgia, serif;
+            --font-body: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+            
+            /* Animationer */
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+            
+            /* Spacing-system baserat på 8px-grid */
+            --space-xs: 0.25rem;   /* 4px */
+            --space-sm: 0.5rem;    /* 8px */
+            --space-md: 1rem;      /* 16px */
+            --space-lg: 1.5rem;    /* 24px */
+            --space-xl: 2rem;      /* 32px */
+            --space-2xl: 3rem;     /* 48px */
+            --space-3xl: 4rem;     /* 64px */
+        }
+
+        /* ===========================================================================
+           CSS RESET & GRUNDLÄGGANDE STYLING
+           =========================================================================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;      /* Mjuk scrollning vid ankarlänkar */
+            font-size: 16px;              /* Bas för rem-beräkningar */
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-size: 1.125rem;          /* 18px för bättre läsbarhet */
+            line-height: 1.7;
+            color: var(--color-text);
+            background-color: var(--color-bg);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ===========================================================================
+           TYPOGRAFI
+           Hierarkiskt system för rubriker och brödtext
+           =========================================================================== */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--color-primary);
+        }
+
+        h1 { font-size: clamp(2rem, 5vw, 3.5rem); }    /* Responsiv storlek */
+        h2 { font-size: clamp(1.5rem, 4vw, 2.5rem); }
+        h3 { font-size: clamp(1.25rem, 3vw, 1.75rem); }
+        h4 { font-size: 1.25rem; }
+
+        p {
+            margin-bottom: var(--space-md);
+            max-width: 75ch;               /* Optimal radlängd för läsbarhet */
+        }
+
+        a {
+            color: var(--color-secondary);
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 2px;
+            transition: color var(--transition-fast);
+        }
+
+        a:hover {
+            color: var(--color-primary);
+        }
+
+        /* ===========================================================================
+           LAYOUT - HEADER
+           Fast navigation med mjuk skugga
+           =========================================================================== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: var(--color-bg-card);
+            box-shadow: var(--shadow-md);
+            padding: var(--space-md) var(--space-xl);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--space-md);
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+
+        /* Navigation med horisontell lista */
+        .nav {
+            display: flex;
+            gap: var(--space-lg);
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            color: var(--color-text);
+            text-decoration: none;
+            font-weight: 500;
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: 4px;
+            transition: all var(--transition-fast);
+        }
+
+        .nav a:hover {
+            color: var(--color-primary);
+            background: rgba(26, 54, 93, 0.05);
+        }
+
+        /* Teknisk info-knapp i header */
+        .tech-btn {
+            background: var(--color-primary);
+            color: var(--color-text-inverse);
+            border: none;
+            padding: var(--space-sm) var(--space-md);
+            border-radius: 6px;
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+
+        .tech-btn:hover {
+            background: var(--color-primary-light);
+            transform: translateY(-1px);
+        }
+
+        /* ===========================================================================
+           HERO-SEKTION
+           Stor introduktionssektion med gradient-bakgrund
+           =========================================================================== */
+        .hero {
+            background: var(--gradient-hero);
+            color: var(--color-text-inverse);
+            padding: calc(80px + var(--space-3xl)) var(--space-xl) var(--space-3xl);
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero h1 {
+            color: var(--color-text-inverse);
+            margin-bottom: var(--space-lg);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto var(--space-xl);
+        }
+
+        /* CTA-knappar i hero */
+        .hero-cta {
+            display: flex;
+            gap: var(--space-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-md) var(--space-xl);
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all var(--transition-normal);
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--color-text-inverse);
+            color: var(--color-primary);
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--color-text-inverse);
+            border-color: var(--color-text-inverse);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-text-inverse);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--color-text-inverse);
+        }
+
+        /* ===========================================================================
+           HUVUDINNEHÅLL
+           Container för alla sektioner
+           =========================================================================== */
+        .main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: var(--space-3xl) var(--space-xl);
+        }
+
+        .section {
+            margin-bottom: var(--space-3xl);
+            /* Animation vid scroll - initial state */
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity var(--transition-slow), transform var(--transition-slow);
+        }
+
+        /* Aktiv state när sektionen scrollas in i viewport */
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-header {
+            margin-bottom: var(--space-xl);
+            padding-bottom: var(--space-md);
+            border-bottom: 3px solid var(--color-secondary);
+        }
+
+        .section-number {
+            display: inline-block;
+            background: var(--color-secondary);
+            color: var(--color-text-inverse);
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 2.5rem;
+            font-weight: 700;
+            margin-right: var(--space-sm);
+            font-size: 1rem;
+        }
+
+        /* ===========================================================================
+           KORT OCH RUTOR
+           Visuella containers för specifikt innehåll
+           =========================================================================== */
+        .card {
+            background: var(--gradient-card);
+            border-radius: 12px;
+            padding: var(--space-xl);
+            margin-bottom: var(--space-lg);
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .card h4 {
+            color: var(--color-secondary);
+            margin-bottom: var(--space-md);
+        }
+
+        /* Highlight-box för viktiga punkter */
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(39, 103, 73, 0.08) 0%, rgba(26, 54, 93, 0.08) 100%);
+            border-left: 4px solid var(--color-secondary);
+            padding: var(--space-lg);
+            border-radius: 0 8px 8px 0;
+            margin: var(--space-lg) 0;
+        }
+
+        .highlight-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Varningsruta */
+        .warning-box {
+            background: linear-gradient(135deg, rgba(192, 86, 33, 0.08) 0%, rgba(192, 86, 33, 0.04) 100%);
+            border-left: 4px solid var(--color-accent);
+            padding: var(--space-lg);
+            border-radius: 0 8px 8px 0;
+            margin: var(--space-lg) 0;
+        }
+
+        /* ===========================================================================
+           PROMPT-EXEMPEL
+           Speciell styling för kodexempel och prompter
+           =========================================================================== */
+        .prompt-example {
+            background: var(--color-bg-dark);
+            color: var(--color-text-inverse);
+            border-radius: 8px;
+            padding: var(--space-lg);
+            margin: var(--space-lg) 0;
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+            font-size: 0.9375rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .prompt-example::before {
+            content: 'PROMPT';
+            position: absolute;
+            top: var(--space-sm);
+            right: var(--space-md);
+            font-size: 0.75rem;
+            color: var(--color-secondary);
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .prompt-example p {
+            margin-bottom: var(--space-md);
+            max-width: none;
+        }
+
+        .prompt-example p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ===========================================================================
+           LISTOR
+           Numrerade och punktlistor med custom styling
+           =========================================================================== */
+        .numbered-list {
+            counter-reset: item;
+            list-style: none;
+            padding: 0;
+        }
+
+        .numbered-list li {
+            counter-increment: item;
+            padding-left: 3rem;
+            margin-bottom: var(--space-md);
+            position: relative;
+        }
+
+        .numbered-list li::before {
+            content: counter(item);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2rem;
+            height: 2rem;
+            background: var(--color-primary);
+            color: var(--color-text-inverse);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 2rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        /* Checklistor */
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding-left: 2rem;
+            margin-bottom: var(--space-sm);
+            position: relative;
+        }
+
+        .checklist li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--color-secondary);
+            font-weight: 700;
+        }
+
+        /* ===========================================================================
+           TABELLER
+           Responsiv tabell för jämförelser
+           =========================================================================== */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--space-lg) 0;
+            background: var(--color-bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: var(--space-md);
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .comparison-table th {
+            background: var(--color-primary);
+            color: var(--color-text-inverse);
+            font-weight: 600;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(26, 54, 93, 0.03);
+        }
+
+        /* ===========================================================================
+           KÄLLFÖRTECKNING
+           Harvard-stil referenslista
+           =========================================================================== */
+        .references {
+            background: var(--color-bg-card);
+            border-radius: 12px;
+            padding: var(--space-xl);
+            margin-top: var(--space-3xl);
+            box-shadow: var(--shadow-md);
+        }
+
+        .references h3 {
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-sm);
+            border-bottom: 2px solid var(--color-primary);
+        }
+
+        .reference-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .reference-list li {
+            margin-bottom: var(--space-md);
+            padding-left: var(--space-lg);
+            text-indent: -var(--space-lg);
+            font-size: 0.9375rem;
+            line-height: 1.6;
+        }
+
+        .reference-list a {
+            word-break: break-all;
+        }
+
+        /* Kategorier inom referenser */
+        .ref-category {
+            font-weight: 600;
+            color: var(--color-secondary);
+            margin-top: var(--space-lg);
+            margin-bottom: var(--space-md);
+            font-size: 1rem;
+        }
+
+        .ref-category:first-of-type {
+            margin-top: 0;
+        }
+
+        /* ===========================================================================
+           INFO-BOX OM LÄNKFORMAT
+           Speciell sektion om tekniska detaljer kring länkar
+           =========================================================================== */
+        .link-info-box {
+            background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 1px solid #7dd3fc;
+            border-radius: 12px;
+            padding: var(--space-xl);
+            margin: var(--space-xl) 0;
+        }
+
+        .link-info-box h4 {
+            color: #0369a1;
+            margin-bottom: var(--space-md);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .link-info-box h4::before {
+            content: 'ℹ️';
+        }
+
+        .link-format-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: var(--space-md);
+            font-size: 0.9375rem;
+        }
+
+        .link-format-table th,
+        .link-format-table td {
+            padding: var(--space-sm) var(--space-md);
+            text-align: left;
+            border: 1px solid #bae6fd;
+        }
+
+        .link-format-table th {
+            background: #0284c7;
+            color: white;
+        }
+
+        .link-format-table td:first-child {
+            font-weight: 600;
+        }
+
+        .good { color: var(--color-secondary); }
+        .ok { color: #b45309; }
+        .poor { color: #dc2626; }
+
+        /* ===========================================================================
+           MODAL (POPUP)
+           Teknisk information om hur presentationen skapades
+           =========================================================================== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-xl);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-normal);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--color-bg-card);
+            border-radius: 16px;
+            max-width: 700px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-xl);
+            transform: scale(0.9) translateY(20px);
+            transition: transform var(--transition-normal);
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-header {
+            padding: var(--space-xl);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: var(--color-bg-card);
+            border-radius: 16px 16px 0 0;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--color-text-light);
+            cursor: pointer;
+            padding: var(--space-xs);
+            line-height: 1;
+            transition: color var(--transition-fast);
+        }
+
+        .modal-close:hover {
+            color: var(--color-text);
+        }
+
+        .modal-body {
+            padding: var(--space-xl);
+        }
+
+        .modal-body h4 {
+            color: var(--color-secondary);
+            margin-top: var(--space-lg);
+            margin-bottom: var(--space-sm);
+        }
+
+        .modal-body h4:first-child {
+            margin-top: 0;
+        }
+
+        .modal-body code {
+            background: rgba(26, 54, 93, 0.08);
+            padding: 0.125rem 0.375rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+        }
+
+        .modal-body pre {
+            background: var(--color-bg-dark);
+            color: var(--color-text-inverse);
+            padding: var(--space-md);
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.8125rem;
+            line-height: 1.5;
+        }
+
+        /* ===========================================================================
+           FOOTER
+           =========================================================================== */
+        .footer {
+            background: var(--color-bg-dark);
+            color: var(--color-text-inverse);
+            padding: var(--space-2xl) var(--space-xl);
+            text-align: center;
+        }
+
+        .footer p {
+            opacity: 0.8;
+            margin: 0 auto;
+            font-size: 0.9375rem;
+        }
+
+        .footer a {
+            color: #90cdf4;
+        }
+
+        /* ===========================================================================
+           RESPONSIV DESIGN
+           Media queries för olika skärmstorlekar
+           =========================================================================== */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .nav {
+                justify-content: center;
+            }
+
+            .hero {
+                padding-top: calc(120px + var(--space-xl));
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+
+            .main {
+                padding: var(--space-xl) var(--space-md);
+            }
+
+            .comparison-table {
+                font-size: 0.875rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: var(--space-sm);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav {
+                gap: var(--space-sm);
+            }
+
+            .nav a {
+                font-size: 0.875rem;
+            }
+
+            .prompt-example {
+                font-size: 0.8125rem;
+                padding: var(--space-md);
+            }
+        }
+
+        /* ===========================================================================
+           SKRIV UT STYLING
+           Optimering för utskrift
+           =========================================================================== */
+        @media print {
+            .header,
+            .hero-cta,
+            .tech-btn,
+            .modal-overlay {
+                display: none !important;
+            }
+
+            .hero {
+                background: var(--color-primary) !important;
+                padding-top: var(--space-xl) !important;
+                min-height: auto !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .section {
+                opacity: 1 !important;
+                transform: none !important;
+                page-break-inside: avoid;
+            }
+
+            .prompt-example {
+                background: #f0f0f0 !important;
+                color: #000 !important;
+                border: 1px solid #ccc;
+            }
+
+            a {
+                text-decoration: underline;
+            }
+
+            a[href]::after {
+                content: " (" attr(href) ")";
+                font-size: 0.75em;
+                color: #666;
+            }
+        }
+
+        /* ===========================================================================
+           TILLGÄNGLIGHET
+           Fokus-styling och reduced motion
+           =========================================================================== */
+        *:focus-visible {
+            outline: 3px solid var(--color-secondary);
+            outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            html {
+                scroll-behavior: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ========================================================================
+         HEADER MED NAVIGATION
+         Fast position högst upp på sidan
+         ======================================================================== -->
+    <!-- UPPDATERING 2025-12-19: Lagt till länk tillbaka till quizet (index.html) -->
+    <header class="header" role="banner">
+        <div class="header-content">
+            <a href="index.html" class="logo" title="Tillbaka till quizet">← Tillbaka till Quizet</a>
+            
+            <nav role="navigation" aria-label="Huvudnavigation">
+                <ul class="nav">
+                    <li><a href="#grunderna">Grunderna</a></li>
+                    <li><a href="#promptskrivning">Promptskrivning</a></li>
+                    <li><a href="#yttranden">Yttranden</a></li>
+                    <li><a href="#planering">Planering</a></li>
+                    <li><a href="#kallor">Källor</a></li>
+                </ul>
+            </nav>
+            
+            <!-- Knapp som öppnar teknisk modal -->
+            <button class="tech-btn" onclick="openModal()" aria-label="Öppna teknisk information">
+                <span>⚙️</span> Teknisk info
+            </button>
+        </div>
+    </header>
+
+    <!-- ========================================================================
+         HERO-SEKTION
+         Introduktion och huvudbudskap
+         ======================================================================== -->
+    <section class="hero" role="banner" aria-labelledby="hero-title">
+        <div class="hero-content">
+            <h1 id="hero-title">Att komma igång med Generativ AI</h1>
+            <p class="hero-subtitle">
+                En praktisk vägledning för tjänstemän inom samhällsbyggnad som arbetar 
+                med planprocesser, bygglov och medborgarkontakt
+            </p>
+            <!-- UPPDATERING 2025-12-19: Tog bort knapparna "Börja här" och "Se alla källor" -->
+        </div>
+    </section>
+
+    <!-- ========================================================================
+         HUVUDINNEHÅLL
+         Alla sektioner med vägledande information
+         ======================================================================== -->
+    <main class="main" role="main">
+        
+        <!-- SEKTION 1: GRUNDERNA -->
+        <section id="grunderna" class="section" aria-labelledby="section-1-title">
+            <header class="section-header">
+                <h2 id="section-1-title">
+                    <span class="section-number">1</span>
+                    Från Google-sökande till AI-dialog
+                </h2>
+            </header>
+            
+            <p>
+                De flesta av oss har vant oss vid att googla. Vi skriver några sökord, får en 
+                lista med länkar och klickar oss fram till svaret. Det fungerar utmärkt för 
+                att hitta fakta som redan finns publicerad någonstans.
+            </p>
+            
+            <p>
+                Generativ AI fungerar på ett helt annat sätt. Istället för att leta upp 
+                befintlig information <strong>skapar</strong> AI nya texter, sammanfattningar 
+                och analyser baserat på det du ger den. Det innebär att kvaliteten på det 
+                du får ut beror helt på kvaliteten på det du stoppar in.
+            </p>
+            
+            <div class="highlight-box">
+                <p>
+                    <strong>Den viktigaste skillnaden:</strong> När du googlar ställer du en fråga 
+                    och får ett svar. När du arbetar med generativ AI har du en <em>dialog</em> 
+                    där flera meddelanden bygger på varandra.
+                </p>
+            </div>
+            
+            <h3>Jämförelse: Google vs AI-dialog</h3>
+            
+            <table class="comparison-table" role="table" aria-label="Jämförelse mellan Google-sökning och AI-dialog">
+                <thead>
+                    <tr>
+                        <th scope="col">Google-tänkande</th>
+                        <th scope="col">AI-dialog</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>"Vad säger PBL om detaljplaner?"</td>
+                        <td>"Jag arbetar som planhandläggare i en mindre kommun. Vi tar fram en detaljplan för ett bostadsområde nära kusten med riksintresse för naturvård. Vilka särskilda hänsyn behöver vi ta?"</td>
+                    </tr>
+                    <tr>
+                        <td>Ett sökord → En lista med länkar</td>
+                        <td>Kontext + Fråga → Anpassat svar → Följdfråga → Förfinat svar</td>
+                    </tr>
+                    <tr>
+                        <td>Du söker bland befintlig information</td>
+                        <td>AI skapar nytt innehåll baserat på din situation</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Ett exempel på AI-dialog</h3>
+            
+            <div class="prompt-example">
+                <p><strong>Första meddelandet:</strong></p>
+                <p>"Jag arbetar som planhandläggare i en mindre svensk kommun. Vi tar just nu fram en ny detaljplan för ett bostadsområde nära kusten. Området omfattas av riksintresse för naturvård. Kan du förklara vilka särskilda hänsyn vi behöver ta enligt PBL?"</p>
+                
+                <p><strong>Andra meddelandet:</strong></p>
+                <p>"Tack. Nu vill jag att du fördjupar resonemangen kring avvägningen mellan bostadsbehovet och riksintresset. Hur har andra kommuner i liknande situationer argumenterat i sina planbeskrivningar?"</p>
+                
+                <p><strong>Tredje meddelandet:</strong></p>
+                <p>"Kan du ge mig ett konkret textförslag till planbeskrivningen som jag kan utgå ifrån?"</p>
+            </div>
+            
+            <p>
+                Denna dialog kallas för "promptande" – du skriver prompter (meddelanden) till AI:n. 
+                Att bli bra på att prompta handlar om att bli bra på att förklara vad du behöver, 
+                ge relevant bakgrund och ställa följdfrågor.
+            </p>
+            
+            <div class="warning-box">
+                <p>
+                    <strong>Viktigt att avsluta varje prompt med:</strong> "Fråga om något är oklart!"
+                </p>
+                <p>
+                    Genom att avsluta så ger du AI:n möjlighet att ställa motfrågor om din 
+                    förfrågan är otydlig. Detta leder ofta till bättre resultat.
+                </p>
+                <p>
+                    En annan bra avslutningsfras: "Analysera vilka olika perspektiv ovanstående 
+                    kan analyseras ur" – för att tydliggöra att frågeställningen kan belysas 
+                    från flera vinklar.
+                </p>
+            </div>
+        </section>
+
+        <!-- SEKTION 2: PROMPTSKRIVNING -->
+        <section id="promptskrivning" class="section" aria-labelledby="section-2-title">
+            <header class="section-header">
+                <h2 id="section-2-title">
+                    <span class="section-number">2</span>
+                    Så skriver du en bra prompt
+                </h2>
+            </header>
+            
+            <p>
+                En bra prompt innehåller fyra delar: <strong>sammanhang</strong>, 
+                <strong>uppgift</strong>, <strong>format</strong> och <strong>avgränsningar</strong>.
+            </p>
+            
+            <div class="card">
+                <h4>1. Sammanhang</h4>
+                <p>
+                    Berätta vem du är och vilken situation du befinner dig i. AI:n vet ingenting 
+                    om dig från början. Om du skriver "sammanfatta yttrandena" utan förklaring 
+                    blir resultatet generiskt. Men om du skriver "Jag är planhandläggare i 
+                    Simrishamns kommun och arbetar med detaljplan för Kivik 3:15. Vi har fått 
+                    in 47 yttranden under samrådet" – då kan AI:n anpassa sitt svar.
+                </p>
+            </div>
+            
+            <div class="card">
+                <h4>2. Uppgift</h4>
+                <p>
+                    Var specifik om vad du vill att AI:n ska göra. "Hjälp mig med yttrandena" 
+                    är vagt. "Kategorisera yttrandena efter ämnesområde och sammanfatta de 
+                    tre vanligaste invändningarna" är konkret.
+                </p>
+            </div>
+            
+            <div class="card">
+                <h4>3. Format</h4>
+                <p>
+                    Specificera hur du vill ha resultatet. Vill du ha en löpande text, en tabell, 
+                    en punktlista? Hur långt ska svaret vara? Om du inte specificerar väljer 
+                    AI:n själv – och det blir sällan precis vad du behöver.
+                </p>
+            </div>
+            
+            <div class="card">
+                <h4>4. Avgränsningar</h4>
+                <p>
+                    Ange villkor och begränsningar. Till exempel: "Fokusera endast på yttranden 
+                    som rör trafikfrågor" eller "Utgå från att kommunen har begränsade resurser 
+                    för omfattande utredningar".
+                </p>
+            </div>
+            
+            <h3>Komplett prompt-exempel</h3>
+            
+            <div class="prompt-example">
+                <p>"Jag är planhandläggare i en svensk kommun och arbetar med en detaljplan för ett nytt bostadsområde. Under samrådet har vi fått in yttranden från privatpersoner, föreningar och myndigheter. Jag kommer nu att klistra in alla yttranden.</p>
+                
+                <p>Din uppgift är att:</p>
+                <p>1. Kategorisera yttrandena efter ämnesområde (t.ex. trafik, miljö, buller, kulturmiljö)<br>
+                2. Sammanfatta de viktigaste synpunkterna inom varje kategori<br>
+                3. Identifiera vilka synpunkter som kommer från myndigheter respektive privatpersoner<br>
+                4. Flagga synpunkter som kräver särskild utredning enligt PBL</p>
+                
+                <p>Presentera resultatet som en strukturerad sammanfattning som jag kan använda som underlag till samrådsredogörelsen. Använd en saklig och formell ton.</p>
+                
+                <p>Fråga om något är oklart!"</p>
+            </div>
+            
+            <div class="highlight-box">
+                <p>
+                    <strong>En viktig princip:</strong> Behandla aldrig första svaret som färdigt.
+                </p>
+                <p>
+                    AI:n gör sitt bästa utifrån det du skrivit, men den träffar sällan helt rätt 
+                    på första försöket. Läs svaret kritiskt och ställ följdfrågor: "Kan du utveckla 
+                    punkten om trafik mer?" eller "Du missade att nämna Länsstyrelsens yttrande 
+                    om strandskydd".
+                </p>
+            </div>
+        </section>
+
+        <!-- SEKTION 3: SAMMANSTÄLLA YTTRANDEN -->
+        <section id="yttranden" class="section" aria-labelledby="section-3-title">
+            <header class="section-header">
+                <h2 id="section-3-title">
+                    <span class="section-number">3</span>
+                    Sammanställa yttranden i planprocessen
+                </h2>
+            </header>
+            
+            <p>
+                Att sammanställa yttranden från samråd och granskning är tidskrävande arbete. 
+                Ni får kanske in tiotals eller hundratals yttranden som ska läsas, kategoriseras, 
+                sammanfattas och bemötas. Här kan AI bli ett kraftfullt verktyg – men det kräver 
+                rätt upplägg.
+            </p>
+            
+            <h3>Steg-för-steg-guide</h3>
+            
+            <ol class="numbered-list">
+                <li>
+                    <strong>Förbered materialet</strong><br>
+                    Samla alla yttranden i ett dokument. Markera om möjligt vem avsändaren är 
+                    (privatperson, förening, myndighet, företag) redan från början.
+                </li>
+                <li>
+                    <strong>Ge AI:n nödvändig bakgrund</strong><br>
+                    Beskriv vad detaljplanen handlar om, vilka de känsliga frågorna är, och 
+                    vad du förväntar dig att yttrandena tar upp.
+                </li>
+                <li>
+                    <strong>Ge exempel på tidigare arbete</strong><br>
+                    Om du kan ge AI:n ett exempel på en tidigare samrådsredogörelse ni gjort 
+                    lär sig AI:n ert sätt att arbeta och kan efterlikna er stil.
+                </li>
+                <li>
+                    <strong>Var tydlig med vad du vill ha ut</strong><br>
+                    Specificera kategorier, detaljeringsgrad och önskad struktur.
+                </li>
+                <li>
+                    <strong>Ge AI:n relevant regelverk</strong><br>
+                    Hänvisa till Plan- och bygglagen och Boverkets vägledningar. Se avsnittet 
+                    om länkformat nedan.
+                </li>
+                <li>
+                    <strong>Granska och förfina</strong><br>
+                    Läs resultatet kritiskt. Har viktiga synpunkter missats? Ge feedback och 
+                    be AI:n justera.
+                </li>
+            </ol>
+            
+            <div class="highlight-box">
+                <p>
+                    <strong>Lägg till ert lokala perspektiv!</strong>
+                </p>
+                <p>
+                    Du kan skriva: "Boverkets vägledning utgår ofta från större kommuner. Vi är 
+                    en mindre kommun med begränsade resurser, så ta hänsyn till det i dina förslag."
+                </p>
+                <p>
+                    På så sätt får AI:n både den formella informationen från myndigheten och 
+                    ert lokala perspektiv.
+                </p>
+            </div>
+            
+            <div class="warning-box">
+                <p>
+                    <strong>Kom ihåg:</strong> AI:n är ett verktyg som hjälper dig arbeta snabbare 
+                    och mer strukturerat. Den ersätter inte din professionella bedömning. Du måste 
+                    alltid kvalitetssäkra resultatet innan det används i tjänsten.
+                </p>
+            </div>
+        </section>
+
+        <!-- SEKTION 4: OMRÅDESPLANERING -->
+        <section id="planering" class="section" aria-labelledby="section-4-title">
+            <header class="section-header">
+                <h2 id="section-4-title">
+                    <span class="section-number">4</span>
+                    Idéer och illustrationer för områdesplanering
+                </h2>
+            </header>
+            
+            <p>
+                Generativ AI kan användas i ett tidigare skede av planeringsprocessen – när ni 
+                behöver utforska olika möjligheter för hur ett område kan utvecklas. Här fungerar 
+                AI:n som en <em>tankepart</em> som kan generera idéer, peka på konflikter och 
+                skapa underlag för diskussion.
+            </p>
+            
+            <h3>Att använda AI som tankepart</h3>
+            
+            <p>
+                Tänk dig att ni ska börja planera ett nytt område. Det finns olika förutsättningar 
+                att ta hänsyn till: kanske ett riksintresse, ett vattenskyddsområde, skyddsavstånd 
+                till en väg för farligt gods, eller höga naturvärden.
+            </p>
+            
+            <div class="prompt-example">
+                <p>"Vi planerar utveckling av ett område i vår kommun med följande förutsättningar:</p>
+                <p>• Området är cirka 5 hektar<br>
+                • Det gränsar till ett vattenskyddsområde i norr<br>
+                • En väg för farligt gods passerar 150 meter österut<br>
+                • I sydvästra delen finns dokumenterade höga naturvärden (äldre lövskog)<br>
+                • Kommunen vill undersöka möjligheten till bostadsbebyggelse</p>
+                
+                <p>Föreslå tre olika principer för hur området skulle kunna disponeras, med hänsyn till dessa restriktioner. För varje princip, beskriv fördelar, nackdelar och vilka utredningar som troligen skulle krävas.</p>
+                
+                <p>Analysera vilka olika perspektiv ovanstående kan analyseras ur.</p>
+                
+                <p>Fråga om något är oklart!"</p>
+            </div>
+            
+            <h3>Att generera illustrationer</h3>
+            
+            <p>
+                Om ni har tillgång till AI-verktyg som kan skapa bilder (Copilot kan göra detta) 
+                kan ni be om visuella illustrationer. Dessa ska ses som <em>underlag för diskussion</em>, 
+                inte färdiga förslag.
+            </p>
+            
+            <div class="card">
+                <h4>Exempel på bildprompt</h4>
+                <p>
+                    "Skapa en konceptbild som visar hur ett bostadsområde med småhus skulle 
+                    kunna se ut om det anpassas till en kuperad terräng med bevarad naturmark 
+                    mellan husen. Stilen ska vara skissartad och konceptuell."
+                </p>
+            </div>
+            
+            <h3>Att jämföra med andra kommuner</h3>
+            
+            <p>
+                AI har tillgång till information om hur andra kommuner arbetat med liknande 
+                frågor. Ni kan be AI:n söka efter och sammanfatta exempel:
+            </p>
+            
+            <div class="prompt-example">
+                <p>"Hur har andra mindre kommuner i Skåne hanterat avvägningen mellan bostadsbyggande och strandskydd? Ge mig tre konkreta exempel med hänvisning till källor."</p>
+                
+                <p>"Vi brukar titta på hur Ystad kommun arbetar. Finns det exempel på hur de hanterat liknande plansituationer?"</p>
+            </div>
+        </section>
+
+        <!-- SEKTION: LÄNKFORMAT -->
+        <section class="section" aria-labelledby="link-info-title">
+            <div class="link-info-box">
+                <h4 id="link-info-title">Om länkformat och hur AI hanterar källor</h4>
+                
+                <p>
+                    En viktig praktisk fråga är vilka typer av länkar som fungerar bäst när du 
+                    ger AI:n källor att arbeta med. Här är en sammanfattning baserad på praktisk 
+                    erfarenhet:
+                </p>
+                
+                <table class="link-format-table" role="table" aria-label="Hur AI hanterar olika länkformat">
+                    <thead>
+                        <tr>
+                            <th scope="col">Format</th>
+                            <th scope="col">Fungerar</th>
+                            <th scope="col">Kommentar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>HTML-sidor</td>
+                            <td class="good">Utmärkt</td>
+                            <td>AI kan läsa och analysera innehållet direkt. Bästa alternativet.</td>
+                        </tr>
+                        <tr>
+                            <td>lagen.nu-länkar</td>
+                            <td class="good">Utmärkt</td>
+                            <td>Strukturerad lagtext som är lätt att tolka.</td>
+                        </tr>
+                        <tr>
+                            <td>riksdagen.se</td>
+                            <td class="good">Bra</td>
+                            <td>Officiella lagtexter, kan vara långa.</td>
+                        </tr>
+                        <tr>
+                            <td>PDF-dokument</td>
+                            <td class="ok">Varierande</td>
+                            <td>Fungerar om de laddas upp. Direktlänkar till PDF kan vara svårare.</td>
+                        </tr>
+                        <tr>
+                            <td>Inloggningsskyddade sidor</td>
+                            <td class="poor">Fungerar ej</td>
+                            <td>AI kan inte logga in på skyddade system.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <p style="margin-top: var(--space-md);">
+                    <strong>Tips:</strong> När du ger AI:n en länk, beskriv även kort vad länken 
+                    innehåller och vad du vill att AI:n ska fokusera på. Till exempel: "Här är 
+                    länken till PBL kapitel 5 om detaljplaner. Fokusera särskilt på bestämmelserna 
+                    om samråd."
+                </p>
+            </div>
+        </section>
+
+        <!-- SEKTION: SAMMANFATTNING -->
+        <section class="section" aria-labelledby="summary-title">
+            <header class="section-header">
+                <h2 id="summary-title">
+                    <span class="section-number">✓</span>
+                    Sammanfattning: Börja här
+                </h2>
+            </header>
+            
+            <p>
+                Om du vill komma igång redan i morgon, börja med detta:
+            </p>
+            
+            <ul class="checklist">
+                <li>Välj ett konkret ärende du arbetar med just nu</li>
+                <li>Öppna Copilot och skriv en prompt enligt principerna ovan</li>
+                <li>Ge sammanhang, beskriv uppgiften, specificera formatet</li>
+                <li>Avsluta med "Fråga om något är oklart!"</li>
+                <li>Läs svaret kritiskt och ställ följdfrågor</li>
+                <li>Upprepa tills du har något användbart</li>
+            </ul>
+            
+            <div class="highlight-box">
+                <p>
+                    <strong>Det viktigaste att ta med sig:</strong>
+                </p>
+                <p>
+                    Generativ AI är inte en sökmotor som ger dig färdiga svar. Det är ett verktyg 
+                    för dialog, där kvaliteten på resultatet beror på kvaliteten på samtalet. 
+                    Ju mer du övar på att prompta, desto mer nytta kommer du att ha av tekniken.
+                </p>
+            </div>
+        </section>
+
+        <!-- ====================================================================
+             KÄLLFÖRTECKNING
+             Harvard-stil referenslista
+             ==================================================================== -->
+        <section id="kallor" class="references" aria-labelledby="references-title">
+            <h3 id="references-title">Källförteckning</h3>
+            
+            <p class="ref-category">Lagar och förordningar</p>
+            <ul class="reference-list">
+                <li>
+                    SFS 2010:900. <em>Plan- och bygglag</em>. Stockholm: Socialdepartementet. 
+                    Tillgänglig: <a href="https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/plan-och-bygglag-2010900_sfs-2010-900/" target="_blank" rel="noopener">https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/plan-och-bygglag-2010900_sfs-2010-900/</a> [Hämtad 2025-12-19]
+                </li>
+                <li>
+                    SFS 2010:900. <em>Plan- och bygglag</em> [Alternativ källa]. lagen.nu. 
+                    Tillgänglig: <a href="https://lagen.nu/2010:900" target="_blank" rel="noopener">https://lagen.nu/2010:900</a> [Hämtad 2025-12-19]
+                </li>
+            </ul>
+            
+            <p class="ref-category">Myndighetspublikationer och vägledningar</p>
+            <ul class="reference-list">
+                <li>
+                    Boverket (2025). <em>PBL kunskapsbanken – en handbok om plan- och bygglagen</em>. 
+                    Tillgänglig: <a href="https://www.boverket.se/sv/PBL-kunskapsbanken/" target="_blank" rel="noopener">https://www.boverket.se/sv/PBL-kunskapsbanken/</a> [Hämtad 2025-12-19]
+                </li>
+                <li>
+                    Boverket (2025). <em>Samråd vid standard och utökat förfarande</em>. 
+                    Tillgänglig: <a href="https://www.boverket.se/sv/PBL-kunskapsbanken/planering/detaljplan/detaljplaneprocessen/samrad/" target="_blank" rel="noopener">https://www.boverket.se/sv/PBL-kunskapsbanken/planering/detaljplan/detaljplaneprocessen/samrad/</a> [Hämtad 2025-12-19]
+                </li>
+                <li>
+                    Myndigheten för digital förvaltning & Integritetsskyddsmyndigheten (2025). 
+                    <em>Riktlinjer för generativ AI inom offentlig förvaltning</em>. 
+                    Tillgänglig: <a href="https://www.digg.se/ai-for-offentlig-forvaltning/riktlinjer-for-generativ-ai" target="_blank" rel="noopener">https://www.digg.se/ai-for-offentlig-forvaltning/riktlinjer-for-generativ-ai</a> [Hämtad 2025-12-19]
+                </li>
+                <li>
+                    Regeringskansliet (2025). <em>Regeringen har tagit emot nationella riktlinjer för generativ AI</em>. 
+                    Pressmeddelande 2025-01-21. 
+                    Tillgänglig: <a href="https://www.regeringen.se/pressmeddelanden/2025/01/regeringen-har-tagit-emot-nationella-riktlinjer-for-generativ-ai/" target="_blank" rel="noopener">https://www.regeringen.se/pressmeddelanden/2025/01/regeringen-har-tagit-emot-nationella-riktlinjer-for-generativ-ai/</a> [Hämtad 2025-12-19]
+                </li>
+                <li>
+                    Regeringskansliet (2024). <em>Ökad användning av generativ AI inom offentlig sektor</em>. 
+                    Pressmeddelande 2024-07-04. 
+                    Tillgänglig: <a href="https://www.regeringen.se/pressmeddelanden/2024/07/okad-anvandning-av-generativ-ai-inom-offentlig-sektor/" target="_blank" rel="noopener">https://www.regeringen.se/pressmeddelanden/2024/07/okad-anvandning-av-generativ-ai-inom-offentlig-sektor/</a> [Hämtad 2025-12-19]
+                </li>
+            </ul>
+            
+            <p class="ref-category">AI och prompt engineering</p>
+            <ul class="reference-list">
+                <li>
+                    AI Sweden (2025). <em>En gemensam digital assistent för offentlig sektor</em>. 
+                    Tillgänglig: <a href="https://www.ai.se/sv/projekt/en-gemensam-digital-assistent-offentlig-sektor" target="_blank" rel="noopener">https://www.ai.se/sv/projekt/en-gemensam-digital-assistent-offentlig-sektor</a> [Hämtad 2025-12-19]
+                </li>
+                <li>
+                    Anthropic (2025). <em>Prompt engineering best practices</em>. 
+                    Tillgänglig: <a href="https://claude.com/blog/best-practices-for-prompt-engineering" target="_blank" rel="noopener">https://claude.com/blog/best-practices-for-prompt-engineering</a> [Hämtad 2025-12-19]
+                </li>
+                <li>
+                    DAIR.AI (2025). <em>Prompt Engineering Guide</em>. 
+                    Tillgänglig: <a href="https://www.promptingguide.ai/" target="_blank" rel="noopener">https://www.promptingguide.ai/</a> [Hämtad 2025-12-19]
+                </li>
+                <li>
+                    MIT Sloan Teaching & Learning Technologies (2025). <em>Effective Prompts for AI: The Essentials</em>. 
+                    Tillgänglig: <a href="https://mitsloanedtech.mit.edu/ai/basics/effective-prompts/" target="_blank" rel="noopener">https://mitsloanedtech.mit.edu/ai/basics/effective-prompts/</a> [Hämtad 2025-12-19]
+                </li>
+                <li>
+                    OpenAI (2025). <em>Prompt engineering</em>. 
+                    Tillgänglig: <a href="https://platform.openai.com/docs/guides/prompt-engineering" target="_blank" rel="noopener">https://platform.openai.com/docs/guides/prompt-engineering</a> [Hämtad 2025-12-19]
+                </li>
+            </ul>
+            
+            <p class="ref-category">Övrigt</p>
+            <ul class="reference-list">
+                <li>
+                    Suntarbetsliv (2025). <em>AI i offentlig sektor – mer tid för människan</em>. 
+                    Tillgänglig: <a href="https://www.suntarbetsliv.se/rapporterat/ai-i-offentlig-sektor-mer-tid-for-manniskan/" target="_blank" rel="noopener">https://www.suntarbetsliv.se/rapporterat/ai-i-offentlig-sektor-mer-tid-for-manniskan/</a> [Hämtad 2025-12-19]
+                </li>
+                <li>
+                    Utveckling Skåne (2025). <em>SveaGPT för skånska kommuner</em>. 
+                    Tillgänglig: <a href="https://utveckling.skane.se/soka-stod/bidrag-att-soka/sveagpt-for-skanska-kommuner/" target="_blank" rel="noopener">https://utveckling.skane.se/soka-stod/bidrag-att-soka/sveagpt-for-skanska-kommuner/</a> [Hämtad 2025-12-19]
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <!-- ========================================================================
+         FOOTER
+         ======================================================================== -->
+    <footer class="footer" role="contentinfo">
+        <p>
+            Skapad av <a href="https://controllerutangranser.wordpress.com" target="_blank" rel="noopener">Kent Lundgren, Controller utan gränser</a> 
+            med AI-assistans från Claude (Anthropic) • December 2025
+        </p>
+    </footer>
+
+    <!-- ========================================================================
+         MODAL: TEKNISK INFORMATION
+         Popup som beskriver tekniken bakom presentationen
+         ======================================================================== -->
+    <div class="modal-overlay" id="techModal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modal-title">⚙️ Teknisk information</h3>
+                <button class="modal-close" onclick="closeModal()" aria-label="Stäng modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h4>Om denna presentation</h4>
+                <p>
+                    Presentationen är skapad med ren HTML, CSS och JavaScript utan externa 
+                    ramverk eller bibliotek. Detta säkerställer maximal portabilitet och 
+                    att filen fungerar i alla moderna webbläsare.
+                </p>
+                
+                <h4>Tekniker som används</h4>
+                <ul>
+                    <li><strong>CSS Custom Properties:</strong> Centraliserad färg- och typografihantering</li>
+                    <li><strong>CSS Grid & Flexbox:</strong> Responsiv layout</li>
+                    <li><strong>Intersection Observer API:</strong> Animerade sektioner vid scroll</li>
+                    <li><strong>Semantisk HTML5:</strong> Tillgänglighetsanpassad struktur</li>
+                    <li><strong>ARIA-attribut:</strong> Förbättrad skärmläsarkompatibilitet</li>
+                </ul>
+                
+                <h4>Hur länkar hanteras</h4>
+                <p>
+                    Generativa AI-modeller som Claude kan läsa och analysera webbsidor direkt 
+                    när de ges en URL. Följande format fungerar bäst:
+                </p>
+                <ul>
+                    <li><strong>HTML-sidor</strong> – AI kan tolka strukturen och innehållet</li>
+                    <li><strong>Strukturerad lagtext</strong> (t.ex. lagen.nu) – Tydlig hierarki</li>
+                    <li><strong>Myndighetssidor</strong> – Pålitlig information</li>
+                </ul>
+                <p>
+                    PDF-filer fungerar bäst om de laddas upp direkt snarare än länkas. 
+                    Inloggningsskyddade sidor kan inte läsas av AI.
+                </p>
+                
+                <h4>Källkod</h4>
+                <p>
+                    Hela presentationen finns i en enda HTML-fil. CSS och JavaScript är 
+                    inbäddade för enkel distribution. Filen kan öppnas direkt i en webbläsare 
+                    eller publiceras på valfri webbserver.
+                </p>
+                
+                <h4>Typsnitt</h4>
+                <p>
+                    Presentationen använder Google Fonts:
+                </p>
+                <ul>
+                    <li><strong>Crimson Pro</strong> – Elegant serif för rubriker</li>
+                    <li><strong>Source Sans 3</strong> – Lättläst sans-serif för brödtext</li>
+                </ul>
+                
+                <h4>Skapad med</h4>
+                <p>
+                    Denna presentation skapades i dialog mellan Kent Lundgren och Claude 
+                    (Anthropic). Texten baseras på praktisk erfarenhet av att använda 
+                    generativ AI i kommunal verksamhet.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================================
+         JAVASCRIPT
+         Interaktivitet för modal och scroll-animationer
+         ======================================================================== -->
+    <script>
+        // ===========================================================================
+        // MODAL-FUNKTIONALITET
+        // Hanterar öppning och stängning av teknisk information-popup
+        // ===========================================================================
+        
+        /**
+         * Öppnar modalen genom att lägga till 'active'-klass
+         * Sätter även fokus på modalen för tillgänglighet
+         */
+        function openModal() {
+            const modal = document.getElementById('techModal');
+            modal.classList.add('active');
+            
+            // Förhindra scroll på bakgrunden när modal är öppen
+            document.body.style.overflow = 'hidden';
+            
+            // Sätt fokus på stäng-knappen för tangentbordsnavigation
+            modal.querySelector('.modal-close').focus();
+        }
+        
+        /**
+         * Stänger modalen genom att ta bort 'active'-klass
+         */
+        function closeModal() {
+            const modal = document.getElementById('techModal');
+            modal.classList.remove('active');
+            
+            // Återställ scroll på body
+            document.body.style.overflow = '';
+        }
+        
+        // Stäng modal när användaren klickar utanför modalinnehållet
+        document.getElementById('techModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+        
+        // Stäng modal med Escape-tangenten
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // ===========================================================================
+        // SCROLL-ANIMATIONER
+        // Använder Intersection Observer API för att animera sektioner när de
+        // scrollas in i viewport
+        // ===========================================================================
+        
+        /**
+         * Skapar en Intersection Observer som lägger till 'visible'-klass
+         * på sektioner när de blir synliga i viewport
+         */
+        const observerOptions = {
+            root: null,           // Använd viewport som root
+            rootMargin: '0px',    // Ingen marginal
+            threshold: 0.1        // Trigga när 10% av elementet är synligt
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Lägg till 'visible'-klass för att trigga CSS-animation
+                    entry.target.classList.add('visible');
+                    
+                    // Sluta observera elementet efter att det blivit synligt
+                    // (animation sker bara en gång)
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        // Observera alla sektioner när DOM:en är laddad
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+
+        // ===========================================================================
+        // SMOOTH SCROLL FÖR NAVIGATION
+        // Förbättrad scroll-hantering för äldre webbläsare
+        // ===========================================================================
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    // Beräkna offset för fixed header
+                    const headerHeight = document.querySelector('.header').offsetHeight;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

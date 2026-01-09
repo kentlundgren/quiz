@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fredagsquiz - Simrishamns kommun</title>
+    <style>
+        /* 
+         * GRUNDLÄGGANDE STYLING
+         * Reset och grundläggande inställningar för hela sidan
+         */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 
+         * FÄRGSCHEMA baserat på Simrishamns kommuns vapen:
+         * - Blått (primär): #0066B3
+         * - Guld/gul (sekundär): #FFB81C
+         * - Röd (accent): #E3000F
+         * - Ljusblå bakgrund: #E6F2FF
+         */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #E6F2FF 0%, #FFE6E6 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* 
+         * CONTAINER
+         * Huvudcontainer som håller allt innehåll centrerat
+         */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 
+         * HEADER SEKTION
+         * Innehåller logotyp och huvudrubrik
+         */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 102, 179, 0.2);
+            margin-bottom: 40px;
+            /* Animation för header när sidan laddas */
+            animation: slideDown 0.6s ease-out;
+        }
+
+        /* Animation för att header glider ner från toppen */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Logotyp styling - visas som en cirkel med kommunens färger */
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #0066B3, #FFB81C);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+            box-shadow: 0 5px 20px rgba(0, 102, 179, 0.3);
+            /* Hover-effekt: logotypen roterar lätt */
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: rotate(5deg) scale(1.05);
+        }
+
+        /* Huvudrubrik */
+        h1 {
+            color: #0066B3;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Underrubrik */
+        .subtitle {
+            color: #E3000F;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        /* 
+         * INTRODUKTIONSSEKTION
+         * Förklarar vad fredagsquizen är
+         */
+        .intro {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #FFB81C;
+            /* Animation för intro-sektion */
+            animation: fadeIn 0.8s ease-out 0.2s backwards;
+        }
+
+        /* Animation för att innehåll tonar in */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .intro h2 {
+            color: #0066B3;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .intro p {
+            color: #333;
+            line-height: 1.8;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        /* 
+         * VECKANS SPECIAL - TEMPORÄR SEKTION
+         * Används för att framhäva speciella veckor (t.ex. dubbel quiz)
+         */
+        .weekly-special {
+            background: linear-gradient(135deg, #F0F8FF 0%, #E6F2FF 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 20px rgba(0, 102, 179, 0.15);
+            border-left: 5px solid #0066B3;
+            /* Animation för special-sektion */
+            animation: fadeIn 0.8s ease-out 0.4s backwards;
+        }
+
+        .weekly-special h2 {
+            color: #0066B3;
+            margin-bottom: 20px;
+            font-size: 2em;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .weekly-special p {
+            color: #333;
+            line-height: 1.8;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+
+        .weekly-special p:last-child {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+
+        /* Styling för länkar till AI-verktyg */
+        .ai-link {
+            color: #0066B3;
+            text-decoration: none;
+            font-weight: bold;
+            border-bottom: 2px solid #FFB81C;
+            transition: all 0.3s ease;
+        }
+
+        .ai-link:hover {
+            color: #E3000F;
+            border-bottom-color: #E3000F;
+        }
+
+        /* 
+         * QUIZ-GRID
+         * Grid-layout för quiz-korten, responsiv design
+         */
+        .quiz-grid {
+            display: grid;
+            /* Skapar kolumner som automatiskt anpassar sig till skärmstorleken */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        /* 
+         * QUIZ-KORT
+         * Varje enskilt quiz representeras som ett kort
+         */
+        .quiz-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            /* Smooth transition för alla förändringar */
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+            /* Animation som gör att korten kommer in med fördröjning */
+            animation: fadeIn 0.6s ease-out backwards;
+        }
+
+        /* Varje kort får en lite olika animation-fördröjning för en cascade-effekt */
+        .quiz-card:nth-child(1) { animation-delay: 0.1s; }
+        .quiz-card:nth-child(2) { animation-delay: 0.2s; }
+        .quiz-card:nth-child(3) { animation-delay: 0.3s; }
+        .quiz-card:nth-child(4) { animation-delay: 0.4s; }
+        .quiz-card:nth-child(5) { animation-delay: 0.5s; }
+        .quiz-card:nth-child(6) { animation-delay: 0.6s; }
+        .quiz-card:nth-child(7) { animation-delay: 0.7s; }
+        .quiz-card:nth-child(8) { animation-delay: 0.8s; }
+
+        /* Dekorativt färgat hörn på varje kort */
+        .quiz-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, transparent 50%, #FFB81C 50%);
+            opacity: 0.3;
+        }
+
+        /* Hover-effekt: kortet lyfts upp och får blå ram */
+        .quiz-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 102, 179, 0.3);
+            border-color: #0066B3;
+        }
+
+        /* Speciell styling för kommande quiz (quiz 8) */
+        .quiz-card.upcoming {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        .quiz-card.upcoming:hover {
+            transform: none;
+            border-color: transparent;
+        }
+
+        /* 
+         * JULUPPEHÅLLS-KORT
+         * Speciell styling för juluppehålls-kortet med bildväxling och musik
+         * UPPDATERING 2026-01-09: Styling för juluppehålls-kort tillagt
+         */
+        .quiz-card.holiday-break {
+            background: linear-gradient(135deg, #FFF5F5 0%, #FFE6E6 100%);
+            border: 3px solid #E3000F;
+        }
+
+        .quiz-card.holiday-break:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(227, 0, 15, 0.3);
+            border-color: #FFB81C;
+        }
+
+        .holiday-image-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .holiday-image {
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .holiday-title {
+            font-size: 2em;
+            color: #E3000F;
+        }
+
+        .music-status {
+            color: #0066B3;
+            font-size: 0.9em;
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        /* 
+         * QUIZ-IKON/BILD
+         * Minimalistisk ikon som representerar quiz-temat
+         */
+        .quiz-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background: linear-gradient(135deg, #E6F2FF, #FFE6E6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .quiz-card:hover .quiz-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* Om det finns en riktig bild istället för emoji */
+        .quiz-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Quiz-nummer i stort format */
+        .quiz-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #0066B3;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Veckonummer */
+        .quiz-week {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        /* Datum */
+        .quiz-date {
+            color: #E3000F;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        /* Tema-beskrivning för varje quiz */
+        .quiz-theme {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        /* "Kommande"-badge för quiz 8 */
+        .upcoming-badge {
+            display: inline-block;
+            background: #FFB81C;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Knapp för att starta quiz */
+        .quiz-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #0066B3, #0052A3);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 102, 179, 0.3);
+        }
+
+        /* Hover-effekt för knappen */
+        .quiz-button:hover {
+            background: linear-gradient(135deg, #0052A3, #003d7a);
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 102, 179, 0.4);
+        }
+
+        /* Inaktiverad knapp för kommande quiz */
+        .quiz-button.disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .quiz-button.disabled:hover {
+            transform: none;
+        }
+
+        /* 
+         * FOOTER
+         * Information i sidfoten
+         */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-out 0.9s backwards;
+        }
+
+        footer p {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .highlight {
+            color: #0066B3;
+            font-weight: bold;
+        }
+
+        /* 
+         * RESPONSIV DESIGN
+         * Anpassningar för mindre skärmar (mobiler och surfplattor)
+         */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .subtitle {
+                font-size: 1.1em;
+            }
+
+            .intro h2 {
+                font-size: 1.5em;
+            }
+
+            .quiz-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .logo {
+                width: 100px;
+                height: 100px;
+                font-size: 40px;
+            }
+
+            .quiz-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER med logotyp och titel -->
+        <header>
+            <!-- Logotyp som visuell representation av Simrishamns kommun -->
+            <div class="logo">🏛️</div>
+            <h1>Fredagsquiz</h1>
+            <p class="subtitle">som hämtar näring från en kommun i östra skåne som har Österlen kärt...</p>
+        </header>
+
+        <!-- INTRODUKTIONSTEXT som förklarar vad fredagsquizen är -->
+        <section class="intro">
+            <h2>Lär känna verksamheten genom quiz!</h2>
+            <p>
+                Välkommen till fredagsquizen! Varje fredag sedan den 22 augusti har jag skapat ett quiz 
+                för att lära känna Simrishamns kommun och samtidigt utforska möjligheterna med generativ AI. 
+            </p>
+            <p>
+                Quizen tas fram med hjälp av 
+                <a href="https://claude.ai" target="_blank" class="ai-link">Claude 4</a> 
+                från Anthropic (för att skapa frågor och svar) och 
+                <a href="https://www.cursor.com" target="_blank" class="ai-link">Cursor</a> 
+                (för att koda programmet i HTML, CSS och JavaScript). 
+            </p>
+            <p>
+                Detta är ett roligt och lärorikt sätt att både förstå kommunens verksamhet och hålla sig 
+                uppdaterad med den snabba utvecklingen inom AI-teknologi. Varje quiz fokuserar på olika 
+                aspekter av kommunen - från kultur och historia till ekonomi och organisation!
+            </p>
+            <p>
+                Fredagsquizen är en del av mitt större arbete med att utforska generativ AI inom ekonomi och analys. 
+                På min AI-portfolio 
+                <a href="https://kentlundgren.se/program/ekonom/" target="_blank" class="ai-link">Ekonomi möter AI</a> 
+                kan du se fler projekt där jag kombinerar ekonomisk expertis med AI-verktyg för att skapa 
+                innovativa lösningar och analyser.
+            </p>
+            <p>
+                Läs mer om hur fredagsquizen skapas – från idé till färdig webbapplikation – på 
+                <a href="https://kentlundgren.se/program/quiz/00/" target="_blank" class="ai-link">Hur Fredagsquizet Skapas</a>.
+            </p>
+        </section>
+
+        <!-- QUIZ-GRID som visar alla quiz i ett rutnät -->
+        <div class="quiz-grid" id="quizGrid">
+            <!-- Quiz-korten skapas dynamiskt med JavaScript nedan -->
+        </div>
+
+        <!-- FOOTER med extra information -->
+        <footer>
+            <p><strong>💡 Tips:</strong> Klicka på ett quiz-kort för att starta!</p>
+            <p>
+                Genom att kombinera AI-verktyg som 
+                <a href="https://claude.ai" target="_blank" class="ai-link">Claude</a> och 
+                <a href="https://www.cursor.com" target="_blank" class="ai-link">Cursor</a> 
+                skapar vi en modern och interaktiv lärandemiljö. Varje quiz är unikt och hjälper 
+                till att bygga kunskap på ett engagerande sätt.
+            </p>
+            <p style="margin-top: 20px; color: #0066B3;">
+                <strong>Skapad med ❤️ för Simrishamns kommun</strong>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        /* 
+         * JAVASCRIPT-KOD
+         * Denna kod skapar quiz-korten dynamiskt baserat på data
+         */
+
+        // Quiz-data: En array med information om alla quiz
+        // Varje quiz har: nummer, vecka, datum, URL, tema-beskrivning och ikon
+        const quizData = [
+            { 
+                number: 1, 
+                week: 34, 
+                date: '22 augusti', 
+                url: 'https://kentlundgren.se/program/quiz1/',
+                theme: 'Simrishamns kultur och historia',
+                icon: '🏛️'
+            },
+            { 
+                number: 2, 
+                week: 35, 
+                date: '29 augusti', 
+                url: 'https://kentlundgren.se/program/quiz/1/',
+                theme: 'Simrishamn och Lund som studentstad',
+                icon: '🏙️',
+                image: 'https://kentlundgren.se/program/quiz/1/bild_till_quiz1.jpg'
+            },
+            { 
+                number: 3, 
+                week: 36, 
+                date: '5 september', 
+                url: 'https://kentlundgren.se/program/quiz/2/',
+                theme: 'Svenska kulturkanon',
+                icon: '🎨'
+            },
+            { 
+                number: 4, 
+                week: 37, 
+                date: '12 september', 
+                url: 'https://kentlundgren.se/program/quiz/3/',
+                theme: 'Kultur och Fritidsförvaltningens verksamhet',
+                icon: '🎭',
+                image: 'https://kentlundgren.se/program/quiz/3/Linn_Fernstrom.jpg'
+            },
+            { 
+                number: 5, 
+                week: 38, 
+                date: '19 september', 
+                url: 'https://kentlundgren.se/program/quiz/4/',
+                theme: 'S:t Nicolai kyrka och kulturkanon',
+                icon: '⛪',
+                image: 'https://kentlundgren.se/program/quiz/4/kyrka_simrishamn.jpg'
+            },
+            { 
+                number: 6, 
+                week: 39, 
+                date: '26 september', 
+                url: 'https://kentlundgren.se/program/quiz/5/',
+                theme: 'Kommunkostnader och ekonomi',
+                icon: '💰'
+            },
+            { 
+                number: 7, 
+                week: 40, 
+                date: '3 oktober', 
+                url: 'https://kentlundgren.se/program/quiz/6/',
+                theme: 'Internkontroll i kommunen',
+                icon: '📋'
+            },
+            { 
+                number: 8, 
+                week: 41, 
+                date: '10 oktober', 
+                url: 'https://kentlundgren.se/program/quiz/7/',
+                theme: 'Kultur- och fritidsnämnden - september 2025',
+                icon: '🎪'
+                // UPPDATERING 2025-10-10: Quiz 8 aktiverat - tidigare markerad som "kommande"
+            },
+            { 
+                number: 9, 
+                week: 42, 
+                date: '17 oktober', 
+                url: 'https://kentlundgren.se/program/quiz/8/',
+                theme: 'Kallbad och bastu - Från fysiologi till samhällsnytta',
+                icon: '🧊',
+                image: 'https://kentlundgren.se/program/quiz/8/aufguss.jpg'
+                // UPPDATERING 2025-10-17: Quiz 9 aktiverat - tema kallbad och bastu
+                // UPPDATERING: Bild aufguss.jpg tillagd
+            },
+            { 
+                number: 10, 
+                week: 43, 
+                date: '24 oktober', 
+                url: 'https://kentlundgren.se/program/quiz/9/',
+                theme: 'Kommunala badanläggningar - Vattenåtgång, energianvändning och kemikalier',
+                icon: '🏊',
+                image: 'https://kentlundgren.se/program/quiz/9/utomhusbad.jpg'
+                // UPPDATERING 2025-10-24: Quiz 10 aktiverat - tema kommunala badanläggningar
+                // UPPDATERING: Bild utomhusbad.jpg tillagd
+            },
+            { 
+                number: 11, 
+                week: 44, 
+                date: '31 oktober', 
+                url: 'https://kentlundgren.se/program/quiz/10/',
+                theme: 'Drift eller Investering? - Kommunal bokföring och redovisning',
+                icon: '📊',
+                image: 'https://kentlundgren.se/program/quiz/10/drift_eller_investering.jpeg'
+                // UPPDATERING 2025-10-31: Quiz 11 aktiverat - tema drift eller investering i kommunal redovisning
+                // UPPDATERING: Bild drift_eller_investering.jpeg tillagd
+            },
+            { 
+                number: 12, 
+                week: 45, 
+                date: '7 november', 
+                url: 'https://kentlundgren.se/program/quiz/11/',
+                theme: 'Budgetpropositionen 2026 - Effekter på kommuner, kultur, fritid och socialtjänst',
+                icon: '🏛️',
+                image: 'https://kentlundgren.se/program/quiz/11/budgetpropositioin2.jpg'
+                // UPPDATERING 2025-11-07: Quiz 12 aktiverat - tema budgetpropositionen 2026
+                // UPPDATERING: Bild budgetpropositioin2.jpg tillagd
+            },
+            { 
+                number: 13, 
+                week: 46, 
+                date: '14 november', 
+                url: 'https://kentlundgren.se/program/quiz/12/',
+                theme: 'Små kommuner, stora skillnader - Ekonomistyrning i Simrishamn och Tomelilla',
+                icon: '🏘️',
+                image: 'https://kentlundgren.se/program/quiz/12/Simrishamn.jpg'
+                // UPPDATERING 2025-11-14: Quiz 13 aktiverat - tema ekonomistyrning i Simrishamn och Tomelilla
+                // UPPDATERING: Bild Simrishamn.jpg tillagd
+            },
+            { 
+                number: 14, 
+                week: 47, 
+                date: '21 november', 
+                url: 'https://kentlundgren.se/program/quiz/13/',
+                theme: 'Årsbokslut och Årsredovisning - En guide för kommunalt anställda i Simrishamn',
+                icon: '📋',
+                image: 'https://kentlundgren.se/program/quiz/13/arsredovisning_2024.jpg'
+                // UPPDATERING 2025-11-21: Quiz 14 aktiverat - tema årsbokslut och årsredovisning
+                // UPPDATERING: Bild arsredovisning_2024.jpg tillagd
+            },
+            { 
+                number: '15A', 
+                week: 48, 
+                date: '28 november', 
+                url: 'https://kentlundgren.se/program/quiz/14/',
+                theme: 'Investering, Reinvestering eller Drift? - Fördjupning med fokus på reinvesteringar',
+                icon: '🔄',
+                image: 'https://kentlundgren.se/program/quiz/14/drift_reinvestering_investering1.jpg'
+                // UPPDATERING 2025-11-28: Quiz 15A aktiverat - tema investering, reinvestering och drift
+                // UPPDATERING: Bild drift_reinvestering_investering1.jpg tillagd
+                // OBS: Quiz 15A pekar på /quiz/14/ pga numreringsändring - två quiz denna vecka för att komma i fas
+            },
+            { 
+                number: '15B', 
+                week: 48, 
+                date: '28 november', 
+                url: 'https://kentlundgren.se/program/quiz/15/',
+                theme: 'Confessions of a Nordic CFO 2025 - en kritisk granskning av nordiska ekonomichefers vardag',
+                icon: '👔',
+                image: 'https://kentlundgren.se/program/quiz/15/glad_och_ledsen_ekonom1.jpg',
+                blogLink: 'https://controllerutangranser.wordpress.com/2025/11/28/confessions-of-a-nordic-cfo-2025-en-kritisk-granskning-av-nordiska-ekonomichefers-vardag/'
+                // UPPDATERING 2025-11-28: Quiz 15B aktiverat - tema CFO-undersökning
+                // UPPDATERING: Bild glad_och_ledsen_ekonom1.jpg tillagd
+                // OBS: Två quiz denna vecka (15A och 15B) för att komma i fas med URL-numreringen
+            },
+            { 
+                number: 16, 
+                week: 49, 
+                date: '5 december', 
+                url: 'https://kentlundgren.se/program/quiz/16B/',
+                theme: 'Fritidskortet möter Kulturskolan 2025',
+                icon: '🎨',
+                image: 'https://kentlundgren.se/program/quiz/16/kultur1.jpg'
+                // UPPDATERING 2025-12-05: Quiz 16 aktiverat - tema Fritidskortet möter Kulturskolan
+                // UPPDATERING: Bild kultur1.jpg tillagd
+            },
+            { 
+                number: 17, 
+                week: 50, 
+                date: '12 december', 
+                url: 'https://kentlundgren.se/program/quiz/17/',
+                theme: 'Det nya regellandskapet 2025 - Bygglov och byggregler',
+                icon: '🏗️',
+                image: 'https://kentlundgren.se/program/quiz/17/bild1.jpg'
+                // UPPDATERING 2025-12-12: Quiz 17 aktiverat - tema nya byggregler och bygglovsregler
+                // Fokus: Regeländringar som träder i kraft 1 juli 2025 (nya byggregler) och 1 december 2025 (nya PBL-regler)
+            },
+            { 
+                number: 18, 
+                week: 51, 
+                date: '19 december', 
+                url: 'https://kentlundgren.se/program/quiz/18/',
+                theme: 'Generativ AI i förvaltningen - Att komma igång med AI-verktyg',
+                icon: '🤖',
+                image: 'https://kentlundgren.se/program/quiz/18/Copilot.jpg'
+                // UPPDATERING 2025-12-19: Quiz 18 aktiverat - tema generativ AI i kommunal förvaltning
+                // Fokus: Promptskrivning, dialogprincipen, nationella riktlinjer och rättssäker AI-användning
+            },
+            { 
+                isHolidayBreak: true,
+                title: '🎄 Juluppehåll',
+                week: 'Vecka 52 och vecka 1', 
+                date: '26 december - 5 januari', 
+                theme: 'Vi tog en två veckors paus över jul',
+                images: ['tomte.jpg', 'julkort_med_tomte.jpeg'],
+                music: 'julmusik.mp3'
+                // UPPDATERING 2026-01-09: Juluppehålls-kort tillagt mellan quiz 18 och 19
+                // Visar bildväxling mellan tomte.jpg och julkort_med_tomte.jpeg var 3:e sekund
+                // Julmusik spelas när användaren klickar på bilden
+            },
+            { 
+                number: 19, 
+                week: 2, 
+                date: '9 januari', 
+                url: 'https://kentlundgren.se/program/quiz/19/',
+                theme: 'Detaljplaner & Borrby-ärendet - När kommunala planer möter lokala intressen',
+                icon: '🏗️',
+                image: 'https://kentlundgren.se/program/quiz/19/planomradet.jpg'
+                // UPPDATERING 2026-01-09: Quiz 19 aktiverat - tema detaljplaner och Borrby-ärendet
+                // Fokus: Detaljplaneprocessen, kommunalt planmonopol, granskningsprocessen och intressekonflikter
+            },
+            { 
+                number: 20, 
+                week: 3, 
+                date: '16 januari', 
+                url: '#', 
+                upcoming: true,
+                theme: 'Kommande Quiz',
+                icon: '📚'
+                // NYTT 2026-01-09: Quiz 20 tillagt som kommande quiz
+            }
+        ];
+
+        // Funktion som skapar HTML för ett quiz-kort
+        function createQuizCard(quiz) {
+            // Skapa ett div-element för kortet
+            const card = document.createElement('div');
+            
+            // SPECIALHANTERING FÖR JULUPPEHÅLLS-KORT
+            // Om detta är ett juluppehålls-kort, skapa en speciell variant med bildväxling och musik
+            if (quiz.isHolidayBreak) {
+                card.className = 'quiz-card holiday-break';
+                
+                // Skapa ett unikt ID för detta kort
+                const cardId = 'holiday-break-card';
+                card.id = cardId;
+                
+                // Bygg HTML för juluppehålls-kortet med växlande bilder
+                card.innerHTML = `
+                    <div class="holiday-image-container" title="🎵 Klicka för julmusik">
+                        <img src="${quiz.images[0]}" alt="Juluppehåll" class="quiz-image holiday-image" id="${cardId}-image">
+                    </div>
+                    <div class="quiz-number holiday-title">${quiz.title}</div>
+                    <div class="quiz-week">${quiz.week}</div>
+                    <div class="quiz-date">📅 ${quiz.date}</div>
+                    <div class="quiz-theme">${quiz.theme}</div>
+                    <div class="music-status" id="${cardId}-status">🎵 Klicka på bilden för julmusik</div>
+                `;
+                
+                // Skapa audio-element för julmusik (dolt från användaren)
+                const audio = new Audio(quiz.music);
+                audio.loop = true; // Musiken ska loopa
+                
+                let isPlaying = false;
+                let currentImageIndex = 0;
+                
+                // BILDVÄXLING: Byt bild var 3:e sekund
+                const imageElement = card.querySelector(`#${cardId}-image`);
+                const imageContainer = card.querySelector('.holiday-image-container');
+                const statusElement = card.querySelector(`#${cardId}-status`);
+                
+                setInterval(() => {
+                    currentImageIndex = (currentImageIndex + 1) % quiz.images.length;
+                    imageElement.src = quiz.images[currentImageIndex];
+                }, 3000);
+                
+                // MUSIK-TOGGLE: Klicka på bilden för att starta/stoppa musik
+                imageContainer.addEventListener('click', function(e) {
+                    e.stopPropagation(); // Förhindra att kortets klick-event aktiveras
+                    
+                    if (isPlaying) {
+                        // Stoppa musiken
+                        audio.pause();
+                        audio.currentTime = 0; // Återställ till början
+                        isPlaying = false;
+                        imageContainer.title = '🎵 Klicka för julmusik';
+                        statusElement.textContent = '🎵 Klicka på bilden för julmusik';
+                        statusElement.style.color = '#0066B3';
+                    } else {
+                        // Starta musiken
+                        audio.play();
+                        isPlaying = true;
+                        imageContainer.title = '🔇 Stoppa julmusik';
+                        statusElement.textContent = '🔇 Klicka för att stoppa musiken';
+                        statusElement.style.color = '#E3000F';
+                    }
+                });
+                
+                // Ändra muspekare för att visa att bilden är klickbar
+                imageContainer.style.cursor = 'pointer';
+                
+                return card;
+            }
+            
+            // STANDARDHANTERING FÖR VANLIGA QUIZ-KORT
+            // Lägg till CSS-klasser, inklusive 'upcoming' för kommande quiz
+            card.className = `quiz-card ${quiz.upcoming ? 'upcoming' : ''}`;
+            
+            // Bygg HTML-innehållet för kortet
+            // Om det finns en bild, visa den, annars visa ikonen
+            let imageHtml = '';
+            if (quiz.image && !quiz.upcoming) {
+                imageHtml = `<img src="${quiz.image}" alt="Quiz ${quiz.number}" class="quiz-image" onerror="this.style.display='none';">`;
+            } else {
+                imageHtml = `<div class="quiz-icon">${quiz.icon}</div>`;
+            }
+            
+            // Sätt HTML-innehållet för kortet
+            card.innerHTML = `
+                ${imageHtml}
+                <div class="quiz-number">#${quiz.number}</div>
+                <div class="quiz-week">Vecka ${quiz.week}</div>
+                <div class="quiz-date">📅 ${quiz.date}</div>
+                <div class="quiz-theme">${quiz.theme}</div>
+                ${quiz.upcoming ? '<span class="upcoming-badge">Kommande Quiz</span>' : ''}
+                <a href="${quiz.url}" 
+                   class="quiz-button ${quiz.upcoming ? 'disabled' : ''}"
+                   ${quiz.upcoming ? 'onclick="return false;"' : 'target="_blank"'}>
+                    ${quiz.upcoming ? 'Kommer snart' : 'Starta Quiz →'}
+                </a>
+            `;
+            
+            // Om det inte är ett kommande quiz, lägg till click-event för hela kortet
+            // Detta gör att användaren kan klicka var som helst på kortet för att öppna quizet
+            if (!quiz.upcoming) {
+                card.addEventListener('click', function(e) {
+                    // Om användaren inte klickade på knappen, öppna länken
+                    if (!e.target.classList.contains('quiz-button')) {
+                        window.open(quiz.url, '_blank');
+                    }
+                });
+            }
+            
+            return card;
+        }
+
+        // Funktion som laddar och visar alla quiz
+        function loadQuizzes() {
+            // Hämta container-elementet där quiz ska visas
+            const grid = document.getElementById('quizGrid');
+            
+            // Loopa igenom all quiz-data och skapa kort för varje quiz
+            quizData.forEach(quiz => {
+                const card = createQuizCard(quiz);
+                grid.appendChild(card);
+            });
+        }
+
+        // Kör funktionen när sidan har laddats klart
+        // Detta säkerställer att alla HTML-element finns innan vi försöker ändra dem
+        document.addEventListener('DOMContentLoaded', loadQuizzes);
+    </script>
+</body>
+</html>

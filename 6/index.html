@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Internkontroll i Simrishamns kommun</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Här skedde en uppdatering: All styling har flyttats till extern fil enligt dina regler -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="quiz-container" role="main">
+        <header class="quiz-header">
+            <h1 class="quiz-title">Quiz: Internkontroll i Simrishamns kommun</h1>
+            <p class="quiz-subtitle">Uppföljning 2024 och 2025</p>
+            <div class="progress-bar" aria-hidden="true">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </header>
+
+        <!-- Här skedde en uppdatering: Ny inledande text i fem sidor före quizet -->
+        <section id="introSection" class="intro-section" aria-live="polite">
+            <div class="intro-card">
+                <h2 class="intro-title" id="introPageTitle"></h2>
+                <div class="intro-body" id="introPageBody"></div>
+                <div class="intro-nav">
+                    <button class="secondary-btn" id="introPrevBtn" type="button" aria-label="Föregående" disabled>⬅️ Föregående</button>
+                    <button class="primary-btn" id="introNextBtn" type="button" aria-label="Nästa">Nästa ➡️</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Startskärm med bild och knapp för att gå vidare till quizet -->
+        <!-- Här skedde en uppdatering: Vi använder bilden intern_kontroll.jpg i stället för tidigare bild -->
+        <section id="imageSection" class="image-section" aria-labelledby="introTitle">
+            <img id="introImage" src="intern_kontroll.jpg" alt="Illustration av internkontroll" class="quiz-image">
+            <p class="image-text" id="introTitle">Internkontroll – verksamhetsrisker, beredskap och uppföljning</p>
+            <button class="continue-btn" id="continueBtn" type="button">Gå vidare till Quiz ➡️</button>
+        </section>
+
+        <!-- Själva quiz-innehållet renderas dynamiskt via JavaScript -->
+        <section id="quizContent" class="hidden" aria-live="polite"></section>
+    </main>
+
+    <!-- Här skedde en uppdatering: Lade till floating action buttons och modaler som i quiz.html -->
+    <div class="floating-buttons">
+        <button class="floating-btn tech-btn" id="techBtn" title="Teknisk beskrivning">🔧</button>
+        <button class="floating-btn prompt-btn" id="promptBtn" title="Visa prompt">📄</button>
+    </div>
+
+    <!-- Modal: Teknisk beskrivning -->
+    <div id="techModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="techTitle">
+        <div class="modal-content">
+            <span class="close" data-close="#techModal" aria-label="Stäng">&times;</span>
+            <h2 id="techTitle">🔧 Teknisk beskrivning</h2>
+            <p><strong>Struktur:</strong> HTML5 (semantisk), extern CSS och JavaScript. Återanvänd teknik från <code>quiz.html</code> men utan att ändra den filen.</p>
+            <ul>
+                <li><strong>UI:</strong> Responsivt, progressbar, startskärm med bild och knapp</li>
+                <li><strong>Tillgänglighet:</strong> ARIA-attribut på dynamiska sektioner</li>
+                <li><strong>Interaktion:</strong> Val med färgkodning (grön/röd), gul bakgrund på svar</li>
+                <li><strong>Kommentarer:</strong> "Här skedde en uppdatering..." inlagt vid ändringar</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Modal: Prompt/underlag -->
+    <div id="promptModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="promptTitle">
+        <div class="modal-content">
+            <span class="close" data-close="#promptModal" aria-label="Stäng">&times;</span>
+            <h2 id="promptTitle">📄 Underlag & Prompt</h2>
+            <p>Quiz: Internkontroll i Simrishamns kommun – Uppföljning 2024 och 2025.</p>
+            <p>Frågor och fördjupade förklaringar hämtade ur rapporterna (Harvard):</p>
+            <ul>
+                <li>Simrishamns kommun (2024) Internkontroll uppföljning 2024. Kultur- och fritidsnämnden. Rapportperiod: 2024-12-31.</li>
+                <li>Simrishamns kommun (2025) Internkontroll uppföljning 2025. Kultur- och fritidsnämnden. Rapportperiod: 2025-12-31.</li>
+            </ul>
+            <p>I löptext används in-text-citat enligt Harvard, t.ex. (Simrishamns kommun, 2025, s. 4).</p>
+        </div>
+    </div>
+
+    <!-- Här skedde en uppdatering: All JavaScript är flyttat till extern fil enligt dina regler -->
+    <script src="script.js" defer></script>
+</body>
+</html>
+

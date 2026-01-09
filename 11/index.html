@@ -1,0 +1,1886 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Budgetpropositionen 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- All styling är inbäddad i denna fil enligt användarens önskemål -->
+    <style>
+/* ============================================
+   Allmän styling och CSS-variabler
+   ============================================ */
+:root {
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --secondary-color: #64748b;
+    --success-color: #10b981;
+    --error-color: #ef4444;
+    --background: #f1f5f9;
+    --card-bg: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #475569;
+    --border-radius: 12px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+    --transition: all 0.3s ease;
+}
+
+/* Reset och grundläggande styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: var(--text-primary);
+}
+
+/* ============================================
+   Huvudcontainer för quiz
+   ============================================ */
+.quiz-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+}
+
+/* ============================================
+   Header med titel och progressbar
+   ============================================ */
+.quiz-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+    padding: 30px;
+    color: white;
+}
+
+.quiz-header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.quiz-header-text {
+    flex: 1;
+    text-align: center;
+}
+
+.quiz-title {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.quiz-subtitle {
+    font-size: 1.1rem;
+    opacity: 0.95;
+}
+
+/* Knapp för att se alla quiz */
+.all-quiz-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition);
+    white-space: nowrap;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    font-family: 'Open Sans', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.all-quiz-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Progressbar */
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--success-color);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+    width: 0%;
+}
+
+/* ============================================
+   Intro-sektion (flersidiga introduktionstexter)
+   ============================================ */
+.intro-section {
+    padding: 40px;
+    animation: fadeIn 0.5s ease;
+}
+
+.intro-card {
+    background: var(--card-bg);
+}
+
+/* Sidindikator - visar vilken sida användaren är på */
+.page-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.page-number {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    letter-spacing: 0.5px;
+}
+
+/* Visuella prickar för sidindikering */
+.page-dots {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.page-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #cbd5e1;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.page-dot:hover {
+    transform: scale(1.2);
+    background: #94a3b8;
+}
+
+.page-dot.active {
+    background: var(--primary-color);
+    width: 14px;
+    height: 14px;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+.intro-title {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.intro-body {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+    margin-bottom: 30px;
+}
+
+.intro-body h3 {
+    color: var(--primary-color);
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+}
+
+.intro-body p {
+    margin-bottom: 15px;
+}
+
+.intro-body ul, .intro-body ol {
+    margin-left: 25px;
+    margin-bottom: 15px;
+}
+
+.intro-body li {
+    margin-bottom: 10px;
+}
+
+.intro-body strong {
+    color: var(--primary-color);
+}
+
+.intro-body a {
+    color: var(--primary-color);
+    text-decoration: underline;
+    transition: var(--transition);
+}
+
+.intro-body a:hover {
+    color: var(--primary-hover);
+    text-decoration: none;
+}
+
+/* Specialstyling för info-rutor i intro-texterna */
+.info-box {
+    background: #dbeafe;
+    border-left: 4px solid var(--primary-color);
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 8px;
+}
+
+.info-box strong {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+}
+
+.warning-box {
+    background: #fef3c7;
+    border-left: 4px solid #f59e0b;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 8px;
+}
+
+.warning-box strong {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+    color: #92400e;
+}
+
+.intro-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+/* ============================================
+   Bildsektion med startbild och knapp
+   Uppdatering 2025-11-07: Växlande bilder för budgetpropositionen
+   ============================================ */
+.image-section {
+    padding: 40px;
+    text-align: center;
+    animation: fadeIn 0.5s ease;
+}
+
+.quiz-image-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    min-height: 500px;
+    margin: 0 auto 25px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    background: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quiz-image {
+    width: 100%;
+    height: auto;
+    max-height: 600px;
+    object-fit: contain;
+    display: none;
+}
+
+.quiz-image.active {
+    display: block;
+}
+
+.image-text {
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+/* ============================================
+   Knappar
+   ============================================ */
+.primary-btn, .secondary-btn, .continue-btn {
+    padding: 14px 28px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: 'Open Sans', sans-serif;
+}
+
+.primary-btn {
+    background: var(--primary-color);
+    color: white;
+    flex: 1;
+}
+
+.primary-btn:hover:not(:disabled) {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.secondary-btn {
+    background: var(--secondary-color);
+    color: white;
+    flex: 1;
+}
+
+.secondary-btn:hover:not(:disabled) {
+    background: #475569;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.continue-btn {
+    background: var(--success-color);
+    color: white;
+    padding: 16px 40px;
+    font-size: 1.2rem;
+}
+
+.continue-btn:hover {
+    background: #059669;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.primary-btn:disabled, .secondary-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ============================================
+   Quiz-innehåll (frågor och svar)
+   ============================================ */
+#quizContent {
+    padding: 40px;
+    animation: fadeIn 0.5s ease;
+}
+
+.question-container {
+    margin-bottom: 30px;
+}
+
+.question-number {
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.question-text {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.4rem;
+    color: var(--text-primary);
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+/* Svarsalternativ - Här används gul bakgrund enligt regel 18 för att visa att det är indata */
+.answers-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.answer-btn {
+    background: #fef3c7; /* Gul bakgrund för att tydligt visa att det är indata */
+    border: 2px solid #d1d5db;
+    padding: 16px 20px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    text-align: left;
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--text-primary);
+    font-family: 'Open Sans', sans-serif;
+}
+
+.answer-btn:hover:not(:disabled) {
+    border-color: var(--primary-color);
+    background: #fde68a;
+    transform: translateX(5px);
+}
+
+.answer-btn:disabled {
+    cursor: not-allowed;
+}
+
+/* Feedback efter svar - grön eller röd enligt design */
+.answer-btn.correct {
+    background: var(--success-color);
+    border-color: var(--success-color);
+    color: white;
+}
+
+.answer-btn.incorrect {
+    background: var(--error-color);
+    border-color: var(--error-color);
+    color: white;
+}
+
+/* Feedback-text under svaren */
+.feedback {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    line-height: 1.8;
+    animation: slideDown 0.3s ease;
+}
+
+.feedback.correct {
+    background: #d1fae5;
+    border-left: 4px solid var(--success-color);
+    color: #065f46;
+}
+
+.feedback.incorrect {
+    background: #fee2e2;
+    border-left: 4px solid var(--error-color);
+    color: #991b1b;
+}
+
+.feedback strong {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+/* Klickbara länkar i feedback */
+.feedback a {
+    color: var(--primary-color);
+    text-decoration: underline;
+    transition: var(--transition);
+    font-weight: 600;
+}
+
+.feedback a:hover {
+    color: var(--primary-hover);
+    text-decoration: none;
+}
+
+/* Nästa-knapp efter svar */
+.next-question-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: var(--transition);
+    font-family: 'Open Sans', sans-serif;
+}
+
+.next-question-btn:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* ============================================
+   Resultatskärm
+   ============================================ */
+.result-container {
+    text-align: center;
+    padding: 40px;
+    animation: fadeIn 0.5s ease;
+}
+
+.result-title {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.result-score {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--success-color);
+    margin: 30px 0;
+}
+
+.result-message {
+    font-size: 1.3rem;
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+/* Container för knappar på resultatskärmen */
+.result-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.restart-btn, .browse-quiz-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 16px 40px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: 'Open Sans', sans-serif;
+    text-decoration: none;
+    display: inline-block;
+    min-width: 280px;
+}
+
+.restart-btn:hover, .browse-quiz-btn:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Speciell styling för "Se alla quiz"-knappen */
+.browse-quiz-btn {
+    background: var(--success-color);
+}
+
+.browse-quiz-btn:hover {
+    background: #059669;
+}
+
+/* ============================================
+   Floating action buttons
+   ============================================ */
+.floating-buttons {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 1000;
+}
+
+.floating-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    transition: var(--transition);
+}
+
+.tech-btn {
+    background: var(--primary-color);
+}
+
+.prompt-btn {
+    background: var(--secondary-color);
+}
+
+.floating-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+}
+
+/* ============================================
+   Modaler
+   ============================================ */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    animation: fadeIn 0.3s ease;
+}
+
+.modal.show {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: var(--border-radius);
+    max-width: 700px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: var(--shadow-lg);
+    animation: slideUp 0.3s ease;
+}
+
+.modal-content h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-family: 'Fredoka', sans-serif;
+}
+
+.modal-content h3 {
+    color: var(--primary-color);
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.modal-content p, .modal-content ul, .modal-content li {
+    line-height: 1.8;
+    margin-bottom: 15px;
+    color: var(--text-primary);
+}
+
+.modal-content ul {
+    margin-left: 20px;
+}
+
+.modal-content a {
+    color: var(--primary-color);
+    text-decoration: underline;
+    transition: var(--transition);
+}
+
+.modal-content a:hover {
+    color: var(--primary-hover);
+    text-decoration: none;
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.close:hover {
+    color: var(--error-color);
+    transform: scale(1.2);
+}
+
+/* ============================================
+   Tooltip för förklaringar
+   ============================================ */
+.tooltip-term {
+    position: relative;
+    display: inline-block;
+    color: var(--primary-color);
+    font-weight: 600;
+    cursor: help;
+    border-bottom: 2px dotted var(--primary-color);
+    padding-bottom: 2px;
+}
+
+.tooltip-content {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    z-index: 1000;
+    bottom: 125%;
+    left: 0;
+    width: 450px;
+    max-width: 90vw;
+    background-color: #1e293b;
+    color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    transition: opacity 0.3s ease;
+    font-weight: normal;
+}
+
+.tooltip-content::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 20px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: #1e293b transparent transparent transparent;
+}
+
+.tooltip-term:hover .tooltip-content {
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltip-content .tooltip-source {
+    display: block;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 0.85rem;
+    font-style: italic;
+}
+
+.tooltip-content .tooltip-source a {
+    color: #60a5fa;
+    text-decoration: underline;
+}
+
+.tooltip-content .tooltip-source a:hover {
+    color: #93c5fd;
+}
+
+/* ============================================
+   Hjälpklasser
+   ============================================ */
+.hidden {
+    display: none !important;
+}
+
+/* ============================================
+   Animationer
+   ============================================ */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   Responsiv design för mindre skärmar
+   ============================================ */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .quiz-header-content {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .quiz-title {
+        font-size: 1.5rem;
+    }
+
+    .quiz-subtitle {
+        font-size: 1rem;
+    }
+
+    .all-quiz-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 14px 20px;
+    }
+
+    .intro-section, #quizContent, .image-section {
+        padding: 25px;
+    }
+
+    .intro-title {
+        font-size: 1.4rem;
+    }
+
+    .intro-body {
+        font-size: 1rem;
+    }
+
+    .question-text {
+        font-size: 1.2rem;
+    }
+
+    .answer-btn {
+        font-size: 1rem;
+        padding: 14px 16px;
+    }
+
+    .floating-buttons {
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .floating-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+
+    .modal-content {
+        padding: 25px;
+        margin: 20px;
+    }
+
+    .result-title {
+        font-size: 1.8rem;
+    }
+
+    .result-score {
+        font-size: 2.2rem;
+    }
+
+    .quiz-image-container {
+        max-width: 100%;
+        min-height: 300px;
+    }
+
+    .tooltip-content {
+        width: 300px;
+        max-width: 95vw;
+        font-size: 0.85rem;
+        padding: 12px;
+        left: 0;
+        right: auto;
+    }
+}
+    </style>
+</head>
+<body>
+    <main class="quiz-container" role="main">
+        <header class="quiz-header">
+            <div class="quiz-header-content">
+                <div class="quiz-header-text">
+                    <h1 class="quiz-title">Quiz: Budgetpropositionen 2026</h1>
+                    <p class="quiz-subtitle">Effekter på kommuner, kultur, fritid och socialtjänst</p>
+                </div>
+                <a href="https://kentlundgren.se/program/quiz/0/" class="all-quiz-btn" target="_blank" rel="noopener noreferrer" title="Se alla Fredagsquiz">
+                    📚 Alla Quiz
+                </a>
+            </div>
+            <div class="progress-bar" aria-hidden="true">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </header>
+
+        <!-- Inledande texter i flera sidor före quizet -->
+        <!-- Här presenteras grundläggande information om budgetpropositionen 2026 -->
+        <section id="introSection" class="intro-section" aria-live="polite">
+            <div class="intro-card">
+                <!-- Sidindikator med text och visuella prickar -->
+                <div class="page-indicator">
+                    <div class="page-number" id="pageNumber">Sida 1 av 5</div>
+                    <div class="page-dots" id="pageDots"></div>
+                </div>
+                <h2 class="intro-title" id="introPageTitle"></h2>
+                <div class="intro-body" id="introPageBody"></div>
+                <div class="intro-nav">
+                    <button class="secondary-btn" id="introPrevBtn" type="button" aria-label="Föregående" disabled>⬅️ Föregående</button>
+                    <button class="primary-btn" id="introNextBtn" type="button" aria-label="Nästa">Nästa ➡️</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Startskärm med växlande bilder och knapp för att gå vidare till quizet -->
+        <!-- Uppdatering 2025-11-07: Bilderna växlar automatiskt mellan budgetproposition1.jpg och budgetproposition2.jpg -->
+        <section id="imageSection" class="image-section hidden" aria-labelledby="introTitle">
+            <div class="quiz-image-container">
+                <img id="budgetImg1" src="budgetpropositioin1.jpg" alt="Budgetproposition illustration 1" class="quiz-image active">
+                <img id="budgetImg2" src="budgetpropositioin2.jpg" alt="Budgetproposition illustration 2" class="quiz-image">
+            </div>
+            <p class="image-text" id="introTitle">Budgetpropositionen 2026 - Test dina kunskaper!</p>
+            <button class="continue-btn" id="continueBtn" type="button">Gå vidare till Quiz ➡️</button>
+        </section>
+
+        <!-- Själva quiz-innehållet renderas dynamiskt via JavaScript -->
+        <section id="quizContent" class="hidden" aria-live="polite"></section>
+    </main>
+
+    <!-- Floating action buttons för teknisk info och källor -->
+    <div class="floating-buttons">
+        <button class="floating-btn tech-btn" id="techBtn" title="Teknisk beskrivning">🔧</button>
+        <button class="floating-btn prompt-btn" id="promptBtn" title="Visa källor">📄</button>
+    </div>
+
+    <!-- Modal: Teknisk beskrivning -->
+    <div id="techModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="techTitle">
+        <div class="modal-content">
+            <span class="close" data-close="#techModal" aria-label="Stäng">&times;</span>
+            <h2 id="techTitle">🔧 Teknisk beskrivning</h2>
+            
+            <h3>Skapandeprocess och AI-assistans</h3>
+            <p><strong>Utmaning med AI-verktyg:</strong> Detta quiz skapades med hjälp av flera olika generativa AI-modeller på grund av tekniska begränsningar. Under utvecklingen uppstod upprepade problem med Claude 4.5 Sonnet som kontinuerligt nådde sin maximala konversationslängd, vilket avbröt arbetsflödet.</p>
+            
+            <div class="info-box">
+                <strong>🤖 AI-modeller som användes för innehållsframtagning:</strong>
+                <ul>
+                    <li><strong>Claude 4.5 Sonnet:</strong> Primär modell för programmering och utveckling av quizstrukturen (trots upprepade avbrott vid maximal konversationslängd)</li>
+                    <li><strong>Mistral Large 2:</strong> Användes för att analysera budgetpropositionen och skapa underlag. Se konversation: <a href="https://chat.mistral.ai/chat/68321936-508a-4688-9ca5-7e2e50971da8" target="_blank" rel="noopener noreferrer">Mistral Chat</a></li>
+                    <li><strong>Grok (xAI):</strong> Alternativ källa för analys och innehållsframtagning. Se konversation: <a href="https://grok.com/c/8ef247c6-daa1-4b40-9975-36e55aaa41e8" target="_blank" rel="noopener noreferrer">Grok Conversation</a></li>
+                </ul>
+            </div>
+            
+            <p><strong>Lärdomar:</strong> Att arbeta med flera olika AI-modeller visade sig vara både utmanande och berikande. Varje modell hade sina styrkor - Claude för kodstruktur, Mistral för strukturerad analys av policy-dokument, och Grok för bred översikt. Detta illustrerar både potentialen och begränsningarna med nuvarande AI-verktyg i kunskapsskapande processer.</p>
+            
+            <h3>Teknisk implementation</h3>
+            <p><strong>Struktur:</strong> Allt i en HTML-fil (HTML5, CSS och JavaScript inbäddat). Återanvänder samma teknik från <code>quiz.html</code> men utan att ändra den filen.</p>
+            <ul>
+                <li><strong>UI:</strong> Responsivt design, progressbar, startskärm med växlande bilder</li>
+                <li><strong>Bildväxling:</strong> Automatisk växling mellan två bilder var 3:e sekund (budgetproposition1.jpg och budgetproposition2.jpg)</li>
+                <li><strong>Tillgänglighet:</strong> ARIA-attribut på dynamiska sektioner</li>
+                <li><strong>Interaktion:</strong> Val med färgkodning (grön/röd), gul bakgrund på inputfält (regel 18)</li>
+                <li><strong>Kommentarer:</strong> Tydliga kommentarer i koden om vad som händer (regel 6)</li>
+                <li><strong>Filer:</strong> Allt sammanslaget i index.html för detta quiz</li>
+                <li><strong>Tema:</strong> Blå färgtoner för att matcha statlig verksamhet och budgetproposition</li>
+            </ul>
+            <p><strong>Uppdatering 2025-11-07:</strong> Skapad ny index.html med quiz om budgetpropositionen 2026, med fokus på effekter för kommuner.</p>
+        </div>
+    </div>
+
+    <!-- Modal: Källor och underlag -->
+    <div id="promptModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="promptTitle">
+        <div class="modal-content">
+            <span class="close" data-close="#promptModal" aria-label="Stäng">&times;</span>
+            <h2 id="promptTitle">📄 Källor & Underlag</h2>
+            <p>Quiz: Budgetpropositionen 2026 - Effekter på kommuner, kultur, fritid och socialtjänst</p>
+            <p><strong>Frågor och fördjupade förklaringar baserade på:</strong></p>
+            
+            <h3>Blogg</h3>
+            <ul>
+                <li>Lundgren, K. (2025) <em>Budgetpropositionen 2026: Effekter på kultur, fritid och socialtjänst i mindre kommuner (Grok)</em>. Controller utan gränser, 7 november. Tillgänglig vid: <a href="https://controllerutangranser.wordpress.com/2025/11/07/budgetpropositionen-2026-effekter-pa-kultur-fritid-och-socialtjanst-i-mindre-kommuner-grok/" target="_blank" rel="noopener noreferrer">https://controllerutangranser.wordpress.com/2025/11/07/budgetpropositionen-2026-effekter-pa-kultur-fritid-och-socialtjanst-i-mindre-kommuner-grok/</a> (Hämtad: 7 november 2025).</li>
+                <li>Lundgren, K. (2025) <em>Budgetpropositionen 2026: Effekter på kultur, fritid och socialtjänst i mindre kommuner (Mistral)</em>. Controller utan gränser, 7 november. Tillgänglig vid: <a href="https://controllerutangranser.wordpress.com/2025/11/07/budgetpropositionen-2026-effekter-pa-kultur-fritid-och-socialtjanst-i-mindre-kommuner-mistral/" target="_blank" rel="noopener noreferrer">https://controllerutangranser.wordpress.com/2025/11/07/budgetpropositionen-2026-effekter-pa-kultur-fritid-och-socialtjanst-i-mindre-kommuner-mistral/</a> (Hämtad: 7 november 2025).</li>
+            </ul>
+            
+            <h3>Myndigheter och organisationer</h3>
+            <ul>
+                <li>Regeringen (2025) <em>Budgetpropositionen för 2026</em>. Proposition 2025/26:1. Stockholm: Regeringskansliet. Tillgänglig vid: <a href="https://www.regeringen.se/rattsliga-dokument/proposition/2025/09/2025261/" target="_blank" rel="noopener noreferrer">https://www.regeringen.se/rattsliga-dokument/proposition/2025/09/2025261/</a> (Hämtad: 7 november 2025).</li>
+                <li>Sveriges Kommuner och Regioner (SKR) (2025) <em>Cirkulär 25:42 - Budgetpropositionen för 2026 samt höständringsbudget för 2025</em>. Tillgänglig vid: <a href="https://extra.skr.se/skr/tjanster/cirkular/cirkular/2025/cirkular2542budgetpropositionenfor2026samthostandringsbudgetfor2025.92402.html" target="_blank" rel="noopener noreferrer">https://extra.skr.se/skr/tjanster/cirkular/cirkular/2025/cirkular2542budgetpropositionenfor2026samthostandringsbudgetfor2025.92402.html</a> (Hämtad: 7 november 2025).</li>
+                <li>Arbetsgivarverket (2025) <em>Arbetsgivarverket kommenterar budgetpropositionen</em>. Tillgänglig vid: <a href="https://www.arbetsgivarverket.se/aktuellt/nyheter/2025/arbetsgivarverket-kommenterar-budgetpropositionen/" target="_blank" rel="noopener noreferrer">https://www.arbetsgivarverket.se/aktuellt/nyheter/2025/arbetsgivarverket-kommenterar-budgetpropositionen/</a> (Hämtad: 7 november 2025).</li>
+                <li>Skatteverket (2025) <em>Budgetpropositionen inlämnad till riksdagen</em>. Tillgänglig vid: <a href="https://www.skatteverket.se/omoss/pressochmedia/nyheter/2025/nyheter/budgetpropositioneninlamnadtillriksdagen.5.40cab8f8197edf03e6460b5.html" target="_blank" rel="noopener noreferrer">https://www.skatteverket.se/omoss/pressochmedia/nyheter/2025/nyheter/budgetpropositioneninlamnadtillriksdagen.5.40cab8f8197edf03e6460b5.html</a> (Hämtad: 7 november 2025).</li>
+            </ul>
+            
+            <h3>Övrigt</h3>
+            <ul>
+                <li>Sammanfattning av budgetproposition för 2026 (PDF-dokument i projektmappen)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- All JavaScript finns inbäddat här i filen enligt användarens önskemål -->
+    <script>
+// ============================================
+// BILDVÄXLING - Uppdatering 2025-11-07
+// Bilderna budgetproposition1.jpg och budgetproposition2.jpg växlar automatiskt var 3:e sekund
+// Detta sker innan användaren klickar på knappen för att starta quizet
+// ============================================
+
+(function() {
+    // Hämta bildelement
+    const img1 = document.getElementById('budgetImg1');
+    const img2 = document.getElementById('budgetImg2');
+    
+    // Array för att hålla koll på vilken bild som är aktiv
+    const images = [img1, img2];
+    let currentImageIndex = 0;
+    let imageInterval = null;
+    
+    // Funktion för att växla till nästa bild
+    function switchImage() {
+        // Ta bort active-class från alla bilder
+        images.forEach(img => img.classList.remove('active'));
+        
+        // Växla till nästa bild
+        currentImageIndex = (currentImageIndex + 1) % images.length;
+        
+        // Lägg till active-class på nästa bild
+        images[currentImageIndex].classList.add('active');
+    }
+    
+    // Starta bildväxling när bildskärmen visas
+    // Detta körs när användaren navigerar från intro-slides till bildskärmen
+    const imageSection = document.getElementById('imageSection');
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.attributeName === 'class') {
+                if (!imageSection.classList.contains('hidden')) {
+                    // Bildskärmen är nu synlig, starta bildväxling
+                    if (!imageInterval) {
+                        imageInterval = setInterval(switchImage, 3000); // Växla var 3:e sekund
+                    }
+                } else {
+                    // Bildskärmen är dold, stoppa bildväxling
+                    if (imageInterval) {
+                        clearInterval(imageInterval);
+                        imageInterval = null;
+                    }
+                }
+            }
+        });
+    });
+    
+    observer.observe(imageSection, { attributes: true });
+})();
+
+// ============================================
+// QUIZ: BUDGETPROPOSITIONEN 2026
+// Detta quiz behandlar budgetpropositionen 2026 och dess effekter på kommuner,
+// med särskilt fokus på kultur, fritid och socialtjänst.
+// Återanvänder samma programmeringsteknik som quiz.html
+// Skapad: 2025-11-07
+// ============================================
+
+// ============================================
+// INTRODUKTIONSTEXTER - Fem slides om budgetpropositionen 2026
+// Här presenteras grundläggande information om budgetpropositionen och dess påverkan på kommuner
+// ============================================
+const introPages = [
+    {
+        title: "Vad är budgetpropositionen 2026?",
+        body: `
+            <p>Välkommen till quizet om <strong>budgetpropositionen för 2026</strong>!</p>
+            
+            <p>Budgetpropositionen är regeringens förslag till statens budget för kommande år. Den presenteras varje september och innehåller förslag på hur skattepengar ska användas för att finansiera allt från vård och skola till försvar och infrastruktur.</p>
+            
+            <div class="info-box">
+                <strong>📅 Viktiga datum</strong>
+                <p>Budgetpropositionen för 2026 presenterades den <strong>22 september 2025</strong> och behandlar statsbudgeten för budgetåret 2026.</p>
+            </div>
+            
+            <div class="info-box">
+                <strong>📊 SKR:s analys - ovärderligt stöd för kommunerna</strong>
+                <p>Sveriges Kommuner och Regioner (SKR) publicerar varje år en sammanfattning och analys av budgetpropositionen i sitt cirkulär. 
+                    För budgetpropositionen 2026 publicerades <a href="https://extra.skr.se/skr/tjanster/cirkular/cirkular/2025/cirkular2542budgetpropositionenfor2026samthostandringsbudgetfor2025.92402.html" target="_blank" rel="noopener noreferrer">SKR Cirkulär 25:42 online</a> 
+                  
+                    som ger en utmärkt genomgång av vad propositionen 
+                    betyder specifikt för kommuner och regioner. SKR:s sammanfattning är särskilt värdefull eftersom den:</p>
+                <ul>
+                    <li>Översätter det omfattande propositionsmaterialet till kommunrelevant information</li>
+                    <li>Identifierar ekonomiska konsekvenser och nya uppdrag för kommunerna</li>
+                    <li>Analyserar hur olika reformer påverkar kommunal verksamhet</li>
+                    <li>Ger en samlad bild av statsbidrag och kompensationsmodeller</li>
+                </ul>
+                
+       
+                   SKR:s sammanfattning: <a href="Sammanfattning_Budgetproposition.pdf" target="_blank">PDF-version (lokal fil)</a></p>
+            </div>
+            
+
+            
+            <p><em>Källor:</em></p>
+            <ul>
+                <li>Regeringen (2025) <a href="https://www.regeringen.se/rattsliga-dokument/proposition/2025/09/2025261/" target="_blank" rel="noopener noreferrer">Budgetpropositionen för 2026</a>. Proposition 2025/26:1.</li>
+                <li>Sveriges Kommuner och Regioner (2025) <a href="https://extra.skr.se/skr/tjanster/cirkular/cirkular/2025/cirkular2542budgetpropositionenfor2026samthostandringsbudgetfor2025.92402.html" target="_blank" rel="noopener noreferrer">Cirkulär 25:42 - Budgetpropositionen för 2026 samt höständringsbudget för 2025</a>.</li>
+            </ul>
+        `
+    },
+    {
+        title: "Ekonomiska effekter för kommunerna",
+        body: `
+            <p>Budgetpropositionen för 2026 innehåller flera viktiga ekonomiska beslut som direkt påverkar kommunernas budget och verksamhet.</p>
+            
+        
+            
+            <h3>Viktiga ekonomiska poster</h3>
+            
+            <p><strong><span class="tooltip-term">Förvaltningsanslag<span class="tooltip-content">Förvaltningsanslag som ska finansiera löner, pensioner, förmåner och andra arbetskraftskostnader stiger med 1,73 procent år 2026. Anslagen för lokaler stiger med 1,1 procent och anslagen som ska gå till de övriga förvaltningskostnaderna stiger med 2,84 procent. Vad varje enskild myndighet får i total uppskrivning beror sedan på vilken resursmix man har på myndigheten. För en myndighet med en genomsnittlig resursmix skrivs de totala förvaltningsanslagen upp med 1,92 procent.<span class="tooltip-source">Källa: <a href="https://www.arbetsgivarverket.se/aktuellt/nyheter/2025/arbetsgivarverket-kommenterar-budgetpropositionen" target="_blank" rel="noopener noreferrer">Arbetsgivarverket (2025)</a></span></span></span>:</strong> Förvaltningsanslagen beräknas öka med 1,92% år 2026 jämfört med 2025. </p>
+            
+            <p><strong>Investeringar:</strong> De totala investeringarna uppgår till cirka 117 miljarder kronor 2026. Den största delen går till försvarsmateriel och krisberedskap, vilket begränsar utrymmet för satsningar på andra områden.</p>
+            
+            <div class="warning-box">
+                <strong>⚠️ Utmaningar för mindre kommuner</strong>
+                <p>Mindre kommuner står ofta inför större utmaningar när det gäller att hantera förändringar i statsbidrag. Med begränsade skatteunderlag och färre möjligheter till stordriftsfördelar kan även små förändringar få stora konsekvenser för verksamheten.</p>
+            </div>
+            
+
+            
+            <p><strong>💡 Läs mer:</strong> <a href="https://extra.skr.se/skr/tjanster/cirkular/cirkular/2025/cirkular2542budgetpropositionenfor2026samthostandringsbudgetfor2025.92402.html" target="_blank" rel="noopener noreferrer">SKR:s cirkulär om budgetpropositionen</a></p>
+            
+            <p><em>Källor: <a href="https://www.arbetsgivarverket.se/aktuellt/nyheter/2025/arbetsgivarverket-kommenterar-budgetpropositionen/" target="_blank" rel="noopener noreferrer">Arbetsgivarverket (2025)</a>; <a href="https://www.regeringen.se/rattsliga-dokument/proposition/2025/09/2025261/" target="_blank" rel="noopener noreferrer">Regeringen (2025)</a>.</em></p>
+        `
+    },
+    {
+        title: "Påverkan på kultur och fritidsverksamhet",
+        body: `
+            <p>Kultur- och fritidsverksamheten spelar en viktig roll för livskvaliteten i kommunerna. Budgetpropositionen för 2026 innehåller flera poster som påverkar detta område.</p>
+            
+            <h3>Mediestöd och kulturverksamhet</h3>
+            
+            <div class="info-box">
+                <strong>📰 Mediestödet för 2026</strong>
+                <p>Regeringen föreslår att mediestödet ska uppgå till <strong>977 119 000 kronor</strong> för år 2026. Detta är en viktig post för att säkerställa mångfald i medieutbudet, vilket är särskilt viktigt för mindre kommuner där lokala medier ofta spelar en avgörande roll.</p>
+            </div>
+            
+            <h3>Bibliotek och kulturhus</h3>
+            <p>Kommunala bibliotek och kulturhus är centrala mötesplatser som bidrar till:</p>
+            <ul>
+                <li>Demokrati och bildning</li>
+                <li>Digital delaktighet</li>
+                <li>Integration och social sammanhållning</li>
+                <li>Kulturell mångfald</li>
+            </ul>
+            
+            <h3>Fritidsverksamhet för barn och unga</h3>
+            <p>Fritidsverksamheten, inklusive fritidsgårdar och föreningsstöd, är viktig för barns och ungas utveckling. Kommunerna ansvarar för att skapa goda förutsättningar för en meningsfull fritid.</p>
+            
+   
+            
+            
+            <p><em>Källor: <a href="https://www.regeringen.se/rattsliga-dokument/proposition/2025/09/2025261/" target="_blank" rel="noopener noreferrer">Regeringen (2025)</a>; <a href="https://controllerutangranser.wordpress.com/2025/11/07/budgetpropositionen-2026-effekter-pa-kultur-fritid-och-socialtjanst-i-mindre-kommuner-grok/" target="_blank" rel="noopener noreferrer">Lundgren (2025)</a>.</em></p>
+        `
+    },
+    {
+        title: "Socialtjänstens utmaningar och möjligheter",
+        body: `
+            <p>Socialtjänsten är kanske den verksamhet i kommunerna som är mest påverkad av externa faktorer och statliga beslut. Budgetpropositionen för 2026 innehåller flera delar som berör socialtjänstens arbete.</p>
+            
+            <h3>Aktivitetskravet</h3>
+            
+
+            
+            <div class="warning-box">
+                <strong>🆕 Nytt: Aktivitetskravet införs 1 juli 2026</strong>
+                <p>En av de största förändringarna i budgetpropositionen för kommunernas socialtjänst är införandet av <strong>aktivitetskravet</strong>. Detta innebär att försörjningsstödstagare med arbetsförmåga måste delta i heltidsaktiviteter för att få behålla sitt stöd.</p>
+                
+                <p><strong>Vad innebär det för kommunerna?</strong></p>
+                <ul>
+                    <li>Kommunerna måste tillhandahålla aktiviteter och insatser</li>
+                    <li>Statlig kompensation: 1 141 miljoner kronor 2026, 2 282 miljoner kronor/år från 2027</li>
+                    <li>SKR ser positivt på reformen men noterar att finansieringen baseras på utredningens lägsta kostnadsbedömning</li>
+                    <li>Risk för ökade kostnader för administration och barnomsorg</li>
+                    <li>Särskilt utmanande för mindre kommuner med färre aktivitetsplatser</li>
+                </ul>
+                
+                <p>Aktivitetskravet kan ge positiva effekter om det genomförs väl, men kräver betydande resurser för implementering och uppföljning.</p>
+            </div>
+            
+
+            
+            
+            <p><em>Källor: <a href="https://controllerutangranser.wordpress.com/2025/11/07/budgetpropositionen-2026-effekter-pa-kultur-fritid-och-socialtjanst-i-mindre-kommuner-mistral/" target="_blank" rel="noopener noreferrer">Lundgren (2025)</a>; <a href="https://extra.skr.se/skr/tjanster/cirkular/cirkular/2025/cirkular2542budgetpropositionenfor2026samthostandringsbudgetfor2025.92402.html" target="_blank" rel="noopener noreferrer">SKR (2025)</a>.</em></p>
+        `
+    },
+    {
+        title: "Vad kan kommunerna göra?",
+        body: `
+            <p>Budgetpropositionen sätter ramarna, men kommunerna har fortfarande stort eget ansvar och handlingsutrymme för hur verksamheterna ska bedrivas.</p>
+            
+
+            
+            <p><strong>1. Budgetarbete och planering</strong></p>
+            <ul>
+                <li>Analysera ekonomiska konsekvenser av budgetpropositionen och de anslag som gives</li>
+                <li>Identifiera vilka verksamheter och kostnader som påverkas mest</li>
+                <li>Planera för olika scenarier (bästa fall, värsta fall, troligt fall)</li>
+            </ul>
+            
+            <p><strong>2. Verksamhetsutveckling</strong></p>
+            <ul>
+                <li>Utveckla samverkan mellan verksamheter, som t ex K&F och Socialförvaltningen</li>
+                <li>Digitalisera för att frigöra resurser - Se till att alla anställda får tillgång till generativ AI</li>
+                <li>Uppmuntra anställda att testa, leka och lära tillsammans med AI</li>
+            </ul>
+            
+            <p><strong>3. Dialog och påverkan</strong></p>
+            <ul>
+                <li>Delta i remissarbete och samråd</li>
+                <li>Påverka genom SKR och kommunförbund</li>
+                <li>Kommunicera konsekvenser till medborgare och beslutsfattare</li>
+            </ul>
+            
+
+            
+            <p><strong>Nu är du redo för quizet!</strong> Testa dina kunskaper om budgetpropositionen 2026 och dess effekter på kommunerna! 🎯</p>
+            
+            <p><em>Källor: <a href="https://extra.skr.se/skr/tjanster/cirkular/cirkular/2025/cirkular2542budgetpropositionenfor2026samthostandringsbudgetfor2025.92402.html" target="_blank" rel="noopener noreferrer">SKR (2025)</a>; <a href="https://controllerutangranser.wordpress.com/2025/11/07/budgetpropositionen-2026-effekter-pa-kultur-fritid-och-socialtjanst-i-mindre-kommuner-grok/" target="_blank" rel="noopener noreferrer">Lundgren (2025)</a>.</em></p>
+        `
+    }
+];
+
+// ============================================
+// QUIZFRÅGOR - Budgetpropositionen 2026
+// Fem frågor som testar förståelsen av budgetpropositionen och dess effekter på kommunerna
+// Baserat på källor från regeringen, SKR och blogginlägg
+// ============================================
+const quizData = [
+    {
+        question: "När presenterades budgetpropositionen för 2026?",
+        answers: [
+            "a) 15 september 2025",
+            "b) 22 september 2025",
+            "c) 1 oktober 2025",
+            "d) 10 oktober 2025"
+        ],
+        correct: 1, // Index 1 = "b) 22 september 2025"
+        explanation: `
+            <strong>✓ RÄTT SVAR: b) 22 september 2025</strong>
+            
+            <p><strong>MOTIVERING:</strong> Budgetpropositionen för 2026 presenterades av regeringen den 22 september 2025. Detta är en viktig årlig händelse i den statliga budgetprocessen där regeringen lägger fram sitt förslag till statsbudget för kommande år.</p>
+            
+            <p>Budgetpropositionen innehåller regeringens förslag till:</p>
+            <ul>
+                <li>Statens inkomster och utgifter</li>
+                <li>Förändringar i statsbidrag till kommuner och regioner</li>
+                <li>Nya reformer och satsningar</li>
+                <li>Ekonomiska prognoser</li>
+            </ul>
+            
+            <p>För kommunerna är det viktigt att snabbt analysera budgetpropositionens innehåll för att kunna anpassa sin egen budgetplanering. SKR (Sveriges Kommuner och Regioner) publicerade sitt cirkulär 25:42 med en sammanfattning av budgetpropositionen för att hjälpa kommuner och regioner att förstå förslagets konsekvenser.</p>
+            
+            <p><strong>💡 Läs mer:</strong> <a href="https://www.regeringen.se/rattsliga-dokument/proposition/2025/09/2025261/" target="_blank" rel="noopener noreferrer">Budgetpropositionen för 2026</a> på Regeringens webbplats</p>
+            
+            <p><strong>KÄLLOR:</strong></p>
+            <ul>
+                <li>Regeringen (2025) <em>Budgetpropositionen för 2026</em>. Proposition 2025/26:1. Tillgänglig vid: <a href="https://www.regeringen.se/rattsliga-dokument/proposition/2025/09/2025261/" target="_blank" rel="noopener noreferrer">https://www.regeringen.se/rattsliga-dokument/proposition/2025/09/2025261/</a></li>
+                <li>Sveriges Kommuner och Regioner (2025) <em>Cirkulär 25:42</em>. Tillgänglig vid: <a href="https://extra.skr.se/skr/tjanster/cirkular/cirkular/2025/cirkular2542budgetpropositionenfor2026samthostandringsbudgetfor2025.92402.html" target="_blank" rel="noopener noreferrer">https://extra.skr.se/skr/tjanster/cirkular/cirkular/2025/cirkular2542budgetpropositionenfor2026samthostandringsbudgetfor2025.92402.html</a></li>
+            </ul>
+        `
+    },
+    {
+        question: "Hur mycket föreslår regeringen att mediestödet ska uppgå till för år 2026?",
+        answers: [
+            "a) 500 miljoner kronor",
+            "b) 977 miljoner kronor",
+            "c) 1,5 miljarder kronor",
+            "d) 2,2 miljarder kronor"
+        ],
+        correct: 1, // Index 1 = "b) 977 miljoner kronor"
+        explanation: `
+            <strong>✓ RÄTT SVAR: b) 977 miljoner kronor</strong>
+            
+            <p><strong>MOTIVERING:</strong> Enligt budgetpropositionen för 2026 föreslår regeringen att mediestödet ska uppgå till 977 miljoner kronor (977 119 000 kronor) för år 2026.</p>
+            
+            <h3>Varför är mediestödet viktigt?</h3>
+            
+            <p>Mediestödet är en viktig del av demokratisk infrastruktur eftersom det:</p>
+            <ul>
+                <li><strong>Säkerställer mångfald:</strong> Bidrar till att olika röster och perspektiv kan höras i samhällsdebatten</li>
+                <li><strong>Stödjer lokala medier:</strong> Särskilt viktigt för mindre kommuner där lokala tidningar och medier spelar en avgörande roll för demokratin och samhällsinformation</li>
+                <li><strong>Upprätthåller granskande journalistik:</strong> Bidrar till att hålla makthavare ansvariga</li>
+                <li><strong>Når hela landet:</strong> Säkerställer att även glesbygd och mindre orter har tillgång till lokal nyhetsbevakning</li>
+            </ul>
+            
+            <h3>Kommunalt perspektiv</h3>
+            
+            <p>För kommunerna är fungerande lokala medier viktiga för:</p>
+            <ul>
+                <li>Kommunikation med medborgarna</li>
+                <li>Transparens i beslutsprocesser</li>
+                <li>Demokratisk legitimitet</li>
+                <li>Information om kommunala tjänster och verksamheter</li>
+            </ul>
+            
+            <p>I mindre kommuner är ofta de lokala medierna en av få källor till information om vad som händer i kommunen, vilket gör mediestödet extra viktigt för dessa kommuner.</p>
+            
+            <p><strong>KÄLLOR:</strong></p>
+            <ul>
+                <li>Regeringen (2025) <em>Budgetpropositionen för 2026</em>. Proposition 2025/26:1. Tillgänglig vid: <a href="https://www.regeringen.se/rattsliga-dokument/proposition/2025/09/2025261/" target="_blank" rel="noopener noreferrer">https://www.regeringen.se/rattsliga-dokument/proposition/2025/09/2025261/</a></li>
+                <li>Lundgren, K. (2025) <em>Budgetpropositionen 2026: Effekter på kultur, fritid och socialtjänst i mindre kommuner (Grok)</em>. Controller utan gränser. Tillgänglig vid: <a href="https://controllerutangranser.wordpress.com/2025/11/07/budgetpropositionen-2026-effekter-pa-kultur-fritid-och-socialtjanst-i-mindre-kommuner-grok/" target="_blank" rel="noopener noreferrer">https://controllerutangranser.wordpress.com/2025/11/07/budgetpropositionen-2026-effekter-pa-kultur-fritid-och-socialtjanst-i-mindre-kommuner-grok/</a></li>
+            </ul>
+        `
+    },
+    {
+        question: "Enligt budgetpropositionen, vilket område får den största delen av investeringarna år 2026?",
+        answers: [
+            "a) Vägar och järnvägar",
+            "b) Försvarsmateriel och krisberedskap",
+            "c) Statens egen verksamhet",
+            "d) Fastigheter och affärsverk"
+        ],
+        correct: 1, // Index 1 = "b) Försvarsmateriel och krisberedskap"
+        explanation: `
+            <strong>✓ RÄTT SVAR: b) Försvarsmateriel och krisberedskap</strong>
+            
+            <p><strong>MOTIVERING:</strong> Enligt budgetpropositionen för 2026 är det försvarsmateriel och krisberedskap som får den största delen av investeringarna. Detta återspeglar den förändrade säkerhetspolitiska situationen i Europa och Sveriges nya medlemskap i NATO.</p>
+            
+            <h3>Vad betyder detta för kommunerna?</h3>
+            
+            <p>Att en stor del av statsbudgetens investeringar går till försvar och krisberedskap påverkar kommunerna på flera sätt:</p>
+            
+            <div class="warning-box">
+                <strong>⚠️ Begränsade resurser för andra områden</strong>
+                <p>När stora delar av budgeten går till försvar och säkerhet finns mindre utrymme för investeringar i andra områden som direkt gynnar kommunerna, såsom infrastruktur, digitalisering eller stöd till kommunal verksamhet.</p>
+            </div>
+            
+            <h3>Prioriteringar i en pressad ekonomi</h3>
+            
+            <p>Den ökade satsningen på försvar innebär att:</p>
+            <ul>
+                <li><strong>Konkurrens om resurser:</strong> Andra verksamhetsområden får mindre utrymme i statsbudgeten</li>
+                <li><strong>Kommunala prioriteringar:</strong> Kommunerna måste göra tydligare val om vad som ska prioriteras</li>
+                <li><strong>Samverkan blir viktigare:</strong> För att klara välfärdsuppdraget behöver kommuner samverka mer och hitta effektiva lösningar</li>
+                <li><strong>Digital transformation:</strong> Digitalisering kan frigöra resurser för kärnverksamheten</li>
+            </ul>
+            
+            <h3>Kommunernas roll i totalförsvaret</h3>
+            
+            <p>Samtidigt har kommunerna också en viktig roll i det civila försvaret och krisberedskapen, vilket kräver:</p>
+            <ul>
+                <li>Uppdaterade krisberedskapsplaner</li>
+                <li>Kompetens inom krisberedskap</li>
+                <li>Samverkan med andra myndigheter</li>
+                <li>Egna investeringar i robusthet och säkerhet</li>
+            </ul>
+            
+            <p><strong>💡 Fördjupning:</strong> <a href="https://controllerutangranser.wordpress.com/2025/11/07/budgetpropositionen-2026-effekter-pa-kultur-fritid-och-socialtjanst-i-mindre-kommuner-mistral/" target="_blank" rel="noopener noreferrer">Läs mer om ekonomiska konsekvenser för kommunerna</a></p>
+            
+            <p><strong>KÄLLOR:</strong></p>
+            <ul>
+                <li>Regeringen (2025) <em>Budgetpropositionen för 2026</em>. Proposition 2025/26:1. Tillgänglig vid: <a href="https://www.regeringen.se/rattsliga-dokument/proposition/2025/09/2025261/" target="_blank" rel="noopener noreferrer">https://www.regeringen.se/rattsliga-dokument/proposition/2025/09/2025261/</a></li>
+                <li>Lundgren, K. (2025) <em>Budgetpropositionen 2026: Effekter på kultur, fritid och socialtjänst i mindre kommuner (Mistral)</em>. Controller utan gränser. Tillgänglig vid: <a href="https://controllerutangranser.wordpress.com/2025/11/07/budgetpropositionen-2026-effekter-pa-kultur-fritid-och-socialtjanst-i-mindre-kommuner-mistral/" target="_blank" rel="noopener noreferrer">https://controllerutangranser.wordpress.com/2025/11/07/budgetpropositionen-2026-effekter-pa-kultur-fritid-och-socialtjanst-i-mindre-kommuner-mistral/</a></li>
+            </ul>
+        `
+    },
+    {
+        question: "Vilken procentuell ökning av förvaltningsanslagen beräknas för år 2026 jämfört med 2025?",
+        answers: [
+            "a) 1,73%",
+            "b) 2,84%",
+            "c) 1,92%",
+            "d) 1,1%"
+        ],
+        correct: 2, // Index 2 = "c) 1,92%"
+        explanation: `
+            <strong>✓ RÄTT SVAR: c) 1,92%</strong>
+            
+            <p><strong>MOTIVERING:</strong> Enligt Arbetsgivarverkets kommentar till budgetpropositionen beräknas förvaltningsanslagen öka med 1,92% år 2026 jämfört med 2025.</p>
+            
+            <h3>Vad är förvaltningsanslag?</h3>
+            
+            <p><span class="tooltip-term">Förvaltningsanslag<span class="tooltip-content">Förvaltningsanslag som ska finansiera löner, pensioner, förmåner och andra arbetskraftskostnader stiger med 1,73 procent år 2026. Anslagen för lokaler stiger med 1,1 procent och anslagen som ska gå till de övriga förvaltningskostnaderna stiger med 2,84 procent. Vad varje enskild myndighet får i total uppskrivning beror sedan på vilken resursmix man har på myndigheten. För en myndighet med en genomsnittlig resursmix skrivs de totala förvaltningsanslagen upp med 1,92 procent.<span class="tooltip-source">Källa: <a href="https://www.arbetsgivarverket.se/aktuellt/nyheter/2025/arbetsgivarverket-kommenterar-budgetpropositionen" target="_blank" rel="noopener noreferrer">Arbetsgivarverket (2025)</a></span></span></span> är de anslag som används för att driva den statliga förvaltningen, inklusive:</p>
+            <ul>
+                <li>Lönekostnader för statsanställda</li>
+                <li>Lokalkostnader</li>
+                <li>Driftskostnader för statliga myndigheter</li>
+                <li>IT och digitalisering</li>
+                <li>Kompetensutveckling</li>
+            </ul>
+            
+            <h3>Vad betyder ökningen på 1,92%?</h3>
+            
+            <div class="info-box">
+                <strong>📊 Jämförelse med inflation och löneutveckling</strong>
+                <p>En ökning på 1,92% ska jämföras med:</p>
+                <ul>
+                    <li>Förväntad inflation</li>
+                    <li>Löneutveckling enligt avtal</li>
+                    <li>Ökade kostnader för lokaler och drift</li>
+                </ul>
+                <p>Om ökningen ligger under dessa faktorer innebär det i praktiken en realnedgång i anslagen.</p>
+            </div>
+            
+            <h3>Konsekvenser för kommunerna</h3>
+            
+            <p>Även om förvaltningsanslagen primärt rör statlig verksamhet påverkas kommunerna indirekt:</p>
+            <ul>
+                <li><strong>Budgetutrymme:</strong> Ökade förvaltningskostnader begränsar utrymmet för överföringar till kommunsektorn</li>
+                <li><strong>Statlig service:</strong> Försämrad statlig service kan leda till ökat tryck på kommunerna (t.ex. om Arbetsförmedlingen eller Försäkringskassan får sämre resurser)</li>
+                <li><strong>Samverkanspartners:</strong> Kommunerna samverkar med många statliga myndigheter, och deras resurser påverkar kvaliteten i samverkan</li>
+            </ul>
+            
+            <h3>Jämförelse i kommunalt perspektiv</h3>
+            
+            <p>Kommunerna står ofta inför liknande utmaningar:</p>
+            <ul>
+                <li>Lönekostnader som ökar enligt avtal</li>
+                <li>Stigande kostnader för lokaler och drift</li>
+                <li>Behov av digitalisering och kompetensutveckling</li>
+                <li>Samtidigt krav på god ekonomisk hushållning</li>
+            </ul>
+            
+            <p>Detta kräver ständigt arbete med effektivisering och prioritering för att klara välfärdsuppdraget.</p>
+            
+            <p><strong>KÄLLOR:</strong></p>
+            <ul>
+                <li>Arbetsgivarverket (2025) <em>Arbetsgivarverket kommenterar budgetpropositionen</em>. Tillgänglig vid: <a href="https://www.arbetsgivarverket.se/aktuellt/nyheter/2025/arbetsgivarverket-kommenterar-budgetpropositionen/" target="_blank" rel="noopener noreferrer">https://www.arbetsgivarverket.se/aktuellt/nyheter/2025/arbetsgivarverket-kommenterar-budgetpropositionen/</a></li>
+                <li>Regeringen (2025) <em>Budgetpropositionen för 2026</em>. Proposition 2025/26:1. Tillgänglig vid: <a href="https://www.regeringen.se/rattsliga-dokument/proposition/2025/09/2025261/" target="_blank" rel="noopener noreferrer">https://www.regeringen.se/rattsliga-dokument/proposition/2025/09/2025261/</a></li>
+            </ul>
+        `
+    },
+    {
+        question: "När införs aktivitetskravet för försörjningsstödstagare och hur mycket kompensation får kommunerna första året?",
+        answers: [
+            "a) 1 januari 2026, 500 miljoner kronor",
+            "b) 1 juli 2026, 1 141 miljoner kronor",
+            "c) 1 januari 2027, 2 282 miljoner kronor",
+            "d) 1 juli 2027, 3 000 miljoner kronor"
+        ],
+        correct: 1, // Index 1 = "b) 1 juli 2026, 1 141 miljoner kronor"
+        explanation: `
+            <strong>✓ RÄTT SVAR: b) 1 juli 2026, 1 141 miljoner kronor</strong>
+            
+            <p><strong>MOTIVERING:</strong> Aktivitetskravet införs den 1 juli 2026 och kräver att försörjningsstödstagare med arbetsförmåga deltar i heltidsaktiviteter. Kommunerna kompenseras med 1 141 miljoner kronor för 2026 (halva året) och 2 282 miljoner kronor årligen från och med 2027.</p>
+            
+            <h3>Vad är aktivitetskravet?</h3>
+            
+            <p>Aktivitetskravet innebär att personer som får försörjningsstöd och har arbetsförmåga måste delta i aktiviteter på heltid för att få behålla sitt försörjningsstöd. Detta kan inkludera:</p>
+            <ul>
+                <li><strong>Arbetsmarknadsåtgärder:</strong> Praktik, subventionerade anställningar</li>
+                <li><strong>Kompetensutveckling:</strong> Studier, yrkesutbildning, svenskundervisning</li>
+                <li><strong>Arbetsförberedande insatser:</strong> Jobbsökaraktiviteter, CV-skrivning</li>
+                <li><strong>Samhällsnyttiga aktiviteter:</strong> Kommunala praktikplatser</li>
+            </ul>
+            
+            <h3>Kommunernas ansvar och utmaningar</h3>
+            
+            <div class="warning-box">
+                <strong>⚠️ SKR:s bedömning av finansieringen</strong>
+                <p>SKR ser positivt på reformen som erkänner kommunernas viktiga roll, men noterar att finansieringen baseras på utredningens lägsta kostnadsbedömning (3 miljarder kronor totalt). Detta riskerar att leda till ökade kostnader för:</p>
+                <ul>
+                    <li>Administration och handläggning</li>
+                    <li>Barnomsorg för deltagare med barn</li>
+                    <li>Uppföljning och kontroll</li>
+                    <li>Tillhandahållande av aktiviteter</li>
+                </ul>
+            </div>
+            
+
+            
+            <div class="info-box">
+                <strong>💡 Positivt perspektiv</strong>
+                <p>Trots utmaningarna kan aktivitetskravet ge positiva effekter om det genomförs väl:</p>
+                <ul>
+                    <li>Fler personer kommer närmare arbetsmarknaden</li>
+                    <li>Struktur och meningsfullhet för individerna</li>
+                    <li>Minskad långvarigt försörjningsstöd på sikt</li>
+                    <li>Statlig erkänsla av kommunernas viktiga roll</li>
+                </ul>
+            </div>
+            
+            <h3>Tidslinje och finansiering</h3>
+            
+            <table style="width: 100%; margin: 15px 0; border-collapse: collapse;">
+                <tr style="background: #dbeafe;">
+                    <th style="padding: 10px; border: 1px solid #93c5fd; text-align: left;">Period</th>
+                    <th style="padding: 10px; border: 1px solid #93c5fd; text-align: left;">Statlig kompensation</th>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #e5e7eb;">1 juli - 31 december 2026</td>
+                    <td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>1 141 miljoner kronor</strong></td>
+                </tr>
+                <tr style="background: #f3f4f6;">
+                    <td style="padding: 10px; border: 1px solid #e5e7eb;">Från och med 2027 (årligen)</td>
+                    <td style="padding: 10px; border: 1px solid #e5e7eb;"><strong>2 282 miljoner kronor</strong></td>
+                </tr>
+            </table>
+            
+ 
+            
+            <p><strong>KÄLLOR:</strong></p>
+            <ul>
+                <li>Sveriges Kommuner och Regioner (2025) <em>Cirkulär 25:42 - Budgetpropositionen för 2026 samt höständringsbudget för 2025</em>, s. 7, 28. Tillgänglig vid: <a href="https://extra.skr.se/skr/tjanster/cirkular/cirkular/2025/cirkular2542budgetpropositionenfor2026samthostandringsbudgetfor2025.92402.html" target="_blank" rel="noopener noreferrer">https://extra.skr.se/skr/tjanster/cirkular/cirkular/2025/cirkular2542budgetpropositionenfor2026samthostandringsbudgetfor2025.92402.html</a></li>
+                <li>Regeringen (2025) <em>Budgetpropositionen för 2026</em>. Proposition 2025/26:1. Tillgänglig vid: <a href="https://www.regeringen.se/rattsliga-dokument/proposition/2025/09/2025261/" target="_blank" rel="noopener noreferrer">https://www.regeringen.se/rattsliga-dokument/proposition/2025/09/2025261/</a></li>
+                <li>Lundgren, K. (2025) <em>Budgetpropositionen 2026: Effekter på kultur, fritid och socialtjänst i mindre kommuner (Mistral)</em>. Controller utan gränser. Tillgänglig vid: <a href="https://controllerutangranser.wordpress.com/2025/11/07/budgetpropositionen-2026-effekter-pa-kultur-fritid-och-socialtjanst-i-mindre-kommuner-mistral/" target="_blank" rel="noopener noreferrer">https://controllerutangranser.wordpress.com/2025/11/07/budgetpropositionen-2026-effekter-pa-kultur-fritid-och-socialtjanst-i-mindre-kommuner-mistral/</a></li>
+            </ul>
+        `
+    }
+];
+
+// ============================================
+// GLOBALA VARIABLER FÖR QUIZ-STATE
+// Här hanterar vi programmets tillstånd
+// ============================================
+let currentIntroPage = 0; // Nuvarande introduktionssida
+let currentQuestion = 0; // Nuvarande fråga i quizet
+let score = 0; // Användarens poäng
+let answered = false; // Om användaren har svarat på aktuell fråga
+
+// ============================================
+// DOM-ELEMENT
+// Här hämtar vi alla viktiga element från HTML:en för att kunna manipulera dem
+// ============================================
+const introSection = document.getElementById('introSection');
+const imageSection = document.getElementById('imageSection');
+const quizContent = document.getElementById('quizContent');
+const progressFill = document.getElementById('progressFill');
+
+// Intro-navigering
+const introPageTitle = document.getElementById('introPageTitle');
+const introPageBody = document.getElementById('introPageBody');
+const introPrevBtn = document.getElementById('introPrevBtn');
+const introNextBtn = document.getElementById('introNextBtn');
+
+// Sidindikator-element
+const pageNumber = document.getElementById('pageNumber');
+const pageDots = document.getElementById('pageDots');
+
+// Bildsektion
+const continueBtn = document.getElementById('continueBtn');
+
+// Modaler
+const techBtn = document.getElementById('techBtn');
+const promptBtn = document.getElementById('promptBtn');
+const techModal = document.getElementById('techModal');
+const promptModal = document.getElementById('promptModal');
+const closeButtons = document.querySelectorAll('.close');
+
+// ============================================
+// INITIALISERING - Körs när sidan laddas
+// ============================================
+document.addEventListener('DOMContentLoaded', () => {
+    // Skapa sidindikator-prickar först
+    createPageDots();
+    
+    // Visa första introduktionssidan
+    showIntroPage(0);
+    
+    // Lyssna på knappar
+    setupEventListeners();
+});
+
+// ============================================
+// EVENT LISTENERS - Kopplar knappar till funktioner
+// ============================================
+function setupEventListeners() {
+    // Intro-navigering
+    introPrevBtn.addEventListener('click', () => navigateIntro(-1));
+    introNextBtn.addEventListener('click', () => navigateIntro(1));
+    
+    // Fortsätt-knapp från bildskärm
+    continueBtn.addEventListener('click', startQuiz);
+    
+    // Modal-knappar
+    techBtn.addEventListener('click', () => openModal(techModal));
+    promptBtn.addEventListener('click', () => openModal(promptModal));
+    
+    // Stäng-knappar i modaler
+    closeButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const modalId = e.target.getAttribute('data-close');
+            const modal = document.querySelector(modalId);
+            closeModal(modal);
+        });
+    });
+    
+    // Stäng modal vid klick utanför
+    window.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal')) {
+            closeModal(e.target);
+        }
+    });
+}
+
+// ============================================
+// SKAPA SIDINDIKATOR-PRICKAR
+// Skapar visuella prickar för varje introduktionssida
+// ============================================
+function createPageDots() {
+    pageDots.innerHTML = ''; // Rensa först
+    
+    // Skapa en prick för varje sida
+    for (let i = 0; i < introPages.length; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'page-dot';
+        dot.setAttribute('data-page', i);
+        dot.setAttribute('title', `Gå till sida ${i + 1}`);
+        
+        // Klick på prick för att hoppa till sida
+        dot.addEventListener('click', () => {
+            currentIntroPage = i;
+            showIntroPage(i);
+        });
+        
+        pageDots.appendChild(dot);
+    }
+}
+
+// ============================================
+// INTRODUKTIONSNAVIGERING
+// Här hanterar vi navigering mellan introduktionssidorna
+// ============================================
+function showIntroPage(pageIndex) {
+    const page = introPages[pageIndex];
+    introPageTitle.textContent = page.title;
+    introPageBody.innerHTML = page.body;
+    
+    // Uppdatera sidnummer-text
+    pageNumber.textContent = `Sida ${pageIndex + 1} av ${introPages.length}`;
+    
+    // Uppdatera aktiv prick
+    const dots = pageDots.querySelectorAll('.page-dot');
+    dots.forEach((dot, index) => {
+        if (index === pageIndex) {
+            dot.classList.add('active');
+        } else {
+            dot.classList.remove('active');
+        }
+    });
+    
+    // Uppdatera knappar
+    introPrevBtn.disabled = (pageIndex === 0);
+    
+    // Om sista sidan, ändra text på nästa-knapp
+    if (pageIndex === introPages.length - 1) {
+        introNextBtn.textContent = 'Se startbild ➡️';
+    } else {
+        introNextBtn.textContent = 'Nästa ➡️';
+    }
+}
+
+function navigateIntro(direction) {
+    currentIntroPage += direction;
+    
+    // Om vi är på sista sidan och klickar nästa, gå till bildskärm
+    if (currentIntroPage >= introPages.length) {
+        introSection.classList.add('hidden');
+        imageSection.classList.remove('hidden');
+        return;
+    }
+    
+    // Annars visa rätt sida
+    showIntroPage(currentIntroPage);
+}
+
+// ============================================
+// STARTA QUIZ
+// Döljer bildskärm och visar första frågan
+// ============================================
+function startQuiz() {
+    imageSection.classList.add('hidden');
+    quizContent.classList.remove('hidden');
+    
+    // Återställ quiz-state
+    currentQuestion = 0;
+    score = 0;
+    answered = false;
+    
+    // Visa första frågan
+    displayQuestion();
+    updateProgress();
+}
+
+// ============================================
+// VISA FRÅGA
+// Renderar en fråga med svarsalternativ dynamiskt
+// ============================================
+function displayQuestion() {
+    const question = quizData[currentQuestion];
+    
+    // Skapa HTML för frågan
+    const questionHTML = `
+        <div class="question-container">
+            <div class="question-number">Fråga ${currentQuestion + 1} av ${quizData.length}</div>
+            <h2 class="question-text">${question.question}</h2>
+            <div class="answers-container">
+                ${question.answers.map((answer, index) => `
+                    <button class="answer-btn" data-index="${index}">
+                        ${answer}
+                    </button>
+                `).join('')}
+            </div>
+            <div id="feedback"></div>
+        </div>
+    `;
+    
+    quizContent.innerHTML = questionHTML;
+    
+    // Lyssna på svar
+    const answerButtons = quizContent.querySelectorAll('.answer-btn');
+    answerButtons.forEach(btn => {
+        btn.addEventListener('click', () => handleAnswer(parseInt(btn.dataset.index)));
+    });
+    
+    answered = false;
+}
+
+// ============================================
+// HANTERA SVAR
+// Körs när användaren klickar på ett svar
+// Här sker färgkodning (grön/röd) och feedback
+// ============================================
+function handleAnswer(selectedIndex) {
+    // Om redan svarat, gör inget
+    if (answered) return;
+    
+    answered = true;
+    const question = quizData[currentQuestion];
+    const answerButtons = quizContent.querySelectorAll('.answer-btn');
+    const feedbackDiv = document.getElementById('feedback');
+    
+    // Markera rätt och fel svar med färgkodning
+    answerButtons.forEach((btn, index) => {
+        btn.disabled = true;
+        if (index === question.correct) {
+            btn.classList.add('correct'); // Grön bakgrund
+        } else if (index === selectedIndex && selectedIndex !== question.correct) {
+            btn.classList.add('incorrect'); // Röd bakgrund
+        }
+    });
+    
+    // Visa feedback
+    if (selectedIndex === question.correct) {
+        score++;
+        feedbackDiv.className = 'feedback correct';
+        feedbackDiv.innerHTML = question.explanation;
+    } else {
+        feedbackDiv.className = 'feedback incorrect';
+        feedbackDiv.innerHTML = `
+            <strong>Tyvärr, det var inte rätt!</strong>
+            ${question.explanation}
+        `;
+    }
+    
+    // Lägg till nästa-knapp
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'next-question-btn';
+    nextBtn.textContent = currentQuestion < quizData.length - 1 ? 'Nästa fråga ➡️' : 'Se resultat 🎉';
+    nextBtn.addEventListener('click', nextQuestion);
+    feedbackDiv.appendChild(nextBtn);
+    
+    // Uppdatera progress
+    updateProgress();
+}
+
+// ============================================
+// NÄSTA FRÅGA
+// Går till nästa fråga eller visar resultat om alla frågor är besvarade
+// ============================================
+function nextQuestion() {
+    currentQuestion++;
+    
+    if (currentQuestion < quizData.length) {
+        displayQuestion();
+        updateProgress();
+    } else {
+        showResults();
+    }
+}
+
+// ============================================
+// VISA RESULTAT
+// Visar slutresultat och möjlighet att starta om
+// ============================================
+function showResults() {
+    const percentage = Math.round((score / quizData.length) * 100);
+    
+    let message = '';
+    if (percentage === 100) {
+        message = 'Perfekt! Du har helt koll på budgetpropositionen 2026! 🌟';
+    } else if (percentage >= 80) {
+        message = 'Mycket bra! Du har god insikt i budgetpropositionen och dess effekter! 👍';
+    } else if (percentage >= 60) {
+        message = 'Bra jobbat! Det finns mer att lära, men du har en god grund! 📚';
+    } else {
+        message = 'Det finns mycket att lära! Läs gärna mer om budgetpropositionen och försök igen! 💪';
+    }
+    
+    const resultsHTML = `
+        <div class="result-container">
+            <h2 class="result-title">Quiz slutfört! 🎉</h2>
+            <div class="result-score">${score} av ${quizData.length} rätt</div>
+            <div class="result-score">${percentage}%</div>
+            <p class="result-message">${message}</p>
+            <div class="result-buttons">
+                <button class="restart-btn" onclick="restartQuiz()">Starta om quiz 🔄</button>
+                <a href="https://kentlundgren.se/program/quiz/0/" class="browse-quiz-btn" target="_blank" rel="noopener noreferrer">Se alla quiz 📚</a>
+            </div>
+        </div>
+    `;
+    
+    quizContent.innerHTML = resultsHTML;
+    updateProgress();
+}
+
+// ============================================
+// STARTA OM QUIZ
+// Återställer allt och börjar om från början
+// ============================================
+function restartQuiz() {
+    currentQuestion = 0;
+    score = 0;
+    answered = false;
+    currentIntroPage = 0;
+    
+    // Visa intro igen
+    quizContent.classList.add('hidden');
+    introSection.classList.remove('hidden');
+    showIntroPage(0);
+    updateProgress();
+}
+
+// ============================================
+// UPPDATERA PROGRESSBAR
+// Visar hur långt användaren har kommit i quizet
+// ============================================
+function updateProgress() {
+    // Om vi är i intro-fasen (inklusive bildskärm), visa 0%
+    if (quizContent.classList.contains('hidden')) {
+        progressFill.style.width = '0%';
+        return;
+    }
+    
+    // Om vi är i quiz-fasen, visa progress baserat på frågor
+    const progress = ((currentQuestion + (answered ? 1 : 0)) / quizData.length) * 100;
+    progressFill.style.width = `${progress}%`;
+}
+
+// ============================================
+// MODAL-HANTERING
+// Öppna och stänga modaler
+// ============================================
+function openModal(modal) {
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden', 'false');
+}
+
+function closeModal(modal) {
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden', 'true');
+}
+
+// ============================================
+// SLUT PÅ SCRIPT
+// Quiz är nu redo att användas!
+// Skapad: 2025-11-07
+// Ämne: Budgetpropositionen 2026 och dess effekter på kommuner
+// ============================================
+    </script>
+</body>
+</html>
+

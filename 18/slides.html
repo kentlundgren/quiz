@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Att komma igång med Generativ AI – Presentation</title>
+    <!--
+        PRESENTATION: Att komma igång med Generativ AI i kommunal förvaltning
+        Skapad: 2025-12-19
+        
+        PowerPoint-liknande presentation i helskärmsformat.
+        Navigera med:
+        - Piltangenter (vänster/höger)
+        - Klicka på pilarna
+        - Mellanslag (nästa slide)
+        
+        Baserad på samma material som quizet på:
+        https://kentlundgren.se/program/quiz/18/
+    -->
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ============================================
+           CSS-VARIABLER
+           ============================================ */
+        :root {
+            --color-primary: #1a365d;
+            --color-primary-light: #2c5282;
+            --color-secondary: #276749;
+            --color-accent: #c05621;
+            --color-bg: #f8fafc;
+            --color-text: #2d3748;
+            --color-text-light: #718096;
+            --color-text-inverse: #f7fafc;
+            --gradient-hero: linear-gradient(135deg, #1a365d 0%, #2c5282 50%, #276749 100%);
+        }
+
+        /* ============================================
+           RESET & GRUNDLÄGGANDE
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gradient-hero);
+            color: var(--color-text-inverse);
+        }
+
+        /* ============================================
+           SLIDE CONTAINER
+           ============================================ */
+        .presentation {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slides-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ============================================
+           INDIVIDUELLA SLIDES
+           ============================================ */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 80px;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.5s ease;
+            background: var(--gradient-hero);
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide.prev {
+            transform: translateX(-100%);
+        }
+
+        .slide-content {
+            max-width: 1000px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Titelslide */
+        .slide.title-slide .slide-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .slide h1 {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 700;
+            line-height: 1.2;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .slide h2 {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .slide h3 {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #90cdf4;
+        }
+
+        .slide p {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            line-height: 1.7;
+            margin-bottom: 20px;
+            max-width: 800px;
+        }
+
+        .slide .subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .slide ul, .slide ol {
+            text-align: left;
+            font-size: clamp(1rem, 2vw, 1.4rem);
+            line-height: 1.8;
+            margin: 20px auto;
+            max-width: 800px;
+        }
+
+        .slide li {
+            margin-bottom: 15px;
+        }
+
+        .slide li strong {
+            color: #90cdf4;
+        }
+
+        /* Highlight-box */
+        .highlight-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid #90cdf4;
+            padding: 25px 30px;
+            border-radius: 0 12px 12px 0;
+            margin: 30px auto;
+            max-width: 800px;
+            text-align: left;
+        }
+
+        .highlight-box p {
+            margin-bottom: 10px;
+        }
+
+        .highlight-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Info-box */
+        .info-box {
+            background: rgba(39, 103, 73, 0.3);
+            border: 2px solid rgba(144, 205, 244, 0.5);
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin: 30px auto;
+            max-width: 800px;
+            text-align: left;
+        }
+
+        /* Warning-box */
+        .warning-box {
+            background: rgba(192, 86, 33, 0.2);
+            border-left: 4px solid var(--color-accent);
+            padding: 25px 30px;
+            border-radius: 0 12px 12px 0;
+            margin: 30px auto;
+            max-width: 800px;
+            text-align: left;
+        }
+
+        /* Prompt-exempel */
+        .prompt-example {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin: 30px auto;
+            max-width: 800px;
+            text-align: left;
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+            font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+            line-height: 1.6;
+            position: relative;
+        }
+
+        .prompt-example::before {
+            content: '💬 PROMPT';
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--color-secondary);
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        .prompt-example strong {
+            color: #90cdf4;
+        }
+
+        /* Tabell */
+        .comparison-table {
+            width: 100%;
+            max-width: 800px;
+            margin: 30px auto;
+            border-collapse: collapse;
+            font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px 20px;
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .comparison-table th {
+            background: rgba(39, 103, 73, 0.5);
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .comparison-table .good {
+            color: #68d391;
+        }
+
+        .comparison-table .ok {
+            color: #f6e05e;
+        }
+
+        .comparison-table .poor {
+            color: #fc8181;
+        }
+
+        /* Emoji-ikon */
+        .slide-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        /* Citat */
+        blockquote {
+            font-style: italic;
+            font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+            border-left: 4px solid #90cdf4;
+            padding-left: 25px;
+            margin: 30px auto;
+            max-width: 700px;
+            text-align: left;
+        }
+
+        blockquote footer {
+            font-style: normal;
+            font-size: 1rem;
+            margin-top: 15px;
+            opacity: 0.8;
+        }
+
+        /* ============================================
+           NAVIGATION
+           ============================================ */
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .nav-arrow:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .nav-arrow:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .nav-arrow:disabled:hover {
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-prev {
+            left: 30px;
+        }
+
+        .nav-next {
+            right: 30px;
+        }
+
+        /* ============================================
+           FOOTER MED SLIDE-NUMMER OCH LÄNK
+           ============================================ */
+        .slide-footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+
+        .slide-number {
+            font-weight: 600;
+        }
+
+        .slide-footer a {
+            color: #90cdf4;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .slide-footer a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Fullscreen-knapp */
+        .fullscreen-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .fullscreen-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: 100;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-accent), #f59e0b);
+            transition: width 0.3s ease;
+        }
+
+        /* ============================================
+           RESPONSIV DESIGN
+           ============================================ */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 40px 30px;
+            }
+
+            .nav-arrow {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+            }
+
+            .nav-prev {
+                left: 10px;
+            }
+
+            .nav-next {
+                right: 10px;
+            }
+
+            .fullscreen-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .slide-footer {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+        }
+
+        /* ============================================
+           ANIMATIONER
+           ============================================ */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide.active .slide-content > * {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .slide.active .slide-content > *:nth-child(1) { animation-delay: 0.1s; }
+        .slide.active .slide-content > *:nth-child(2) { animation-delay: 0.2s; }
+        .slide.active .slide-content > *:nth-child(3) { animation-delay: 0.3s; }
+        .slide.active .slide-content > *:nth-child(4) { animation-delay: 0.4s; }
+        .slide.active .slide-content > *:nth-child(5) { animation-delay: 0.5s; }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <!-- Progress bar -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <!-- Fullscreen-knapp -->
+        <button class="fullscreen-btn" id="fullscreenBtn" title="Helskärm (F)">⛶</button>
+
+        <!-- Navigation -->
+        <button class="nav-arrow nav-prev" id="prevBtn" title="Föregående (←)">←</button>
+        <button class="nav-arrow nav-next" id="nextBtn" title="Nästa (→)">→</button>
+
+        <!-- Slides container -->
+        <div class="slides-container">
+            
+            <!-- SLIDE 1: Titelslide -->
+            <div class="slide title-slide active">
+                <div class="slide-content">
+                    <div class="slide-icon">🤖</div>
+                    <h1>Att komma igång med Generativ AI</h1>
+                    <p class="subtitle">En praktisk vägledning för tjänstemän i kommunal förvaltning</p>
+                    <p style="margin-top: 40px; opacity: 0.7; font-size: 1rem;">
+                        Kent Lundgren • Controller utan gränser • December 2025
+                    </p>
+                </div>
+            </div>
+
+            <!-- SLIDE 2: Från Google till AI -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>🔍 Från Google till AI-dialog</h2>
+                    <p>Den grundläggande skillnaden mellan traditionell sökning och generativ AI</p>
+                    <div class="highlight-box">
+                        <p><strong>Google</strong> = Söka befintlig information</p>
+                        <p><strong>Generativ AI</strong> = Skapa nytt innehåll baserat på din input</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 3: Nyckelinsikt -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>💡 Nyckelinsikten</h2>
+                    <div class="highlight-box">
+                        <p>När du <strong>googlar</strong> ställer du en fråga och får ett svar.</p>
+                        <p>När du arbetar med <strong>generativ AI</strong> har du en <em>dialog</em> där flera meddelanden bygger på varandra.</p>
+                    </div>
+                    <p>Kvaliteten på det du får ut beror helt på kvaliteten på det du stoppar in.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 4: Jämförelse -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>📝 Exempel på skillnaden</h2>
+                    <div class="prompt-example">
+                        <p><strong>Google-sökning:</strong></p>
+                        <p>"Vad säger PBL om samråd?"</p>
+                    </div>
+                    <div class="prompt-example">
+                        <p><strong>AI-dialog:</strong></p>
+                        <p>"Jag arbetar som handläggare i en mindre kommun. Vi tar fram en detaljplan för ett bostadsområde nära kusten med riksintresse för naturvård. Vilka särskilda hänsyn behöver vi ta?"</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 5: Fyra delar i en prompt -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>✍️ Fyra delar i en bra prompt</h2>
+                    <ol>
+                        <li><strong>Sammanhang</strong> – Vem är du och vilken situation befinner du dig i?</li>
+                        <li><strong>Uppgift</strong> – Vad vill du att AI:n ska göra? Var specifik!</li>
+                        <li><strong>Format</strong> – Hur vill du ha resultatet? (text, tabell, punktlista)</li>
+                        <li><strong>Avgränsningar</strong> – Vilka villkor och begränsningar finns?</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- SLIDE 6: Sammanhang -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>1️⃣ Sammanhang</h2>
+                    <p>AI:n vet ingenting om dig från början!</p>
+                    <div class="warning-box">
+                        <p><strong>❌ Vagt:</strong> "Sammanfatta yttrandena"</p>
+                    </div>
+                    <div class="info-box">
+                        <p><strong>✅ Bättre:</strong> "Jag är planhandläggare i Simrishamns kommun och arbetar med detaljplan för Kivik 3:15. Vi har fått in 47 yttranden under samrådet."</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 7: Uppgift & Format -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>2️⃣ Uppgift & 3️⃣ Format</h2>
+                    <div class="warning-box">
+                        <p><strong>❌ Vagt:</strong> "Hjälp mig med yttrandena"</p>
+                    </div>
+                    <div class="info-box">
+                        <p><strong>✅ Konkret:</strong> "Kategorisera yttrandena efter ämnesområde och sammanfatta de tre vanligaste invändningarna. Presentera som en tabell med max 500 ord."</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 8: Tips -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>💡 Viktigt tips!</h2>
+                    <div class="highlight-box" style="text-align: center;">
+                        <p style="font-size: 1.4rem;"><strong>Avsluta alltid med:</strong></p>
+                        <p style="font-size: 1.6rem; color: #90cdf4;">"Fråga om något är oklart!"</p>
+                    </div>
+                    <p>Detta ger AI:n möjlighet att ställa motfrågor om din förfrågan är otydlig – vilket ofta leder till bättre resultat.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 9: Dialogen är nyckeln -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>💬 Dialogen är nyckeln</h2>
+                    <div class="warning-box" style="text-align: center;">
+                        <p style="font-size: 1.3rem;"><strong>⚠️ Behandla aldrig första svaret som färdigt!</strong></p>
+                    </div>
+                    <p>AI:ns första svar är sällan det bästa svaret. Läs kritiskt och ställ följdfrågor.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 10: Följdfrågor -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>🔄 Bra följdfrågor att ställa</h2>
+                    <ul>
+                        <li>"Kan du <strong>utveckla avsnittet om X</strong> mer?"</li>
+                        <li>"Du <strong>missade att nämna Y</strong> – ta med det."</li>
+                        <li>"Skriv om med mer <strong>fokus på åtgärder</strong>."</li>
+                        <li>"<strong>Korta ner till hälften</strong> men behåll huvudpoängerna."</li>
+                    </ul>
+                    <p style="margin-top: 30px;"><em>Ju mer du förfinar, desto bättre blir resultatet!</em></p>
+                </div>
+            </div>
+
+            <!-- SLIDE 11: Ge AI:n rätt underlag -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>📚 Ge AI:n rätt underlag</h2>
+                    <p>Tre sätt att förbättra resultatet:</p>
+                    <ol>
+                        <li><strong>Ge exempel</strong> – "Här är hur vi formulerade det förra gången"</li>
+                        <li><strong>Länka till regelverk</strong> – PBL på lagen.nu, Boverkets kunskapsbank</li>
+                        <li><strong>Lägg till ert lokala perspektiv</strong> – "Vi är en mindre kommun med begränsade resurser"</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- SLIDE 12: Vad fungerar bäst -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>🔗 Vilka källor fungerar bäst?</h2>
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Format</th>
+                            <th>Fungerar</th>
+                        </tr>
+                        <tr>
+                            <td>HTML-sidor</td>
+                            <td class="good">✅ Utmärkt</td>
+                        </tr>
+                        <tr>
+                            <td>lagen.nu</td>
+                            <td class="good">✅ Mycket bra</td>
+                        </tr>
+                        <tr>
+                            <td>PDF-dokument</td>
+                            <td class="ok">⚠️ Bäst att ladda upp</td>
+                        </tr>
+                        <tr>
+                            <td>Inloggningsskyddade sidor</td>
+                            <td class="poor">❌ Fungerar ej</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SLIDE 13: Nationella riktlinjer -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>🏛️ Nationella riktlinjer</h2>
+                    <p><strong>Januari 2025:</strong> Digg och IMY presenterade gemensamma riktlinjer för generativ AI i offentlig förvaltning.</p>
+                    <div class="info-box">
+                        <p><strong>18 riktlinjer inom 7 områden:</strong></p>
+                        <p>Ledning • Dataskydd (GDPR) • Arbetsrätt • Anskaffning • Informationssäkerhet • Upphovsrätt • Etik</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 14: Projekt Svea -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>🤝 Projekt Svea</h2>
+                    <p>Över <strong>50 offentliga organisationer</strong> utvecklar tillsammans en gemensam AI-assistent för offentlig sektor.</p>
+                    <div class="highlight-box">
+                        <p>Projektet drivs av <strong>AI Sweden</strong> och syftar till att skapa en säker och anpassad AI-lösning för svenska myndigheter och kommuner.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 15: Citat -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>💬 Vad säger civilministern?</h2>
+                    <blockquote>
+                        "Ökad användning av AI kan bidra till minskad administration och frigöra mer tid för mänskliga möten."
+                        <footer>— Erik Slottner, civilminister</footer>
+                    </blockquote>
+                </div>
+            </div>
+
+            <!-- SLIDE 16: Mänsklig kontroll -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>🛡️ Mänsklig kontroll är avgörande</h2>
+                    <div class="warning-box">
+                        <p><strong>Digg och IMY betonar:</strong></p>
+                        <p>"Beslut med stöd av generativ AI bör ha mänsklig kontroll."</p>
+                    </div>
+                    <p>AI:n är ett verktyg – men det är alltid tjänstemannen som bär ansvaret för att underlaget är korrekt.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 17: Sammanfattning -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>✅ Sammanfattning</h2>
+                    <ul>
+                        <li><strong>Dialog, inte sökning</strong> – Generativ AI skapar nytt innehåll</li>
+                        <li><strong>4 delar i en prompt</strong> – Sammanhang, uppgift, format, avgränsningar</li>
+                        <li><strong>"Fråga om oklart"</strong> – Låt AI:n ställa motfrågor</li>
+                        <li><strong>Iterera!</strong> – Första svaret är sällan det bästa</li>
+                        <li><strong>Mänsklig kontroll</strong> – Granska alltid innan beslut</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- SLIDE 18: Kom igång! -->
+            <div class="slide title-slide">
+                <div class="slide-content">
+                    <div class="slide-icon">🚀</div>
+                    <h1>Börja redan idag!</h1>
+                    <ol style="text-align: left; max-width: 600px;">
+                        <li>Välj ett konkret ärende du arbetar med</li>
+                        <li>Öppna Copilot och skriv en prompt</li>
+                        <li>Ge sammanhang, uppgift och format</li>
+                        <li>Avsluta med "Fråga om något är oklart!"</li>
+                        <li>Läs svaret kritiskt och ställ följdfrågor</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- SLIDE 19: Tack & Quiz -->
+            <div class="slide title-slide">
+                <div class="slide-content">
+                    <div class="slide-icon">🎯</div>
+                    <h1>Testa dina kunskaper!</h1>
+                    <p class="subtitle">Gör quizet och se hur mycket du har lärt dig</p>
+                    <p style="margin-top: 40px;">
+                        <a href="https://kentlundgren.se/program/quiz/18/" style="color: #90cdf4; font-size: 1.3rem; text-decoration: underline;">
+                            kentlundgren.se/program/quiz/18/
+                        </a>
+                    </p>
+                    <p style="margin-top: 50px; opacity: 0.7; font-size: 1rem;">
+                        Tack för att du lyssnade! 🙏
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer med slide-nummer och länk -->
+        <div class="slide-footer">
+            <span class="slide-number" id="slideNumber">Bild 1 av 19</span>
+            <a href="https://kentlundgren.se/program/quiz/18/" target="_blank" rel="noopener noreferrer">
+                🎯 Gör quizet: kentlundgren.se/program/quiz/18/
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // JAVASCRIPT FÖR SLIDE-PRESENTATION
+        // ============================================
+        
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const slideNumber = document.getElementById('slideNumber');
+        const progressFill = document.getElementById('progressFill');
+        
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+        
+        // Uppdatera slide-visning
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active', 'prev');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                } else if (index < currentSlide) {
+                    slide.classList.add('prev');
+                }
+            });
+            
+            // Uppdatera slide-nummer
+            slideNumber.textContent = `Bild ${currentSlide + 1} av ${totalSlides}`;
+            
+            // Uppdatera progress bar
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            progressFill.style.width = `${progress}%`;
+            
+            // Uppdatera knappar
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+        }
+        
+        // Navigering
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+        
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+        
+        // Event listeners för knappar
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+        
+        // Tangentbordsnavigering
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 'ArrowRight':
+                case ' ':
+                case 'Enter':
+                    e.preventDefault();
+                    nextSlide();
+                    break;
+                case 'ArrowLeft':
+                case 'Backspace':
+                    e.preventDefault();
+                    prevSlide();
+                    break;
+                case 'Home':
+                    e.preventDefault();
+                    currentSlide = 0;
+                    updateSlide();
+                    break;
+                case 'End':
+                    e.preventDefault();
+                    currentSlide = totalSlides - 1;
+                    updateSlide();
+                    break;
+                case 'f':
+                case 'F':
+                    toggleFullscreen();
+                    break;
+                case 'Escape':
+                    if (document.fullscreenElement) {
+                        document.exitFullscreen();
+                    }
+                    break;
+            }
+        });
+        
+        // Helskärm
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+                fullscreenBtn.textContent = '⛶';
+            } else {
+                document.exitFullscreen();
+                fullscreenBtn.textContent = '⛶';
+            }
+        }
+        
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
+        
+        // Touch-swipe för mobil
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+        
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    nextSlide(); // Swipe vänster = nästa
+                } else {
+                    prevSlide(); // Swipe höger = föregående
+                }
+            }
+        }
+        
+        // Initialisera
+        updateSlide();
+        
+        console.log('Presentation laddad: Att komma igång med Generativ AI');
+        console.log('Navigera med piltangenter, mellanslag eller klick på pilarna');
+        console.log('Tryck F för helskärm');
+    </script>
+</body>
+</html>
+

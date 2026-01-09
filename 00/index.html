@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hur Fredagsquizet Skapas - AI-samarbete mellan Claude och Cursor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 Hur Fredagsquizet Skapas</h1>
+            <p class="subtitle">En process där olika AI-modeller kompletterar varandra</p>
+        </header>
+
+        <main>
+            <!-- Introduktion -->
+            <section class="intro-section">
+                <h2>Översikt av processen</h2>
+                <p>
+                    Varje fredag publiceras ett nytt quiz på 
+                    <a href="https://kentlundgren.se/program/quiz/0/" target="_blank" rel="noopener">kentlundgren.se/program/quiz/</a>. 
+                    Processen för att skapa dessa quiz är ett praktiskt exempel på hur olika AI-verktyg kan 
+                    samarbeta och komplettera varandra – där 
+                    <a href="https://claude.ai" target="_blank" rel="noopener" class="ai-tool-link claude-link" data-tooltip="Claude är en avancerad AI-assistent från Anthropic, specialiserad på innehållsskapande, analys och genomtänkta svar.">Claude</a>
+                    (<a href="https://www.anthropic.com/claude" target="_blank" rel="noopener" class="info-link">info</a>)
+                    ansvarar för innehållet och 
+                    <a href="https://www.cursor.com" target="_blank" rel="noopener" class="ai-tool-link cursor-link" data-tooltip="Cursor är en AI-driven kodeditor byggd för att hjälpa utvecklare skriva kod snabbare och mer effektivt.">Cursor</a>
+                    (<a href="https://cursor.com/features" target="_blank" rel="noopener" class="info-link">info</a>)
+                    skapar den tekniska implementationen.
+                </p>
+            </section>
+
+            <!-- Process Overview -->
+            <section class="process-overview">
+                <h2>Processen i två steg</h2>
+                <div class="steps-container">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <h3>Innehållsskapande med Claude</h3>
+                        <p>Skapa quizfrågor och svarsalternativ</p>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <h3>Teknisk implementation med Cursor</h3>
+                        <p>Bygga interaktiv webbapplikation</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Steg 1: Claude -->
+            <section class="detail-section claude-section">
+                <div class="section-header">
+                    <h2>📝 Steg 1: Innehållsskapande med Claude</h2>
+                    <span class="ai-badge claude">Claude AI</span>
+                </div>
+                
+                <div class="content-box">
+                    <h3>Vad händer i detta steg?</h3>
+                    <p>
+                        I det första steget används <strong>Claude AI</strong> för att generera själva quizinnehållet. 
+                        Claude är särskilt lämplig för denna uppgift eftersom den är tränerad för att:
+                    </p>
+                    <ul>
+                        <li>Förstå och analysera komplexa ämnen</li>
+                        <li>Skapa välavvägda och genomtänkta frågor</li>
+                        <li>Generera relevanta och utmanande svarsalternativ</li>
+                        <li>Säkerställa faktisk korrekthet</li>
+                    </ul>
+
+                    <h3>Exempel på prompt till Claude</h3>
+                    <div class="code-example">
+                        <div class="code-header">
+                            Prompt 1: Till Claude 
+                            (<a href="promt1_till_quiz_nr_12_251114.pdf" target="_blank" class="pdf-link">📄 Se exempel på promt1_till_quiz_nr_12_251114.pdf</a>)
+                        </div>
+                        <div class="code-content">
+                            <p><strong>Exempel prompt:</strong></p>
+                            <p class="prompt-text">
+                                "Jag vill att du skapar ett quiz om [ÄMNE]. Quizet ska innehålla 5 frågor 
+                                med 4 svarsalternativ vardera. Frågorna ska vara varierade i svårighetsgrad 
+                                och täcka olika aspekter av ämnet. För varje fråga ska du också ange vilket 
+                                alternativ som är det korrekta svaret och ge en kort förklaring."
+                            </p>
+                            
+                            <p><strong>Temaexempel för fredagsquiz:</strong></p>
+                            <ul class="theme-list">
+                                <li>Kommunal ekonomi och budget</li>
+                                <li>Svensk politik och riksdag</li>
+                                <li>Lokal historia och kultur</li>
+                                <li>Allmänbildning och aktuella händelser</li>
+                                <li>Säsongsteman (Halloween, jul, etc.)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>Vad får du från Claude?</h3>
+                    <div class="output-box">
+                        <p>Claude levererar strukturerad data som innehåller:</p>
+                        <ul>
+                            <li><strong>5 välformulerade frågor</strong> om det valda ämnet</li>
+                            <li><strong>4 svarsalternativ</strong> per fråga (A, B, C, D)</li>
+                            <li><strong>Korrekt svar</strong> markerat för varje fråga</li>
+                            <li><strong>Förklaringar</strong> som kan användas för att ge feedback</li>
+                        </ul>
+                        
+                        <p class="note">
+                            💡 <strong>Tips:</strong> Spara Claudes svar i ett dokument för att enkelt kunna 
+                            referera till det i nästa steg.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Steg 2: Cursor -->
+            <section class="detail-section cursor-section">
+                <div class="section-header">
+                    <h2>💻 Steg 2: Teknisk implementation med Cursor</h2>
+                    <span class="ai-badge cursor">Cursor AI</span>
+                </div>
+                
+                <div class="content-box">
+                    <h3>Vad händer i detta steg?</h3>
+                    <p>
+                        I det andra steget används <strong>Cursor AI</strong> för att omvandla quizinnehållet till 
+                        en fullt funktionell webbapplikation. Cursor är optimerad för:
+                    </p>
+                    <ul>
+                        <li>Att skriva och strukturera kod (HTML, CSS, JavaScript)</li>
+                        <li>Att skapa responsiva och användbara gränssnitt</li>
+                        <li>Att implementera interaktiv funktionalitet</li>
+                        <li>Att organisera kod i separata filer enligt best practice</li>
+                    </ul>
+
+                    <h3>Exempel på prompt till Cursor</h3>
+                    <div class="code-example">
+                        <div class="code-header">
+                            Prompt 2: Till Cursor 
+                            (<a href="promt2_till_quiz_nr_12_251114.pdf" target="_blank" class="pdf-link">📄 Se exempel på promt2_till_quiz_nr_12_251114.pdf</a>)
+                        </div>
+                        <div class="code-content">
+                            <p><strong>Exempel prompt:</strong></p>
+                            <p class="prompt-text">
+                                "Jag vill att du i princip återanvänder samma programmeringsteknik som finns i 
+                                tidigare quiz. Skapa ett interaktivt quiz med följande innehåll från Claude:
+                                <br><br>
+                                [HÄR KLISTRAS INNEHÅLLET FRÅN CLAUDE]
+                                <br><br>
+                                Skapa separata filer:
+                                <br>- index.html (struktur)
+                                <br>- styles.css (design)
+                                <br>- script.js (funktionalitet)
+                                <br><br>
+                                Använd samma stil och layout som tidigare quiz på kentlundgren.se/program/quiz/"
+                            </p>
+                        </div>
+                    </div>
+
+                    <h3>Vad skapar Cursor?</h3>
+                    <div class="output-box">
+                        <p>Cursor genererar en komplett webbapplikation med:</p>
+                        
+                        <div class="file-structure">
+                            <h4>📁 Filstruktur</h4>
+                            <ul class="file-list">
+                                <li>
+                                    <strong>index.html</strong>
+                                    <span>Semantisk HTML5-struktur med tillgängligt markup</span>
+                                </li>
+                                <li>
+                                    <strong>styles.css</strong>
+                                    <span>Responsiv design som fungerar på alla enheter</span>
+                                </li>
+                                <li>
+                                    <strong>script.js</strong>
+                                    <span>Interaktiv logik för quiz-funktionalitet</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="features-grid">
+                            <h4>✨ Funktioner som implementeras</h4>
+                            <div class="feature-item">
+                                <span class="feature-icon">🎯</span>
+                                <span>Interaktiv frågehantering</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">✅</span>
+                                <span>Omedelbar feedback på svar</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span>Resultaträkning och poängvisning</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔄</span>
+                                <span>Möjlighet att göra om quizet</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📱</span>
+                                <span>Responsiv design för mobil och desktop</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🎨</span>
+                                <span>Enhetlig design med tidigare quiz</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Varför denna uppdelning fungerar -->
+            <section class="why-section">
+                <h2>🎯 Varför denna uppdelning fungerar så bra</h2>
+                
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h3>Claude – Innehållsexperten</h3>
+                        <div class="strengths">
+                            <h4>Styrkor:</h4>
+                            <ul>
+                                <li>Djup förståelse för ämnen och kontext</li>
+                                <li>Kan skapa engagerande och pedagogiska frågor</li>
+                                <li>Säkerställer faktisk korrekthet</li>
+                                <li>Anpassar svårighetsgrad och ton</li>
+                            </ul>
+                        </div>
+                        <div class="role">
+                            <strong>Roll:</strong> Skapar det intellektuella innehållet
+                        </div>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h3>Cursor – Kodningsexperten</h3>
+                        <div class="strengths">
+                            <h4>Styrkor:</h4>
+                            <ul>
+                                <li>Optimerad för kodgenerering</li>
+                                <li>Förstår webbstandarder och best practices</li>
+                                <li>Skapar ren, underhållbar kod</li>
+                                <li>Implementerar interaktivitet och UX</li>
+                            </ul>
+                        </div>
+                        <div class="role">
+                            <strong>Roll:</strong> Transformerar innehåll till funktionalitet
+                        </div>
+                    </div>
+                </div>
+
+                <div class="synergy-box">
+                    <h3>🔄 Synergieffekten</h3>
+                    <p>
+                        Genom att kombinera Claudes innehållskompetens med Cursors kodningsförmåga får du:
+                    </p>
+                    <ul>
+                        <li><strong>Högkvalitativt innehåll:</strong> Väl genomtänkta frågor och svar</li>
+                        <li><strong>Professionell kod:</strong> Ren, strukturerad och underhållbar implementation</li>
+                        <li><strong>Snabb utveckling:</strong> Från idé till färdigt quiz på kort tid</li>
+                        <li><strong>Konsekvent kvalitet:</strong> Samma höga standard varje vecka</li>
+                        <li><strong>Flexibilitet:</strong> Enkelt att anpassa och uppdatera</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Workflow sammanfattning -->
+            <section class="workflow-section">
+                <h2>📋 Komplett Workflow - Steg för steg</h2>
+                
+                <div class="workflow-steps">
+                    <div class="workflow-step">
+                        <div class="step-badge">Förberedelse</div>
+                        <h3>1. Välj tema</h3>
+                        <p>Bestäm vilket ämne veckans fredagsquiz ska handla om.</p>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-badge">Claude</div>
+                        <h3>2. Prompta Claude</h3>
+                        <p>
+                            Använd Claude för att generera 5 frågor med 4 svarsalternativ vardera. 
+                            Spara resultatet i ett dokument.
+                        </p>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-badge">Granskning</div>
+                        <h3>3. Granska innehållet</h3>
+                        <p>
+                            Kontrollera att frågorna är korrekta och passar din målgrupp. 
+                            Gör eventuella justeringar.
+                        </p>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-badge">Cursor</div>
+                        <h3>4. Prompta Cursor</h3>
+                        <p>
+                            Klistra in quizinnehållet i Cursor och be den skapa HTML, CSS och JavaScript-filer.
+                        </p>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-badge">Test</div>
+                        <h3>5. Testa quizet</h3>
+                        <p>
+                            Öppna index.html i webbläsaren och testa att alla funktioner fungerar korrekt.
+                        </p>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-badge">Publicering</div>
+                        <h3>6. Publicera</h3>
+                        <p>
+                            Ladda upp filerna till din webbserver i rätt mapp 
+                            (t.ex. /program/quiz/13/ för quiz nummer 13).
+                        </p>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-badge">Klart!</div>
+                        <h3>7. Dela med världen</h3>
+                        <p>
+                            Ditt nya fredagsquiz är live och redo att användas! 🎉
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tips och Best Practices -->
+            <section class="tips-section">
+                <h2>💡 Tips och Best Practices</h2>
+                
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h3>📝 För Claude-prompten</h3>
+                        <ul>
+                            <li>Var specifik om ämne och svårighetsgrad</li>
+                            <li>Be om varierande frågetyper</li>
+                            <li>Inkludera önskad ton (formell/informell)</li>
+                            <li>Begär förklaringar till rätta svar</li>
+                            <li>Specificera målgrupp om relevant</li>
+                        </ul>
+                    </div>
+
+                    <div class="tip-card">
+                        <h3>💻 För Cursor-prompten</h3>
+                        <ul>
+                            <li>Referera till tidigare quiz för konsekvent stil</li>
+                            <li>Be om separata filer (HTML/CSS/JS)</li>
+                            <li>Specificera responsiv design</li>
+                            <li>Inkludera tillgänglighetskrav</li>
+                            <li>Be om kommentarer i koden</li>
+                        </ul>
+                    </div>
+
+                    <div class="tip-card">
+                        <h3>🎨 För design och UX</h3>
+                        <ul>
+                            <li>Håll konsekvent stil mellan olika quiz</li>
+                            <li>Testa på olika enheter (mobil/tablet/desktop)</li>
+                            <li>Använd tydliga färger för feedback</li>
+                            <li>Säkerställ god läsbarhet</li>
+                            <li>Inkludera bilder där relevant</li>
+                        </ul>
+                    </div>
+
+                    <div class="tip-card">
+                        <h3>⚡ För effektivitet</h3>
+                        <ul>
+                            <li>Skapa mallar för dina prompts</li>
+                            <li>Spara standardstilar i ett bibliotek</li>
+                            <li>Dokumentera din process</li>
+                            <li>Bygg upp en samling av teman</li>
+                            <li>Återanvänd fungerande strukturer</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Exempel på resultat -->
+            <section class="examples-section">
+                <h2>🎯 Se tidigare fredagsquiz</h2>
+                <p>
+                    Här är några exempel på quiz som skapats med denna process:
+                </p>
+                <div class="examples-grid">
+                    <a href="../0/" class="example-card" target="_blank">
+                        <span class="example-number">Quiz 0</span>
+                        <span class="example-title">Fredagsquiz - Intro</span>
+                    </a>
+                    <a href="../1/" class="example-card" target="_blank">
+                        <span class="example-number">Quiz 1</span>
+                        <span class="example-title">Första quizet</span>
+                    </a>
+                    <a href="../12/" class="example-card" target="_blank">
+                        <span class="example-number">Quiz 12</span>
+                        <span class="example-title">Senaste quizet</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Bild: Samarbete mellan människa och maskin -->
+            <section class="image-section">
+                <div class="image-container">
+                    <img src="samarbete_manniska_maskin.jpg" alt="Samarbete mellan människa och maskin - AI och mänsklig kreativitet" class="feature-image">
+                    <p class="image-caption">
+                        💡 Samarbete mellan människa och AI – där mänsklig kreativitet möter maskinell effektivitet
+                    </p>
+                </div>
+            </section>
+
+            <!-- Sammanfattning -->
+            <section class="summary-section">
+                <h2>🎓 Sammanfattning</h2>
+                <div class="summary-box">
+                    <p>
+                        Genom att kombinera olika AI-verktyg efter deras styrkor kan du skapa högkvalitativa 
+                        webbapplikationer snabbt och effektivt. Claude bidrar med djup förståelse och kvalitativt 
+                        innehåll, medan Cursor levererar professionell kod och implementation.
+                    </p>
+                    <p>
+                        Denna arbetsmetod illustrerar framtidens sätt att arbeta: inte att välja mellan olika 
+                        AI-verktyg, utan att kombinera dem på smartast möjliga sätt för att uppnå bästa resultat.
+                    </p>
+                    <div class="key-takeaway">
+                        <strong>Nyckeln till framgång:</strong> Använd rätt verktyg för rätt uppgift, och låt dem 
+                        komplettera varandra i en sömlös workflow.
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>
+                Skapad av Kent Lundgren | 
+                <a href="https://kentlundgren.se" target="_blank" rel="noopener">kentlundgren.se</a>
+            </p>
+            <p class="meta-note">
+                📝 Denna beskrivande sida skapades också genom samarbete mellan Claude och Cursor!
+            </p>
+        </footer>
+    </div>
+
+    <!-- Teknik-modal knapp -->
+    <button id="techModalBtn" class="tech-modal-btn" title="Se teknisk information">
+        ⚙️ Tekniker
+    </button>
+
+    <!-- Teknik-modal -->
+    <div id="techModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>🛠️ Tekniker som används på denna sida</h2>
+            
+            <div class="tech-section">
+                <h3>📄 HTML5 (HyperText Markup Language)</h3>
+                <p>
+                    <strong>Vad:</strong> Standardspråket för att strukturera webbsidor.<br>
+                    <strong>Används för:</strong> Semantisk struktur med elements som <code>&lt;header&gt;</code>, 
+                    <code>&lt;section&gt;</code>, <code>&lt;article&gt;</code>, och <code>&lt;footer&gt;</code>.
+                </p>
+                <ul>
+                    <li>Semantiska HTML5-element för bättre SEO och tillgänglighet</li>
+                    <li>ARIA-attribut för förbättrad tillgänglighet</li>
+                    <li>Meta-tags för responsiv design</li>
+                </ul>
+            </div>
+
+            <div class="tech-section">
+                <h3>🎨 CSS3 (Cascading Style Sheets)</h3>
+                <p>
+                    <strong>Vad:</strong> Stilspråk för att designa och layouta webbsidor.<br>
+                    <strong>Används för:</strong> Responsiv design, animationer, och visuell presentation.
+                </p>
+                <ul>
+                    <li><strong>CSS Grid & Flexbox:</strong> Modern layout för responsiv design</li>
+                    <li><strong>CSS Variables:</strong> För enkel färg- och stilhantering</li>
+                    <li><strong>Media Queries:</strong> Anpassning för olika skärmstorlekar</li>
+                    <li><strong>Transitions & Animations:</strong> Mjuka övergångar och effekter</li>
+                    <li><strong>Custom Tooltips:</strong> CSS-baserade tooltips med <code>::before</code> och <code>::after</code></li>
+                    <li><strong>Gradient Backgrounds:</strong> Moderna färgövergångar</li>
+                    <li><strong>Box Shadow & Border Radius:</strong> Djup och moderna former</li>
+                </ul>
+            </div>
+
+            <div class="tech-section">
+                <h3>⚡ JavaScript (ES6+)</h3>
+                <p>
+                    <strong>Vad:</strong> Programmeringsspråk för interaktivitet på webbsidor.<br>
+                    <strong>Används för:</strong> Dynamisk funktionalitet och användarinteraktion.
+                </p>
+                <ul>
+                    <li><strong>Event Listeners:</strong> För att hantera användarinteraktioner</li>
+                    <li><strong>DOM Manipulation:</strong> Dynamisk uppdatering av sidinnehåll</li>
+                    <li><strong>Intersection Observer API:</strong> För scroll-animationer</li>
+                    <li><strong>Clipboard API:</strong> För copy-funktionalitet</li>
+                    <li><strong>Smooth Scrolling:</strong> Mjuk navigering mellan sektioner</li>
+                    <li><strong>Modal Dialog:</strong> Dynamisk visning av innehåll</li>
+                    <li><strong>Local Storage:</strong> Kan användas för att spara användarpreferenser</li>
+                </ul>
+            </div>
+
+            <div class="tech-section">
+                <h3>💡 Avancerade tekniker</h3>
+                <ul>
+                    <li><strong>Custom CSS Tooltips:</strong> Tooltips skapade med CSS <code>data-tooltip</code> attribut och <code>::before</code> pseudo-element</li>
+                    <li><strong>Modal Dialogs:</strong> Interaktiva dialoger med JavaScript och CSS</li>
+                    <li><strong>Responsive Design:</strong> Fungerar på mobil, tablet och desktop</li>
+                    <li><strong>Print Optimization:</strong> Särskild styling för utskrift</li>
+                    <li><strong>Accessibility (a11y):</strong> ARIA-labels, keyboard navigation, fokusindikator</li>
+                    <li><strong>Performance:</strong> Optimerad för snabb laddning och mjuk interaktion</li>
+                </ul>
+            </div>
+
+            <div class="tech-section">
+                <h3>🔧 Utvecklingsverktyg</h3>
+                <ul>
+                    <li><strong>Claude AI:</strong> Använd för innehållsskapande och promptdesign</li>
+                    <li><strong>Cursor AI:</strong> Använd för kodgenerering och implementation</li>
+                    <li><strong>Git/GitHub:</strong> Versionshantering (rekommenderas)</li>
+                    <li><strong>Browser DevTools:</strong> För testning och debugging</li>
+                </ul>
+            </div>
+
+            <div class="tech-section">
+                <h3>🎯 Best Practices</h3>
+                <ul>
+                    <li>Separation of Concerns: HTML, CSS och JavaScript i separata filer</li>
+                    <li>Semantisk HTML för bättre SEO och tillgänglighet</li>
+                    <li>Mobile-First Design</li>
+                    <li>Progressive Enhancement</li>
+                    <li>Clean Code med kommentarer</li>
+                    <li>Cross-browser compatibility</li>
+                </ul>
+            </div>
+
+            <div class="tech-footer">
+                <p>
+                    <strong>💻 Öppen källkod:</strong> Alla dessa tekniker är standardwebbteknologier 
+                    som fungerar i alla moderna webbläsare utan externa bibliotek eller ramverk.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

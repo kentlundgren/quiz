@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 Fräckt Fredagsquiz - Svart Humor, Katter & Lite Till!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Extern CSS-fil enligt best practice -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="quiz-container" role="main">
+        <header class="quiz-header">
+            <div class="quiz-header-content">
+                <div class="quiz-header-text">
+                    <h1 class="quiz-title">🔥 Fräckt Fredagsquiz</h1>
+                    <p class="quiz-subtitle">Svart humor, kattmemes & saker man inte pratar om på jobbet 😏</p>
+                </div>
+                <a href="https://kentlundgren.se/program/quiz/0/" class="all-quiz-btn" target="_blank" rel="noopener noreferrer" title="Se alla Fredagsquiz">
+                    📚 Alla Quiz
+                </a>
+            </div>
+            <div class="progress-bar" aria-hidden="true">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </header>
+
+        <!-- Inledande texter i fem sidor före quizet -->
+        <!-- Här presenteras roliga och fräcka introduktioner -->
+        <section id="introSection" class="intro-section" aria-live="polite">
+            <div class="intro-card">
+                <!-- Sidindikator med text och visuella prickar -->
+                <div class="page-indicator">
+                    <div class="page-number" id="pageNumber">Sida 1 av 5</div>
+                    <div class="page-dots" id="pageDots"></div>
+                </div>
+                <h2 class="intro-title" id="introPageTitle"></h2>
+                <div class="intro-body" id="introPageBody"></div>
+                <div class="intro-nav">
+                    <button class="secondary-btn" id="introPrevBtn" type="button" aria-label="Föregående" disabled>⬅️ Backa</button>
+                    <button class="primary-btn" id="introNextBtn" type="button" aria-label="Nästa">Ge mig mer! ➡️</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Startskärm med växlande bilder och knapp för att gå vidare till quizet -->
+        <!-- Bilderna raknull.jpg, kaffe_och_trekant.jpg, samlat_puckon.jpg och vi_vet_inte_varfor_vi_graver.jpg växlar automatiskt var 3:e sekund -->
+        <section id="imageSection" class="image-section hidden" aria-labelledby="introTitle">
+            <div class="quiz-image-container">
+                <img id="img1" src="raknull.jpg" alt="Räknull - klassisk humor" class="quiz-image active">
+                <img id="img2" src="kaffe_och_trekant.jpg" alt="Kaffe och trekant - två saker som håller folk vakna" class="quiz-image">
+                <img id="img3" src="samlat_puckon.jpg" alt="Samlat puckon - vi vet alla hur det är" class="quiz-image">
+                <img id="img4" src="vi_vet_inte_varfor_vi_graver.jpg" alt="Vi vet inte varför vi gräver - existentiell kris" class="quiz-image">
+            </div>
+            <p class="image-text" id="introTitle">Redo att testa hur fräck du egentligen är? 😈🐱</p>
+            <button class="continue-btn" id="continueBtn" type="button">Starta det fräcka quizet! 🔥</button>
+        </section>
+
+        <!-- Själva quiz-innehållet renderas dynamiskt via JavaScript -->
+        <section id="quizContent" class="hidden" aria-live="polite"></section>
+    </main>
+
+    <!-- Floating action buttons för teknisk info och källor -->
+    <div class="floating-buttons">
+        <button class="floating-btn tech-btn" id="techBtn" title="Teknisk beskrivning">🔧</button>
+        <button class="floating-btn prompt-btn" id="promptBtn" title="Varför detta quiz?">😈</button>
+    </div>
+
+    <!-- Modal: Teknisk beskrivning -->
+    <div id="techModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="techTitle">
+        <div class="modal-content">
+            <span class="close" data-close="#techModal" aria-label="Stäng">&times;</span>
+            <h2 id="techTitle">🔧 Teknisk beskrivning</h2>
+            
+            <h3>Struktur och organisation</h3>
+            <p><strong>Filstruktur:</strong> Detta quiz är byggt med separation of concerns-principen, där HTML, CSS och JavaScript är uppdelade i separata filer:</p>
+            <ul>
+                <li><strong>index.html:</strong> Innehåller HTML-strukturen och semantisk markup</li>
+                <li><strong>styles.css:</strong> All styling och responsiv design</li>
+                <li><strong>script.js:</strong> All JavaScript-logik och interaktivitet</li>
+            </ul>
+            
+            <div class="info-box">
+                <strong>💡 Varför separata filer?</strong>
+                <p>Att dela upp kod i separata filer ger flera fördelar:</p>
+                <ul>
+                    <li><strong>Underhållbarhet:</strong> Lättare att hitta och uppdatera specifik kod</li>
+                    <li><strong>Återanvändbarhet:</strong> CSS och JavaScript kan användas i flera HTML-filer</li>
+                    <li><strong>Läsbarhet:</strong> Tydligare struktur och mindre filer att hantera</li>
+                    <li><strong>Cachning:</strong> Webbläsaren kan cacha CSS och JS separat för bättre prestanda</li>
+                </ul>
+            </div>
+            
+            <h3>Teknisk implementation</h3>
+            <ul>
+                <li><strong>HTML5:</strong> Semantisk markup med ARIA-attribut för tillgänglighet</li>
+                <li><strong>CSS3:</strong> Responsiv design med CSS-variabler och flexbox</li>
+                <li><strong>JavaScript (ES6+):</strong> Modern JavaScript med arrow functions, template literals och DOM-manipulation</li>
+                <li><strong>UI:</strong> Progressbar, sidindikator med klickbara prickar, växlande bilder</li>
+                <li><strong>Bildväxling:</strong> Automatisk växling mellan fyra bilder var 3:e sekund</li>
+            </ul>
+            
+            <h3>Skapad information</h3>
+            <p><strong>Skapad:</strong> 2025-11-28 med AI-assistans (Claude Opus 4.5)</p>
+            <p><strong>Tema:</strong> Fräckt Fredagsquiz med svart humor, katter och lite av varje!</p>
+        </div>
+    </div>
+
+    <!-- Modal: Varför detta quiz -->
+    <div id="promptModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="promptTitle">
+        <div class="modal-content">
+            <span class="close" data-close="#promptModal" aria-label="Stäng">&times;</span>
+            <h2 id="promptTitle">😈 Varför ett fräckt quiz?</h2>
+            
+            <div class="info-box">
+                <strong>🎉 Fredag = Fest!</strong>
+                <p>Ibland behöver man bara skratta åt lite fräck humor, söta katter som gör dumma saker, och frågor som får en att rodna lite.</p>
+            </div>
+            
+            <h3>🤔 Vad handlar quizet om?</h3>
+            <ul>
+                <li><strong>Svart humor:</strong> Skämt som är så fel att de blir rätt</li>
+                <li><strong>Kattfakta:</strong> Visste du att katter sover 70% av sina liv? Latmaskar!</li>
+                <li><strong>Fräcka frågor:</strong> Saker man normalt inte diskuterar vid fikabordet</li>
+                <li><strong>Allmänbildning:</strong> ...fast den roliga sorten!</li>
+            </ul>
+            
+            <div class="warning-box">
+                <strong>⚠️ Varning!</strong>
+                <p>Detta quiz innehåller humor som kan vara olämplig för:</p>
+                <ul>
+                    <li>Folk utan humor</li>
+                    <li>Din chef (om hen tittar över axeln)</li>
+                    <li>Eventuella helgon i närheten</li>
+                </ul>
+            </div>
+            
+            <h3>📸 Bilderna i quizet</h3>
+            <p>De fyra bilderna som visas är handplockade för maximal underhållning. De har <em>absolut ingenting</em> att göra med frågorna. Eller har de det...? 🤔</p>
+            
+            <p><strong>Skapat av:</strong> Kent Lundgren med hjälp av en AI som tvingades skriva fräcka skämt 😅</p>
+        </div>
+    </div>
+
+    <!-- Extern JavaScript-fil enligt best practice -->
+    <script src="script.js"></script>
+</body>
+</html>
+

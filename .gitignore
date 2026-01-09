@@ -1,0 +1,44 @@
+# Windows specifika filer
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS specifika filer
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Temporära filer
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+
+# Editor och IDE filer
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Node modules (om du använder Node.js)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build och dist mappar
+dist/
+build/
+.cache/
+
+# Log filer
+*.log
+
+# Övrigt
+.env
+.env.local

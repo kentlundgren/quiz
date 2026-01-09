@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simrishamns Kommunkostnader 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+        
+        .population-info {
+            background: linear-gradient(45deg, #27ae60, #229954);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            display: inline-block;
+            font-weight: bold;
+        }
+        
+        .header-buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .info-btn {
+            background: linear-gradient(45deg, #9b59b6, #8e44ad);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .info-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Här skedde en uppdatering - gjorde navigationsknapparna sticky så de alltid syns */
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+        
+        /* ALLA NAVIGATIONSKNAPPAR - NU GRÖNA! */
+        .toggle-btn {
+            background: linear-gradient(45deg, #27ae60, #229954);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .toggle-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+        }
+        
+        .toggle-btn.active {
+            background: linear-gradient(45deg, #16a085, #1abc9c);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .visual-comparison {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .visual-comparison h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+        }
+        
+        .comparison-visual {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 50px;
+            margin: 40px 0;
+            min-height: 400px;
+        }
+        
+        .cost-bar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 120px;
+        }
+        
+        .bar-visual {
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 20px 10px;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .bar-visual::after {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { top: -100%; }
+            100% { top: 100%; }
+        }
+        
+        .bar-visual:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .culture-bar {
+            background: linear-gradient(135deg, #c0392b, #a93226);
+            height: 60px;
+            width: 100px;
+        }
+        
+        .social-bar {
+            background: linear-gradient(135deg, #2980b9, #1f618d);
+            height: 600px;
+            width: 120px;
+        }
+        
+        .bar-label {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #2c3e50;
+            text-align: center;
+        }
+        
+        .bar-amount {
+            font-size: 1.4em;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        
+        .ratio-info {
+            text-align: center;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        
+        .social-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .social-toggle-btn {
+            background: linear-gradient(45deg, #9b59b6, #8e44ad);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .social-toggle-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .social-toggle-btn.active {
+            background: linear-gradient(45deg, #16a085, #1abc9c);
+        }
+        
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .chart-wrapper {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .chart-wrapper:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .chart-title {
+            font-size: 1.5em;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        
+        .chart {
+            position: relative;
+            height: 400px;
+        }
+        
+        .social-breakdown {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .social-item {
+            background: linear-gradient(135deg, #5dade2, #3498db);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .social-item:nth-child(1) { background: linear-gradient(135deg, #5dade2, #3498db); }
+        .social-item:nth-child(2) { background: linear-gradient(135deg, #3498db, #2980b9); }
+        .social-item:nth-child(3) { background: linear-gradient(135deg, #2980b9, #1f618d); }
+        .social-item:nth-child(4) { background: linear-gradient(135deg, #1f618d, #154360); }
+        .social-item:nth-child(5) { background: linear-gradient(135deg, #154360, #0b2838); }
+        
+        .social-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .social-item h4 {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        
+        .social-item .amount {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .social-item .per-capita {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .comparison {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        
+        .comparison.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .demographic-explanation {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .demographic-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-box {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .stat-box .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .stat-box .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        /* Här skedde en uppdatering - gjorde åldersstatistiken mer framträdande */
+        .stat-box.highlight {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(243, 156, 18, 0.3);
+            border: 3px solid #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: visible;
+        }
+
+        .stat-box.highlight:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 35px rgba(243, 156, 18, 0.4);
+        }
+
+        .stat-box.highlight .stat-number {
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-box.highlight .stat-label {
+            font-weight: bold;
+            opacity: 1;
+        }
+
+        /* Här skedde en uppdatering - tvingar tooltip att vara helt solid med flera lager */
+        .age-tooltip {
+            position: absolute;
+            top: 50%;
+            left: 120%;
+            transform: translateY(-50%);
+            background: #ffffff;
+            /* Flera lager för att säkerställa solid bakgrund */
+            background-color: #ffffff !important;
+            background-image: linear-gradient(#ffffff, #ffffff) !important;
+            color: #333333;
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            width: 350px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 9999;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            pointer-events: none;
+            /* Tvingar solid bakgrund på alla sätt */
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border: 3px solid #cccccc;
+            /* Extra säkerhet med box-shadow inset */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 0 0 1000px #ffffff;
+        }
+
+        /* Extra solid bakgrundslager */
+        .age-tooltip::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #ffffff;
+            border-radius: 15px;
+            z-index: -1;
+        }
+
+        .age-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -12px;
+            transform: translateY(-50%);
+            border: 12px solid transparent;
+            border-right-color: #ffffff;
+            z-index: 1;
+        }
+
+        .stat-box.highlight:hover .age-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .age-comparison {
+            margin: 10px 0;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            background-color: rgba(255, 255, 255, 0.3) !important;
+            border-radius: 8px;
+            border-left: 4px solid #f39c12;
+            /* Tvingar solid bakgrund */
+            backdrop-filter: none !important;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .age-comparison strong {
+            color: #333333;
+            font-weight: bold;
+        }
+
+        /* Här skedde en uppdatering - tvingar alla element i tooltip:en att vara helt solida */
+        .age-tooltip * {
+            background-color: inherit !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+
+        /* Här skedde en uppdatering - fixade så att age-comparison behåller sin bakgrund */
+        .age-tooltip h4,
+        .age-tooltip .age-comparison strong,
+        .age-tooltip .age-comparison em {
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+
+        /* Säkerställer att alla age-comparison boxar har solid bakgrund */
+        .age-tooltip .age-comparison {
+            background: rgba(255, 255, 255, 0.3) !important;
+            background-color: rgba(255, 255, 255, 0.3) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+
+        /* Här skedde en uppdatering - enhetlig aggressiv CSS för alla sektioner med olika färger */
+        
+        /* Simrishamn-sektion - orange tema */
+        .simrishamn-section {
+            background: #fff3e0 !important;
+            background-color: #fff3e0 !important;
+            background-image: linear-gradient(#fff3e0, #fff3e0) !important;
+            border: 3px solid #ff9800 !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            opacity: 1 !important;
+            box-shadow: inset 0 0 0 1000px #fff3e0 !important;
+        }
+
+        .simrishamn-section strong,
+        .simrishamn-section em {
+            background: transparent !important;
+            color: #333 !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+
+        /* Sverige-sektion - blå tema */
+        .sverige-section {
+            background: #e3f2fd !important;
+            background-color: #e3f2fd !important;
+            background-image: linear-gradient(#e3f2fd, #e3f2fd) !important;
+            border: 3px solid #2196f3 !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            opacity: 1 !important;
+            box-shadow: inset 0 0 0 1000px #e3f2fd !important;
+        }
+
+        .sverige-section strong,
+        .sverige-section em {
+            background: transparent !important;
+            color: #333 !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+
+        /* Lund-sektion - grön tema */
+        .lund-section {
+            background: #e8f5e8 !important;
+            background-color: #e8f5e8 !important;
+            background-image: linear-gradient(#e8f5e8, #e8f5e8) !important;
+            border: 3px solid #4caf50 !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            opacity: 1 !important;
+            box-shadow: inset 0 0 0 1000px #e8f5e8 !important;
+        }
+
+        .lund-section strong,
+        .lund-section em {
+            background: transparent !important;
+            color: #333 !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+        
+        .comparison-bars {
+            margin: 20px 0;
+        }
+        
+        .comparison-item {
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(236, 240, 241, 0.5);
+            border-radius: 15px;
+            position: relative;
+            cursor: help;
+        }
+        
+        .comparison-item:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .tooltip {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.9em;
+            width: 300px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 8px solid transparent;
+            border-top-color: #2c3e50;
+        }
+        
+        .comparison-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .comparison-values {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .value-box {
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            min-width: 120px;
+        }
+        
+        .value-box.simrishamn {
+            background: linear-gradient(45deg, #c0392b, #a93226);
+            color: white;
+        }
+        
+        .value-box.simrishamn.social {
+            background: linear-gradient(45deg, #2980b9, #1f618d);
+            color: white;
+        }
+        
+        .value-box.sweden {
+            background: linear-gradient(45deg, #e74c3c, #d35400);
+            color: white;
+        }
+        
+        .value-box.sweden.social {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+        }
+        
+        .progress-container {
+            background: #ecf0f1;
+            border-radius: 10px;
+            height: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(45deg, #c0392b, #a93226);
+            border-radius: 10px;
+            transition: width 1s ease;
+            width: 0%;
+        }
+        
+        .progress-bar.social {
+            background: linear-gradient(45deg, #2980b9, #1f618d);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #fff, #f8f9fa);
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 80%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #e74c3c;
+        }
+        
+        .modal h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        
+        .modal p, .modal ul {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .modal code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2em; }
+            .header-buttons { position: static; margin-top: 20px; }
+            .charts-container { grid-template-columns: 1fr; }
+            .social-grid { grid-template-columns: 1fr; }
+            .controls { flex-direction: column; align-items: center; }
+            .legend { flex-direction: column; align-items: center; }
+            .demographic-stats { grid-template-columns: repeat(2, 1fr); }
+            .comparison-visual { flex-direction: column; gap: 30px; height: auto; }
+            .modal-content { width: 95%; margin: 10% auto; }
+            .tooltip { display: none; }
+            
+            /* Här skedde en uppdatering - anpassade ålderstooltip för mobiler */
+            .age-tooltip {
+                width: 280px;
+                font-size: 0.8em;
+                padding: 15px;
+                /* På mobiler, visa tooltip ovanför istället för till höger */
+                top: -20px;
+                left: 50%;
+                transform: translate(-50%, -100%);
+            }
+            
+            .age-tooltip::after {
+                /* Pil nedåt för mobiler */
+                top: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+                border: 8px solid transparent;
+                border-top-color: #2c3e50;
+                border-right-color: transparent;
+            }
+            
+            .stat-box.highlight .stat-number {
+                font-size: 2.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-buttons">
+                <button class="info-btn" onclick="goBackToQuiz()">🎯 Tillbaka till Quiz</button>
+                <button class="info-btn" onclick="openModal('promptModal')">📝 Uppdrag</button>
+                <button class="info-btn" onclick="openModal('techModal')">💻 Teknik</button>
+            </div>
+            <h1>💰 Simrishamns Kommunkostnader 2025</h1>
+            <p class="subtitle">Interaktiv analys av <span style="color: #c0392b; font-weight: bold;">Kultur & Fritid</span> och <span style="color: #2980b9; font-weight: bold;">Sociala insatser</span></p>
+            <div class="population-info">👥 Befolkning: 19 000 invånare</div>
+        </div>
+        
+        <!-- Här skedde en uppdatering - flyttade navigationsknapparna högst upp så de alltid syns -->
+        <div class="controls">
+            <button class="toggle-btn" id="visualBtn" onclick="toggleView('visual')">📊 Visuell jämförelse</button>
+            <button class="toggle-btn" id="totalBtn" onclick="toggleView('total')">💸 Totala kostnader</button>
+            <button class="toggle-btn" id="perCapitaBtn" onclick="toggleView('perCapita')">👤 Per invånare</button>
+            <button class="toggle-btn active" id="comparisonBtn" onclick="toggleView('comparison')">📈 Sverige-jämförelse</button>
+        </div>
+        
+        <div class="visual-comparison">
+            <h2>🎯 Kostnadsjämförelse per invånare</h2>
+            <div class="comparison-visual">
+                <div class="cost-bar">
+                    <div class="bar-visual culture-bar">
+                        <div class="bar-amount">3 198 kr</div>
+                        <div style="font-size: 0.9em;">per invånare</div>
+                    </div>
+                    <div class="bar-label">
+                        <div>🎭 Kultur & Fritid</div>
+                        <div class="bar-amount">60,8 mkr/år</div>
+                    </div>
+                </div>
+                
+                <div class="cost-bar">
+                    <div class="bar-visual social-bar">
+                        <div class="bar-amount" style="font-size: 1.6em;">32 452 kr</div>
+                        <div style="font-size: 0.9em;">per invånare</div>
+                        <div style="margin-top: 10px; font-size: 0.8em; opacity: 0.8;">≈ 10× större</div>
+                    </div>
+                    <div class="bar-label">
+                        <div>🏥 Sociala insatser</div>
+                        <div class="bar-amount">615,6 mkr/år</div>
+                    </div>
+                </div>
+            </div>
+            <div class="ratio-info">
+                📊 Socialförvaltningen kostar 10,1 gånger mer än Kultur & Fritid per invånare
+            </div>
+        </div>
+        
+        <div class="social-breakdown" id="socialBreakdown" style="display: none;">
+            <h2 class="chart-title">🏥 Socialförvaltningens kostnader</h2>
+            <div class="social-controls">
+                <button class="social-toggle-btn active" id="coreOnlyBtn" onclick="toggleSocialView('core')">Kärnverksamhet</button>
+                <button class="social-toggle-btn" id="allSocialBtn" onclick="toggleSocialView('all')">Alla kostnader</button>
+            </div>
+            <div class="social-grid" id="socialGrid">
+                <!-- Kommer fyllas dynamiskt -->
+            </div>
+        </div>
+        
+        <div class="comparison active" id="comparisonSection">
+            <h2 class="chart-title">📊 Simrishamns demografiska "paradox"</h2>
+            
+            <div class="demographic-explanation">
+                <h3>🧓 Varför Simrishamn har höga sociala kostnader trots effektivitet</h3>
+                <p><strong>Paradoxen:</strong> Simrishamn har lägre kostnad per äldre invånare än riksgenomsnittet, men ändå högre total social kostnad per invånare. Förklaringen ligger i kommunens unika åldersstruktur.</p>
+                
+                <div class="demographic-stats">
+                    <!-- Här skedde en uppdatering - gjorde åldersstatistiken mer framträdande med tooltip -->
+                    <div class="stat-box highlight">
+                        <span class="stat-number">35.5%</span>
+                        <span class="stat-label">över 65 år</span>
+                        <div class="age-tooltip">
+                            <h4 style="margin-bottom: 15px; color: #333333;">📊 Åldersfördelning i jämförelse</h4>
+                            
+                            <!-- Här skedde en uppdatering - gav alla sektioner egna klasser för enhetlig styling -->
+                            <div class="age-comparison simrishamn-section">
+                                <strong>🏛️ Simrishamn:</strong> 35,5% över 65 år<br>
+                                <em>Extremt hög andel äldre invånare</em>
+                            </div>
+                            
+                            <div class="age-comparison sverige-section">
+                                <strong>🇸🇪 Sverige:</strong> ~20,8% över 65 år<br>
+                                <em>Simrishamn har 70% fler äldre än riksgenomsnittet</em>
+                            </div>
+                            
+                            <!-- Här skedde en uppdatering - gav Lund-sektionen en egen klass för att fixa transparensen -->
+                            <div class="age-comparison lund-section">
+                                <strong>🎓 Lund:</strong> ~17,4% över 65 år<br>
+                                <em>Simrishamn har över DUBBELT så många äldre som Lund</em>
+                            </div>
+                            
+                            <div style="margin-top: 15px; padding: 10px; background: rgba(243, 156, 18, 0.2); border-radius: 8px;">
+                                <strong>💡 Konsekvens:</strong> Den höga andelen äldre förklarar varför Simrishamns sociala kostnader är höga trots effektiv äldrevård.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number">18.0%</span>
+                        <span class="stat-label">65-74 år<br>(vs 10% riket)</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number">12.6%</span>
+                        <span class="stat-label">75-84 år<br>(vs 7% riket)</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number">20 761</span>
+                        <span class="stat-label">kr/äldre<br>(effektivt!)</span>
+                    </div>
+                </div>
+                
+                <p><strong>Slutsats:</strong> <span style="font-size: 1.2em; text-decoration: underline;">MÅNGA</span> äldre invånare × effektiv kostnad per äldre = <strong>Ändå hög total kostnad per invånare</strong></p>
+                <p><em>Den stora andelen äldre (35,5% vs riksgenomsnitt 20%) är den avgörande faktorn som driver upp Simrishamns totalkostnader trots effektiv äldrevård.</em></p>
+            </div>
+            
+            <div class="comparison-bars">
+                <div class="comparison-item">
+                    <div class="tooltip">
+                        <strong>Beräkningsgrund Kultur & Fritid:</strong><br>
+                        • SCB-data 2013: Kultur/fritid var mindre kategori<br>
+                        • Ekonomifakta: Kommunernas totalkostnader 868 mdr kr 2024<br>
+                        • Uppskattning: 5-6% av totala kostnader = ca 40-50 mdr kr<br>
+                        • Per invånare: 50 mdr ÷ 10,6 milj invånare ≈ 4 700 kr<br>
+                        • Simrishamn: 3 198 kr (32% lägre än uppskattat genomsnitt)
+                    </div>
+                    <div class="comparison-title">💰 Kultur & Fritid - Kostnad per invånare</div>
+                    <div class="comparison-values">
+                        <div class="value-box simrishamn">
+                            <div>Simrishamn</div>
+                            <div><strong>3 198 kr</strong></div>
+                        </div>
+                        <div class="value-box sweden">
+                            <div>Sverige (uppskattat)</div>
+                            <div><strong>4 700 kr</strong></div>
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="cultureProgress"></div>
+                    </div>
+                    <p style="margin-top: 10px; font-style: italic;">✅ Simrishamn: 32% lägre än uppskattat riksgenomsnitt</p>
+                </div>
+                
+                <div class="comparison-item">
+                    <div class="tooltip">
+                        <strong>Beräkningsgrund Sociala insatser:</strong><br>
+                        • SCB 2013: Äldre/funktionshindrade 17 590 kr per invånare<br>
+                        • Inflation 2013-2025: ca 35% = 23 747 kr<br>
+                        • + andra sociala insatser ≈ 30 000 kr per invånare<br>
+                        • Simrishamn: 32 452 kr (8% högre pga demografin)<br>
+                        • Förklaring: 35,5% över 65 år vs 20% riksgenomsnitt
+                    </div>
+                    <div class="comparison-title">🏥 Sociala insatser - Kostnad per invånare</div>
+                    <div class="comparison-values">
+                        <div class="value-box simrishamn social">
+                            <div>Simrishamn</div>
+                            <div><strong>32 452 kr</strong></div>
+                        </div>
+                        <div class="value-box sweden social">
+                            <div>Sverige (uppskattat)</div>
+                            <div><strong>30 000 kr</strong></div>
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar social" id="socialProgress"></div>
+                    </div>
+                    <p style="margin-top: 10px; font-style: italic;">📈 Simrishamn: 8% högre pga extremt hög andel äldre</p>
+                </div>
+                
+                <div class="comparison-item">
+                    <div class="tooltip">
+                        <strong>Beräkningsgrund Äldrevård:</strong><br>
+                        • Simrishamns kostnad: 394,5 mkr för äldrevård<br>
+                        • Äldre invånare: 35,5% av 19 000 = 6 745 personer<br>
+                        • Kostnad per äldre: 394,5 mkr ÷ 6 745 = 58 489 kr<br>
+                        • Riksgenomsnitt uppskattat: 70 000-80 000 kr<br>
+                        • Baserat på SCB äldre data och kostnadstrender<br>
+                        • Simrishamn är 16-26% mer effektiv
+                    </div>
+                    <div class="comparison-title">👴 Äldrevård - Kostnad per äldre invånare</div>
+                    <div class="comparison-values">
+                        <div class="value-box simrishamn social">
+                            <div>Simrishamn</div>
+                            <div><strong>58 489 kr</strong></div>
+                        </div>
+                        <div class="value-box sweden social">
+                            <div>Sverige (uppskattat)</div>
+                            <div><strong>70 000 kr</strong></div>
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar social" id="elderProgress"></div>
+                    </div>
+                    <p style="margin-top: 10px; font-style: italic;">✅ Simrishamn: 16% mer effektiv än uppskattat riksgenomsnitt</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="charts-container" id="chartsContainer" style="display: none;">
+            <div class="chart-wrapper">
+                <h2 class="chart-title">🎭 Kultur & Fritid</h2>
+                <div class="chart">
+                    <canvas id="cultureChart" width="400" height="300"></canvas>
+                </div>
+            </div>
+            
+            <div class="chart-wrapper">
+                <h2 class="chart-title">🏥 Sociala insatser</h2>
+                <div class="chart">
+                    <canvas id="socialChart" width="400" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(45deg, #c0392b, #a93226);"></div>
+                <span>Kultur & Fritid: 60.8 mkr/år</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(45deg, #2980b9, #1f618d);"></div>
+                <span>Sociala insatser: 615.6 mkr/år</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal för uppdragsbeskrivning -->
+    <div id="promptModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('promptModal')">&times;</span>
+            <h2>📝 Ursprungliga uppdraget</h2>
+            <p><strong>Primärt uppdrag:</strong> Skapa en kreativ, visuell, interaktiv och responsiv visualisering som visar årskostnader totalt och per invånare för Kultur & Fritid samt Socialförvaltningen i Simrishamns kommun.</p>
+            
+            <h3>🎯 Specifika krav:</h3>
+            <ul>
+                <li>Visa <strong>tydliga proportioner</strong> mellan kostnaderna (Sociala insatser ≈ 10x Kultur & Fritid)</li>
+                <li>Dela upp sociala kostnader i: Barn & Unga, Vuxna, Äldre</li>
+                <li>Jämför med svenska genomsnittsvärden</li>
+                <li>Förklara Simrishamns demografiska "paradox"</li>
+                <li>Toggle mellan kärnverksamhet och alla kostnader inom socialförvaltningen</li>
+            </ul>
+            
+            <h3>📊 Datagrund:</h3>
+            <ul>
+                <li><strong>Kultur & Fritid:</strong> 60.757 mkr/år (3 198 kr/invånare)</li>
+                <li><strong>Sociala insatser:</strong> 615.583 mkr/år (32 452 kr/invånare)</li>
+                <li><strong>Befolkning:</strong> 19 000 invånare</li>
+                <li><strong>Demografisk utmaning:</strong> 35.5% över 65 år</li>
+            </ul>
+            
+            <h3>🔄 Utvecklingsprocess:</h3>
+            <p>Visualiseringen utvecklades iterativt baserat på feedback om:</p>
+            <ul>
+                <li>Fungerande jämförelseknappar</li>
+                <li>Bättre visuella proportioner</li>
+                <li>Tooltips för beräkningsmetoder</li>
+                <li>Modala fönster för dokumentation</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Modal för teknisk information -->
+    <div id="techModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('techModal')">&times;</span>
+            <h2>💻 Teknisk implementering</h2>
+            
+            <h3>🛠 Teknisk stack:</h3>
+            <ul>
+                <li><strong>HTML5:</strong> Struktur och semantik, canvas för diagramritning</li>
+                <li><strong>CSS3:</strong> Styling, animationer, responsiv design, gradients</li>
+                <li><strong>Vanilla JavaScript:</strong> Interaktivitet, datahhantering, canvas-ritning</li>
+            </ul>
+            
+            <h3>🎨 CSS-tekniker:</h3>
+            <ul>
+                <li><code>backdrop-filter: blur()</code> - Glasmorphism effekt</li>
+                <li><code>CSS Grid & Flexbox</code> - Responsiv layout</li>
+                <li><code>Linear gradients</code> - Moderna färgövergångar</li>
+                <li><code>CSS Animations</code> - Shimmer, fade-in, hover effekter</li>
+                <li><code>Transform & transition</code> - Mjuka interaktioner</li>
+            </ul>
+            
+            <h3>⚙️ JavaScript-funktioner:</h3>
+            <ul>
+                <li><strong>Canvas API:</strong> Ritning av cirkeldiagram med Canvas 2D Context</li>
+                <li><strong>DOM Manipulation:</strong> Dynamisk uppdatering av innehåll</li>
+                <li><strong>Event Handling:</strong> Klick, hover, modal-hantering</li>
+                <li><strong>Responsive Design:</strong> MediaQuery-baserade anpassningar</li>
+                <li><strong>Data Visualization:</strong> Proportionella staplar och cirkeldiagram</li>
+            </ul>
+            
+            <h3>📱 Responsivitet:</h3>
+            <p>Designen anpassas för olika skärmstorlekar med:</p>
+            <ul>
+                <li>Flexibel grid-layout som kollapsar på mobil</li>
+                <li>Tooltips som döljs på touch-enheter</li>
+                <li>Anpassade fontstorlekar och avstånd</li>
+                <li>Mobilvänliga knappar och interaktioner</li>
+            </ul>
+            
+            <h3>🎯 Designprinciper:</h3>
+            <ul>
+                <li><strong>Progressive Enhancement:</strong> Fungerar utan JavaScript</li>
+                <li><strong>Accessibility:</strong> Semantisk HTML och kontrast</li>
+                <li><strong>Performance:</strong> Ingen externa beroenden</li>
+                <li><strong>UX:</strong> Tydliga visuella hierarkier och feedback</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        // Data för Simrishamns kommun med uppdaterade svenska genomsnitt
+        const data = {
+            culture: {
+                total: 60.757,
+                perCapita: 3198,
+                swedenAvg: 4700 // Baserat på uppskattning från totalkostnader
+            },
+            social: {
+                total: 615.583,
+                perCapita: 32452,
+                swedenAvg: 30000, // Baserat på SCB 2013 + inflation + tillägg
+                breakdown: {
+                    young: { total: 38.408, perCapita: 2021, label: '👶 Barn & Unga' },
+                    adult: { total: 167.242, perCapita: 8802, label: '👨‍💼 Vuxna' },
+                    elder: { total: 394.466, perCapita: 20761, label: '👴 Äldre' },
+                    quality: { total: 14.657, perCapita: 771, label: '📋 Kvalitet/Ledning' },
+                    political: { total: 1.810, perCapita: 95, label: '🏛️ Politisk verksamhet' }
+                }
+            }
+        };
+        
+        let currentView = 'comparison';
+        let socialView = 'core';
+        
+        function toggleView(view) {
+            // Uppdatera knappar
+            document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(view + 'Btn').classList.add('active');
+            
+            currentView = view;
+            
+            // Här skedde en uppdatering - tog bort .visual-comparison från 'total' och 'perCapita' vyerna
+            // så att visuella jämförelsen bara visas när man klickar på "Visuell jämförelse"
+            const sections = {
+                'visual': ['.visual-comparison'],
+                'total': ['#socialBreakdown', '#chartsContainer'],
+                'perCapita': ['#socialBreakdown', '#chartsContainer'],
+                'comparison': ['#comparisonSection']
+            };
+            
+            // Dölj alla sektioner först
+            document.querySelectorAll('.visual-comparison, #socialBreakdown, #chartsContainer, #comparisonSection').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            // Visa relevanta sektioner
+            if (sections[view]) {
+                sections[view].forEach(selector => {
+                    const element = document.querySelector(selector);
+                    if (element) {
+                        element.style.display = view === 'comparison' ? 'block' : 
+                                              selector === '#chartsContainer' ? 'grid' : 'block';
+                    }
+                });
+            }
+            
+            if (view === 'comparison') {
+                animateProgressBars();
+            } else {
+                updateSocialBreakdown();
+                if (view !== 'visual') {
+                    drawCharts();
+                }
+            }
+        }
+        
+        function toggleSocialView(view) {
+            document.querySelectorAll('.social-toggle-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(view === 'core' ? 'coreOnlyBtn' : 'allSocialBtn').classList.add('active');
+            
+            socialView = view;
+            updateSocialBreakdown();
+            
+            if (currentView !== 'comparison' && currentView !== 'visual') {
+                drawCharts();
+            }
+        }
+        
+        function updateSocialBreakdown() {
+            const grid = document.getElementById('socialGrid');
+            grid.innerHTML = '';
+            
+            const itemsToShow = socialView === 'core' 
+                ? ['young', 'adult', 'elder'] 
+                : ['young', 'adult', 'elder', 'quality', 'political'];
+            
+            itemsToShow.forEach((key, index) => {
+                const item = data.social.breakdown[key];
+                const div = document.createElement('div');
+                div.className = 'social-item';
+                
+                let totalText, perCapitaText;
+                if (currentView === 'total') {
+                    totalText = item.total.toFixed(1) + ' mkr';
+                    perCapitaText = item.perCapita.toLocaleString() + ' kr/inv';
+                } else if (currentView === 'perCapita') {
+                    totalText = item.perCapita.toLocaleString() + ' kr';
+                    perCapitaText = 'per invånare';
+                } else {
+                    totalText = item.total.toFixed(1) + ' mkr';
+                    perCapitaText = item.perCapita.toLocaleString() + ' kr/inv';
+                }
+                
+                div.innerHTML = `
+                    <h4>${item.label}</h4>
+                    <div class="amount">${totalText}</div>
+                    <div class="per-capita">${perCapitaText}</div>
+                `;
+                
+                grid.appendChild(div);
+            });
+        }
+        
+        function animateProgressBars() {
+            setTimeout(() => {
+                const culturePercent = (data.culture.perCapita / data.culture.swedenAvg) * 100;
+                const socialPercent = (data.social.perCapita / data.social.swedenAvg) * 100;
+                const elderPercent = (58489 / 70000) * 100; // Kostnad per äldre invånare
+                
+                document.getElementById('cultureProgress').style.width = Math.min(culturePercent, 100) + '%';
+                document.getElementById('socialProgress').style.width = Math.min(socialPercent, 100) + '%';
+                document.getElementById('elderProgress').style.width = Math.min(elderPercent, 100) + '%';
+            }, 500);
+        }
+        
+        function drawCharts() {
+            drawPieChart('cultureChart', [
+                { label: 'Kultur & Fritid', value: currentView === 'total' ? data.culture.total : data.culture.perCapita, color: '#c0392b' }
+            ], currentView === 'total' ? 'miljoner kr' : 'kr per invånare');
+            
+            const itemsToShow = socialView === 'core' 
+                ? ['young', 'adult', 'elder'] 
+                : ['young', 'adult', 'elder', 'quality', 'political'];
+            
+            const colors = ['#5dade2', '#3498db', '#2980b9', '#1f618d', '#154360']; // Olika blå nyanser
+            const socialData = itemsToShow.map((key, index) => ({
+                label: data.social.breakdown[key].label.replace(/[👶👨‍💼👴📋🏛️]/g, '').trim(),
+                value: currentView === 'total' ? data.social.breakdown[key].total : data.social.breakdown[key].perCapita,
+                color: colors[index]
+            }));
+            
+            drawPieChart('socialChart', socialData, currentView === 'total' ? 'miljoner kr' : 'kr per invånare');
+        }
+        
+        function drawPieChart(canvasId, data, unit) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = Math.min(centerX, centerY) - 50;
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const total = data.reduce((sum, item) => sum + item.value, 0);
+            let currentAngle = -Math.PI / 2;
+            
+            data.forEach((item, index) => {
+                const sliceAngle = (item.value / total) * 2 * Math.PI;
+                
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, radius, currentAngle, currentAngle + sliceAngle);
+                ctx.lineTo(centerX, centerY);
+                ctx.fillStyle = item.color;
+                ctx.fill();
+                
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+                
+                if (item.value / total > 0.1) {
+                    const labelAngle = currentAngle + sliceAngle / 2;
+                    const labelRadius = radius * 0.7;
+                    const labelX = centerX + Math.cos(labelAngle) * labelRadius;
+                    const labelY = centerY + Math.sin(labelAngle) * labelRadius;
+                    
+                    ctx.fillStyle = '#fff';
+                    ctx.font = 'bold 12px Segoe UI';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(item.label, labelX, labelY - 5);
+                    
+                    const valueText = unit.includes('miljoner') ? 
+                        item.value.toFixed(1) + 'M' : 
+                        item.value.toLocaleString() + 'kr';
+                    ctx.font = 'bold 10px Segoe UI';
+                    ctx.fillText(valueText, labelX, labelY + 10);
+                }
+                
+                currentAngle += sliceAngle;
+            });
+            
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius * 0.4, 0, 2 * Math.PI);
+            ctx.fillStyle = '#fff';
+            ctx.fill();
+            
+            ctx.fillStyle = '#2c3e50';
+            ctx.font = 'bold 16px Segoe UI';
+            ctx.textAlign = 'center';
+            const totalText = unit.includes('miljoner') ? 
+                total.toFixed(1) + ' mkr' : 
+                total.toLocaleString() + ' kr';
+            ctx.fillText('Totalt', centerX, centerY - 8);
+            ctx.font = 'bold 14px Segoe UI';
+            ctx.fillText(totalText, centerX, centerY + 12);
+        }
+        
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+        
+        // Här skedde en uppdatering - ny funktion för att gå tillbaka till quizet
+        function goBackToQuiz() {
+            // Gå tillbaka till index.html (quizet)
+            window.location.href = 'index.html';
+        }
+        
+        // Stäng modal vid klick utanför
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+        
+        // Initialisera
+        setTimeout(() => {
+            toggleView('comparison');
+        }, 100);
+    </script>
+</body>
+</html>

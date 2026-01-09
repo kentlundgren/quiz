@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Kultur- och fritidsnämnden september 2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <!-- All styling finns i extern CSS-fil enligt användarens regler -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="quiz-container" role="main">
+        <header class="quiz-header">
+            <h1 class="quiz-title">Quiz: Kultur- och fritidsnämnden</h1>
+            <p class="quiz-subtitle">September 2025</p>
+            <div class="progress-bar" aria-hidden="true">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </header>
+
+        <!-- Inledande texter i flera sidor före quizet -->
+        <!-- Här skedde en uppdatering: Lade till sidindikator för att visa progression -->
+        <section id="introSection" class="intro-section" aria-live="polite">
+            <div class="intro-card">
+                <!-- Sidindikator med text och visuella prickar -->
+                <div class="page-indicator">
+                    <div class="page-number" id="pageNumber">Sida 1 av 5</div>
+                    <div class="page-dots" id="pageDots"></div>
+                </div>
+                <h2 class="intro-title" id="introPageTitle"></h2>
+                <div class="intro-body" id="introPageBody"></div>
+                <div class="intro-nav">
+                    <button class="secondary-btn" id="introPrevBtn" type="button" aria-label="Föregående" disabled>⬅️ Föregående</button>
+                    <button class="primary-btn" id="introNextBtn" type="button" aria-label="Nästa">Nästa ➡️</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Startskärm med bild och knapp för att gå vidare till quizet -->
+        <section id="imageSection" class="image-section" aria-labelledby="introTitle">
+            <img id="introImage" src="september.jpg" alt="Septemberbild för kultur- och fritidsnämnden" class="quiz-image">
+            <p class="image-text" id="introTitle">Kultur- och fritidsnämnden - september 2025</p>
+            <button class="continue-btn" id="continueBtn" type="button">Gå vidare till Quiz ➡️</button>
+        </section>
+
+        <!-- Själva quiz-innehållet renderas dynamiskt via JavaScript -->
+        <section id="quizContent" class="hidden" aria-live="polite"></section>
+    </main>
+
+    <!-- Floating action buttons för teknisk info och prompt -->
+    <div class="floating-buttons">
+        <button class="floating-btn tech-btn" id="techBtn" title="Teknisk beskrivning">🔧</button>
+        <button class="floating-btn prompt-btn" id="promptBtn" title="Visa prompt">📄</button>
+    </div>
+
+    <!-- Modal: Teknisk beskrivning -->
+    <div id="techModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="techTitle">
+        <div class="modal-content">
+            <span class="close" data-close="#techModal" aria-label="Stäng">&times;</span>
+            <h2 id="techTitle">🔧 Teknisk beskrivning</h2>
+            <p><strong>Struktur:</strong> HTML5 (semantisk), extern CSS och JavaScript. Återanvänd teknik från <code>quiz.html</code> men utan att ändra den filen.</p>
+            <ul>
+                <li><strong>UI:</strong> Responsivt design, progressbar, startskärm med bild och knapp</li>
+                <li><strong>Tillgänglighet:</strong> ARIA-attribut på dynamiska sektioner</li>
+                <li><strong>Interaktion:</strong> Val med färgkodning (grön/röd), gul bakgrund på inputfält</li>
+                <li><strong>Kommentarer:</strong> Tydliga kommentarer i koden om vad som händer</li>
+                <li><strong>Filer:</strong> Separata filer - index.html, styles.css och script.js</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Modal: Prompt/underlag -->
+    <div id="promptModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="promptTitle">
+        <div class="modal-content">
+            <span class="close" data-close="#promptModal" aria-label="Stäng">&times;</span>
+            <h2 id="promptTitle">📄 Underlag & Källor</h2>
+            <p>Quiz: Kultur- och fritidsnämnden september 2025</p>
+            <p><strong>Frågor och fördjupade förklaringar hämtade ur kommunens rapporter:</strong></p>
+            <ul>
+                <li>Simrishamns kommun (2025) Delårsrapport 2025</li>
+                <li>Simrishamns kommun (2025) Månadsrapport september 2025</li>
+            </ul>
+            <p><strong>Teoretisk grund för tillitsbaserat ledarskap och tillförlitlig organisering:</strong></p>
+            <ul>
+                <li><a href="https://snsse.cdn.triggerfish.cloud/uploads/2023/02/tillforlitlig-styrning-och-organisering-av-valfarden.pdf" target="_blank" rel="noopener noreferrer">Björk, L. och Tengblad, S. (red.) (2023). Tillförlitlig styrning och organisering av välfärden. Stockholm: SNS Förlag.</a></li>
+                <li><a href="https://controllerutangranser.wordpress.com/2025/09/26/tillitsbaserat-ledarskap-en-djupdykning-i-teori-och-praktik/" target="_blank" rel="noopener noreferrer">Controller utan gränser (2025). "Tillitsbaserat ledarskap – en djupdykning i teori och praktik"</a></li>
+            </ul>
+            <p>I löptext används citat med sidnummer enligt referenserna ovan.</p>
+        </div>
+    </div>
+
+    <!-- All JavaScript finns i extern JS-fil enligt användarens regler -->
+    <script src="script.js" defer></script>
+</body>
+</html>
+

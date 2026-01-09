@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Årsbokslut och Årsredovisning - En guide för kommunalt anställda</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Extern CSS-fil enligt användarens preferenser (regel 1-3) -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="quiz-container" role="main">
+        <header class="quiz-header">
+            <div class="quiz-header-content">
+                <div class="quiz-header-text">
+                    <h1 class="quiz-title">Quiz: Årsbokslut och Årsredovisning</h1>
+                    <p class="quiz-subtitle">En guide för kommunalt anställda i Simrishamn</p>
+                </div>
+                <a href="https://kentlundgren.se/program/quiz/0/" class="all-quiz-btn" target="_blank" rel="noopener noreferrer" title="Se alla Fredagsquiz">
+                    📚 Alla Quiz
+                </a>
+            </div>
+            <div class="progress-bar" aria-hidden="true">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </header>
+
+        <!-- Inledande texter i fem sidor före quizet -->
+        <!-- Här presenteras grundläggande information om årsbokslut och årsredovisning -->
+        <section id="introSection" class="intro-section" aria-live="polite">
+            <div class="intro-card">
+                <!-- Sidindikator med text och visuella prickar -->
+                <div class="page-indicator">
+                    <div class="page-number" id="pageNumber">Sida 1 av 5</div>
+                    <div class="page-dots" id="pageDots"></div>
+                </div>
+                <h2 class="intro-title" id="introPageTitle"></h2>
+                <div class="intro-body" id="introPageBody"></div>
+                <div class="intro-nav">
+                    <button class="secondary-btn" id="introPrevBtn" type="button" aria-label="Föregående" disabled>⬅️ Föregående</button>
+                    <button class="primary-btn" id="introNextBtn" type="button" aria-label="Nästa">Nästa ➡️</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Startskärm med växlande bilder och knapp för att gå vidare till quizet -->
+        <!-- Bilderna arsredovisning_2021.jpg och arsredovisning_2024.jpg växlar automatiskt var 3:e sekund -->
+        <section id="imageSection" class="image-section hidden" aria-labelledby="introTitle">
+            <div class="quiz-image-container">
+                <img id="img1" src="arsredovisning_2021.jpg" alt="Årsredovisning 2021" class="quiz-image active">
+                <img id="img2" src="arsredovisning_2024.jpg" alt="Årsredovisning 2024" class="quiz-image">
+            </div>
+            <p class="image-text" id="introTitle">Nu är du redo! Testa dina kunskaper om årsbokslut och årsredovisning! 🎯</p>
+            <button class="continue-btn" id="continueBtn" type="button">Gå vidare till Quiz ➡️</button>
+        </section>
+
+        <!-- Själva quiz-innehållet renderas dynamiskt via JavaScript -->
+        <section id="quizContent" class="hidden" aria-live="polite"></section>
+    </main>
+
+    <!-- Floating action buttons för teknisk info och källor -->
+    <div class="floating-buttons">
+        <button class="floating-btn tech-btn" id="techBtn" title="Teknisk beskrivning">🔧</button>
+        <button class="floating-btn prompt-btn" id="promptBtn" title="Visa källor">📄</button>
+    </div>
+
+    <!-- Modal: Teknisk beskrivning -->
+    <div id="techModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="techTitle">
+        <div class="modal-content">
+            <span class="close" data-close="#techModal" aria-label="Stäng">&times;</span>
+            <h2 id="techTitle">🔧 Teknisk beskrivning</h2>
+            
+            <h3>Struktur och organisation</h3>
+            <p><strong>Filstruktur:</strong> Detta quiz är byggt med separation of concerns-principen, där HTML, CSS och JavaScript är uppdelade i separata filer:</p>
+            <ul>
+                <li><strong>index.html:</strong> Innehåller HTML-strukturen och semantisk markup</li>
+                <li><strong>styles.css:</strong> All styling och responsiv design</li>
+                <li><strong>script.js:</strong> All JavaScript-logik och interaktivitet</li>
+            </ul>
+            
+            <div class="info-box">
+                <strong>💡 Varför separata filer?</strong>
+                <p>Att dela upp kod i separata filer ger flera fördelar:</p>
+                <ul>
+                    <li><strong>Underhållbarhet:</strong> Lättare att hitta och uppdatera specifik kod</li>
+                    <li><strong>Återanvändbarhet:</strong> CSS och JavaScript kan användas i flera HTML-filer</li>
+                    <li><strong>Läsbarhet:</strong> Tydligare struktur och mindre filer att hantera</li>
+                    <li><strong>Cachning:</strong> Webbläsaren kan cacha CSS och JS separat för bättre prestanda</li>
+                    <li><strong>Samarbete:</strong> Flera utvecklare kan arbeta med olika filer samtidigt</li>
+                    <li><strong>Best practice:</strong> Följer webbutvecklingens standarder och konventioner</li>
+                </ul>
+            </div>
+            
+            <h3>Teknisk implementation</h3>
+            <ul>
+                <li><strong>HTML5:</strong> Semantisk markup med ARIA-attribut för tillgänglighet</li>
+                <li><strong>CSS3:</strong> Responsiv design med CSS-variabler och flexbox</li>
+                <li><strong>JavaScript (ES6+):</strong> Modern JavaScript med arrow functions, template literals och DOM-manipulation</li>
+                <li><strong>UI:</strong> Progressbar, sidindikator med klickbara prickar, växlande bilder</li>
+                <li><strong>Bildväxling:</strong> Automatisk växling mellan arsredovisning_2021.jpg och arsredovisning_2024.jpg var 3:e sekund</li>
+                <li><strong>Interaktion:</strong> Val med färgkodning (grön/röd), gul bakgrund på inputfält (regel 18)</li>
+                <li><strong>Responsivitet:</strong> Fungerar på både dator och mobil</li>
+            </ul>
+            
+            <h3>Skapad information</h3>
+            <p><strong>Skapad:</strong> 2025-11-20 med AI-assistans (Claude 4.5 Sonnet)</p>
+            <p><strong>Baserad på:</strong> Blogg om årsbokslut och årsredovisning samt instruktioner från Simrishamns kommun</p>
+            <p><strong>Skapad 2025-11-20:</strong> Nytt quiz om årsbokslut och årsredovisning med fokus på viktiga datum, periodisering, verksamhetsberättelser och skillnader mellan begreppen. Programmet återanvänder samma teknik som tidigare quiz med separata filer för HTML, CSS och JavaScript.</p>
+        </div>
+    </div>
+
+    <!-- Modal: Källor och underlag -->
+    <div id="promptModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="promptTitle">
+        <div class="modal-content">
+            <span class="close" data-close="#promptModal" aria-label="Stäng">&times;</span>
+            <h2 id="promptTitle">📄 Källor & Referenser</h2>
+            <p>Quiz: Årsbokslut och Årsredovisning - En guide för kommunalt anställda</p>
+            <p><strong>Frågor och fördjupade förklaringar baserade på (i Harvard-format):</strong></p>
+            
+            <div class="info-box">
+                <strong>📚 Om detta quiz</strong>
+                <p>Detta quiz är skapat för att hjälpa kommunalt anställda i Simrishamn att förstå årsbokslutsprocessen och årsredovisningens struktur. Materialet baseras på officiella instruktioner och den kommunala redovisningslagen.</p>
+            </div>
+            
+            <h3>Primära källor - Simrishamns kommun</h3>
+            <ul>
+                <li><a href="Instruktioner_till arsbokslut_2025.pdf" target="_blank" rel="noopener noreferrer">Simrishamns kommun (2025a) <em>Instruktioner till årsbokslut 2025</em></a>. Simrishamn: Kommunledningskontoret, Ekonomiavdelningen.</li>
+                <li><a href="Instruktioner__till_arsredovisning_2025.pdf" target="_blank" rel="noopener noreferrer">Simrishamns kommun (2025b) <em>Instruktioner till årsredovisning 2025</em></a>. Simrishamn: Kommunledningskontoret, Ekonomiavdelningen.</li>
+                <li><a href="Investeringsriktlinjer_Simrishamns_kommun.pdf" target="_blank" rel="noopener noreferrer">Simrishamns kommun (2022) <em>Investeringsriktlinjer för Simrishamns kommun</em>. KS 2022-03-16, §37, Dnr KS 2021/357</a>. Simrishamn: Kommunledningskontoret.</li>
+            </ul>
+            
+            <h3>Lagstiftning och rekommendationer</h3>
+            <ul>
+                <li>Sveriges Riksdag (2018) <em>Lag (2018:597) om kommunal bokföring och redovisning</em>. Stockholm: Finansdepartementet. Tillgänglig: <a href="https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-2018597-om-kommunal-bokforing-och_sfs-2018-597/" target="_blank" rel="noopener noreferrer">riksdagen.se</a> [Hämtad: 2025-11-20].</li>
+                <li>Rådet för kommunal redovisning (RKR) (2021) <em>RKR R14 Drift- och investeringsredovisning</em>. Stockholm: RKR. Tillgänglig: <a href="https://www.rkr.se/" target="_blank" rel="noopener noreferrer">rkr.se</a> [Hämtad: 2025-11-20].</li>
+                <li>Rådet för kommunal redovisning (RKR) (2024) <em>RKR R15 Förvaltningsberättelse</em>. Stockholm: RKR. Tillgänglig: <a href="https://www.rkr.se/" target="_blank" rel="noopener noreferrer">rkr.se</a> [Hämtad: 2025-11-20].</li>
+            </ul>
+            
+            <h3>Blogg och sekundära källor</h3>
+            <ul>
+                <li>Lundgren, K. (2025) <em>Årsbokslut och årsredovisning: En guide</em>. Controller utan gränser, 20 november. Tillgänglig: <a href="https://controllerutangranser.wordpress.com/2025/11/20/arsbokslut-och-arsredovisning-en-guide/" target="_blank" rel="noopener noreferrer">controllerutangranser.wordpress.com</a> [Hämtad: 2025-11-20].</li>
+                <li>Sveriges Kommuner och Regioner (SKR) (2024) <em>Vägledning för kommunal redovisning</em>. Stockholm: SKR.</li>
+                <li>Helsingborg stad (2024) <em>Instruktioner för årsbokslut och årsredovisning 2024</em>. Helsingborg: Ekonomikontoret.</li>
+                <li>Landskrona stad (2025) <em>Tidplan för årsbokslut och årsredovisning 2025</em>. Landskrona: Ekonomienheten.</li>
+            </ul>
+            
+            <h3>💡 Mer information</h3>
+            <p>För fullständig information om årsbokslut och årsredovisning i din kommun, kontakta din ekonomifunktion eller controller.</p>
+            <p><strong>Läs mer på bloggen:</strong> <a href="https://controllerutangranser.wordpress.com/2025/11/20/arsbokslut-och-arsredovisning-en-guide/" target="_blank" rel="noopener noreferrer">Årsbokslut och årsredovisning: En guide</a></p>
+        </div>
+    </div>
+
+    <!-- Extern JavaScript-fil enligt användarens preferenser (regel 1-3) -->
+    <script src="script.js"></script>
+</body>
+</html>
+

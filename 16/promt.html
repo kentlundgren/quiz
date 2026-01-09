@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ursprunglig Prompt – Kultur- och Fritidsanalys</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Source+Sans+Pro:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================
+           CSS för Prompt-sidan
+           Visar den ursprungliga prompten som skapade quizet
+           ============================================ */
+        
+        :root {
+            --primary-color: #0d9488;
+            --primary-hover: #0f766e;
+            --accent-color: #f97316;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --card-bg: #ffffff;
+            --code-bg: #1e293b;
+            --border-radius: 12px;
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans Pro', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0d9488 0%, #065f53 50%, #0d9488 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+            padding: 30px;
+            color: white;
+            text-align: center;
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro-box {
+            background: #ccfbf1;
+            border-left: 4px solid var(--primary-color);
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        .intro-box h2 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .intro-box p {
+            line-height: 1.7;
+            color: var(--text-primary);
+        }
+
+        .prompt-container {
+            background: var(--code-bg);
+            border-radius: 8px;
+            padding: 30px;
+            overflow-x: auto;
+        }
+
+        .prompt-text {
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+            color: #e2e8f0;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .prompt-text .section-title {
+            color: #f97316;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: block;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #475569;
+            padding-bottom: 5px;
+        }
+
+        .prompt-text .subsection {
+            color: #22d3ee;
+            font-weight: 600;
+        }
+
+        .prompt-text .highlight {
+            color: #a5f3fc;
+            font-weight: 500;
+        }
+
+        .prompt-text .step {
+            color: #fbbf24;
+            font-weight: 600;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary-color);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .meta-info {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e2e8f0;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .meta-info p {
+            margin-bottom: 8px;
+        }
+
+        .meta-info a {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
+        .meta-info a:hover {
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .prompt-container {
+                padding: 15px;
+            }
+
+            .prompt-text {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📝 Ursprunglig Prompt</h1>
+            <p>Den AI-prompt som skapade quizet "Fritidskortet möter Kulturskolan"</p>
+        </header>
+
+        <div class="content">
+            <div class="intro-box">
+                <h2>💡 Vad är detta?</h2>
+                <p>Nedan visas den ursprungliga prompten som användes för att instruera AI-assistenten (Claude) att skapa bloggtexten, slides och quizfrågorna om Fritidskortet och Kulturskolan. Prompten visar hur man kan strukturera ett komplext uppdrag i flera steg för att få ett genomarbetat resultat.</p>
+            </div>
+
+            <div class="prompt-container">
+                <div class="prompt-text"><span class="section-title">PROMPT FÖR KULTUR- OCH FRITIDSANALYS (Tredelt uppdrag)</span>
+
+<span class="section-title">UPPDRAGETS STRUKTUR</span>
+Detta är ett tredelt uppdrag som ska genomföras i följande steg:
+
+<span class="step">STEG 1:</span> Temaidentifiering och godkännande
+<span class="step">STEG 2:</span> Bloggtext (3000 ord)
+<span class="step">STEG 3:</span> Slides (5 st) och Quiz (5 frågor)
+
+<span class="section-title">STEG 1: TEMAIDENTIFIERING OCH GODKÄNNANDE</span>
+
+<span class="subsection">Instruktion:</span>
+
+Genomför en web search för att identifiera aktuella händelser, 
+nyheter och fenomen inom kultur- och fritidsområdet i södra 
+Sverige/Skåne under den senaste veckan.
+
+Baserat på din analys, föreslå <span class="highlight">ETT konkret tema</span> för bloggtexten. 
+Tänkbara temaområden kan vara:
+
+• Hållbarhet inom kultur och fritid
+• Kulturarv och bevarande
+• Ungas fritid och ungdomskultur
+• Konst och teknologi
+• Folkbildning och demokrati
+• Inkludering och tillgänglighet
+• Andra aktuella teman du identifierar
+
+<span class="subsection">Presentera ditt föreslagna tema med:</span>
+
+• Tematitel
+• Kort motivering (varför just detta tema är aktuellt nu)
+• Vilka aktuella händelser/nyheter som ligger till grund för valet
+• Eventuell koppling till kulturkanon och/eller design (om relevant)
+
+<span class="highlight">⚠️ VÄNTA PÅ ANVÄNDARENS GODKÄNNANDE innan du fortsätter till steg 2.</span>
+
+<span class="section-title">STEG 2: BLOGGTEXT (efter godkänt tema)</span>
+
+<span class="subsection">Ramverk:</span>
+
+• Omfattning: Ca 3000 ord
+• Språk: Svenska
+• Målgrupp: Tjänstemän inom kultur och fritid i svenska kommuner
+• Ton: Balanserat akademisk med några kul och anmärkningsvärda inslag
+• Blogg: https://controllerutangranser.wordpress.com/
+
+<span class="subsection">Geografisk avgränsning:</span>
+
+• <span class="highlight">Primärt fokus:</span> Simrishamn kommun (18 000 invånare, sydöstra Skåne)
+• <span class="highlight">Sekundärt fokus:</span> Jämförelser med Lunds kommun kan göras om det 
+  är relevant och lämpligt för analysen
+• Kontext: Södra Sverige/Skåne
+
+<span class="subsection">Innehållskrav:</span>
+
+• Utgå från det godkända temat och aktuella händelser
+• Gör kopplingar till kulturkanon där så är möjligt
+• Integrera designperspektiv där det är relevant
+• Inkludera konkreta exempel från Simrishamn kommun (och eventuellt Lund)
+• Använd <span class="highlight">Harvardstil</span> för källhänvisningar där det är lämpligt
+• Verifiera att eventuella länkar till källor fungerar
+• Föreslå minst EN bild/illustration som passar texten 
+  (beskriv innehåll och eventuell bildkälla)
+
+<span class="subsection">Format:</span>
+
+• Textformat som kan klistras direkt in i WordPress-blogg
+• Tydlig struktur med rubriker och underrubriker
+• Välformaterad för god läsbarhet
+
+<span class="section-title">STEG 3A: SLIDES (5 st)</span>
+
+Skapa 5 slides i textformat som sammanfattar bloggtexten:
+
+<span class="subsection">Format för varje slide:</span>
+
+SLIDE [nummer]: [Rubrik]
+- Punkt 1
+- Punkt 2
+- Punkt 3
+[osv]
+Källa: [Harvardstil-referens med länk om möjligt]
+
+<span class="subsection">Krav:</span>
+
+• Varje slide ska ha <span class="highlight">MINST EN källa</span> i Harvardformat
+• Källorna ska ha fungerande länkar där det är möjligt
+• Slides ska täcka de viktigaste insikterna från bloggtexten
+
+<span class="section-title">STEG 3B: QUIZ (5 frågor)</span>
+
+Skapa ett quiz med 5 frågor:
+
+<span class="subsection">Struktur för varje fråga:</span>
+
+FRÅGA [nummer]: [Frågetext]
+
+A) [Svarsalternativ]
+B) [Svarsalternativ]
+C) [Svarsalternativ]
+D) [Svarsalternativ]
+
+RÄTT SVAR: [X]
+
+MOTIVERING:
+[Utförlig förklaring på 3-5 meningar om varför detta är rätt svar 
+och varför de andra alternativen är felaktiga]
+
+KÄLLA: [Harvardstil-referens med länk om möjligt]
+
+<span class="subsection">Fördelning av frågetyper:</span>
+
+• <span class="highlight">Fråga 1-4:</span> Faktakunskap från bloggtexten 
+  (t.ex. statistik, händelser, begrepp, exempel)
+• <span class="highlight">Fråga 5:</span> Förståelse och analys 
+  (t.ex. tolkning, konsekvenser, framtidsperspektiv)
+
+<span class="subsection">Krav:</span>
+
+• Varje rätt svar ska ha <span class="highlight">MINST EN källa</span> i Harvardformat
+• Källorna ska ha fungerande länkar där det är möjligt
+• Motiveringar ska vara pedagogiska och tydliga
+
+<span class="section-title">KÖR DENNA PROMPT GENOM ATT:</span>
+
+1. Först göra web search och föreslå tema
+2. Vänta på godkännande
+3. Sedan producera bloggtext, slides och quiz enligt specifikationerna ovan
+
+<span class="highlight">Fråga om ännu något är oklart.</span></div>
+            </div>
+
+            <div class="meta-info">
+                <p><strong>🤖 AI-modell:</strong> Claude Opus 4.5 (Anthropic)</p>
+                <p><strong>📅 Datum:</strong> 5 december 2025</p>
+                <p><strong>📝 Resultat:</strong> Bloggtexten "<a href="https://controllerutangranser.wordpress.com/2025/12/05/fritidskortet-moter-kulturskolan/" target="_blank" rel="noopener noreferrer">Fritidskortet möter kulturskolan</a>" samt detta quiz</p>
+                <p><strong>👤 Promptförfattare:</strong> Kent Lundgren</p>
+            </div>
+
+            <a href="index.html" class="back-link">⬅️ Tillbaka till quizet</a>
+        </div>
+    </div>
+</body>
+</html>
+

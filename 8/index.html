@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Kallbad och bastu - Från fysiologi till samhällsnytta</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- All styling är inbäddad i denna fil enligt användarens önskemål -->
+    <style>
+/* ============================================
+   Allmän styling och CSS-variabler
+   ============================================ */
+:root {
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --secondary-color: #64748b;
+    --success-color: #10b981;
+    --error-color: #ef4444;
+    --background: #f1f5f9;
+    --card-bg: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #475569;
+    --border-radius: 12px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+    --transition: all 0.3s ease;
+}
+
+/* Reset och grundläggande styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: var(--text-primary);
+}
+
+/* ============================================
+   Huvudcontainer för quiz
+   ============================================ */
+.quiz-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+}
+
+/* ============================================
+   Header med titel och progressbar
+   ============================================ */
+.quiz-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+    padding: 30px;
+    text-align: center;
+    color: white;
+}
+
+.quiz-title {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.quiz-subtitle {
+    font-size: 1.1rem;
+    opacity: 0.95;
+    margin-bottom: 20px;
+}
+
+/* Progressbar */
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--success-color);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+    width: 0%;
+}
+
+/* ============================================
+   Intro-sektion (flersidiga introduktionstexter)
+   ============================================ */
+.intro-section {
+    padding: 40px;
+    animation: fadeIn 0.5s ease;
+}
+
+.intro-card {
+    background: var(--card-bg);
+}
+
+/* Sidindikator - visar vilken sida användaren är på */
+.page-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.page-number {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    letter-spacing: 0.5px;
+}
+
+/* Visuella prickar för sidindikering */
+.page-dots {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.page-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #cbd5e1;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.page-dot:hover {
+    transform: scale(1.2);
+    background: #94a3b8;
+}
+
+.page-dot.active {
+    background: var(--primary-color);
+    width: 14px;
+    height: 14px;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+.intro-title {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.intro-body {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+    margin-bottom: 30px;
+}
+
+.intro-body h3 {
+    color: var(--primary-color);
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+}
+
+.intro-body p {
+    margin-bottom: 15px;
+}
+
+.intro-body ul, .intro-body ol {
+    margin-left: 25px;
+    margin-bottom: 15px;
+}
+
+.intro-body li {
+    margin-bottom: 10px;
+}
+
+.intro-body strong {
+    color: var(--primary-color);
+}
+
+.intro-body a {
+    color: var(--primary-color);
+    text-decoration: underline;
+    transition: var(--transition);
+}
+
+.intro-body a:hover {
+    color: var(--primary-hover);
+    text-decoration: none;
+}
+
+.intro-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+/* ============================================
+   Bildsektion med startbild och knapp
+   ============================================ */
+.image-section {
+    padding: 40px;
+    text-align: center;
+    animation: fadeIn 0.5s ease;
+}
+
+.quiz-image {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+    margin-bottom: 25px;
+}
+
+.image-text {
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+/* ============================================
+   Knappar
+   ============================================ */
+.primary-btn, .secondary-btn, .continue-btn {
+    padding: 14px 28px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: 'Open Sans', sans-serif;
+}
+
+.primary-btn {
+    background: var(--primary-color);
+    color: white;
+    flex: 1;
+}
+
+.primary-btn:hover:not(:disabled) {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.secondary-btn {
+    background: var(--secondary-color);
+    color: white;
+    flex: 1;
+}
+
+.secondary-btn:hover:not(:disabled) {
+    background: #475569;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.continue-btn {
+    background: var(--success-color);
+    color: white;
+    padding: 16px 40px;
+    font-size: 1.2rem;
+}
+
+.continue-btn:hover {
+    background: #059669;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.primary-btn:disabled, .secondary-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ============================================
+   Quiz-innehåll (frågor och svar)
+   ============================================ */
+#quizContent {
+    padding: 40px;
+    animation: fadeIn 0.5s ease;
+}
+
+.question-container {
+    margin-bottom: 30px;
+}
+
+.question-number {
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.question-text {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.4rem;
+    color: var(--text-primary);
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+/* Svarsalternativ - Här används gul bakgrund enligt regel 18 för att visa att det är indata */
+.answers-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.answer-btn {
+    background: #fef3c7; /* Gul bakgrund för att tydligt visa att det är indata */
+    border: 2px solid #d1d5db;
+    padding: 16px 20px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    text-align: left;
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--text-primary);
+    font-family: 'Open Sans', sans-serif;
+}
+
+.answer-btn:hover:not(:disabled) {
+    border-color: var(--primary-color);
+    background: #fde68a;
+    transform: translateX(5px);
+}
+
+.answer-btn:disabled {
+    cursor: not-allowed;
+}
+
+/* Feedback efter svar - grön eller röd enligt design */
+.answer-btn.correct {
+    background: var(--success-color);
+    border-color: var(--success-color);
+    color: white;
+}
+
+.answer-btn.incorrect {
+    background: var(--error-color);
+    border-color: var(--error-color);
+    color: white;
+}
+
+/* Feedback-text under svaren */
+.feedback {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    line-height: 1.8;
+    animation: slideDown 0.3s ease;
+}
+
+.feedback.correct {
+    background: #d1fae5;
+    border-left: 4px solid var(--success-color);
+    color: #065f46;
+}
+
+.feedback.incorrect {
+    background: #fee2e2;
+    border-left: 4px solid var(--error-color);
+    color: #991b1b;
+}
+
+.feedback strong {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+/* Klickbara källor i feedback */
+.feedback a {
+    color: var(--primary-color);
+    text-decoration: underline;
+    transition: var(--transition);
+    font-weight: 600;
+}
+
+.feedback a:hover {
+    color: var(--primary-hover);
+    text-decoration: none;
+}
+
+/* Nästa-knapp efter svar */
+.next-question-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: var(--transition);
+    font-family: 'Open Sans', sans-serif;
+}
+
+.next-question-btn:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* ============================================
+   Resultatskärm
+   ============================================ */
+.result-container {
+    text-align: center;
+    padding: 40px;
+    animation: fadeIn 0.5s ease;
+}
+
+.result-title {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.result-score {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--success-color);
+    margin: 30px 0;
+}
+
+.result-message {
+    font-size: 1.3rem;
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+/* Container för knappar på resultatskärmen */
+.result-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.restart-btn, .browse-quiz-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 16px 40px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: 'Open Sans', sans-serif;
+    text-decoration: none;
+    display: inline-block;
+    min-width: 280px;
+}
+
+.restart-btn:hover, .browse-quiz-btn:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Speciell styling för "Se alla quiz"-knappen */
+.browse-quiz-btn {
+    background: var(--success-color);
+}
+
+.browse-quiz-btn:hover {
+    background: #059669;
+}
+
+/* ============================================
+   Floating action buttons
+   ============================================ */
+.floating-buttons {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 1000;
+}
+
+.floating-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    transition: var(--transition);
+}
+
+.tech-btn {
+    background: var(--primary-color);
+}
+
+.prompt-btn {
+    background: var(--secondary-color);
+}
+
+.floating-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+}
+
+/* ============================================
+   Modaler
+   ============================================ */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    animation: fadeIn 0.3s ease;
+}
+
+.modal.show {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: var(--border-radius);
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: var(--shadow-lg);
+    animation: slideUp 0.3s ease;
+}
+
+.modal-content h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-family: 'Fredoka', sans-serif;
+}
+
+.modal-content p, .modal-content ul, .modal-content li {
+    line-height: 1.8;
+    margin-bottom: 15px;
+    color: var(--text-primary);
+}
+
+.modal-content ul {
+    margin-left: 20px;
+}
+
+.modal-content a {
+    color: var(--primary-color);
+    text-decoration: underline;
+    transition: var(--transition);
+}
+
+.modal-content a:hover {
+    color: var(--primary-hover);
+    text-decoration: none;
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.close:hover {
+    color: var(--error-color);
+    transform: scale(1.2);
+}
+
+/* ============================================
+   Hjälpklasser
+   ============================================ */
+.hidden {
+    display: none !important;
+}
+
+/* ============================================
+   Animationer
+   ============================================ */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   Responsiv design för mindre skärmar
+   ============================================ */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .quiz-title {
+        font-size: 1.5rem;
+    }
+
+    .quiz-subtitle {
+        font-size: 1rem;
+    }
+
+    .intro-section, #quizContent, .image-section {
+        padding: 25px;
+    }
+
+    .intro-title {
+        font-size: 1.4rem;
+    }
+
+    .intro-body {
+        font-size: 1rem;
+    }
+
+    .question-text {
+        font-size: 1.2rem;
+    }
+
+    .answer-btn {
+        font-size: 1rem;
+        padding: 14px 16px;
+    }
+
+    .floating-buttons {
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .floating-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+
+    .modal-content {
+        padding: 25px;
+        margin: 20px;
+    }
+
+    .result-title {
+        font-size: 1.8rem;
+    }
+
+    .result-score {
+        font-size: 2.2rem;
+    }
+}
+    </style>
+</head>
+<body>
+    <main class="quiz-container" role="main">
+        <header class="quiz-header">
+            <h1 class="quiz-title">Quiz: Kallbad och bastu</h1>
+            <p class="quiz-subtitle">Från fysiologi till samhällsnytta</p>
+            <div class="progress-bar" aria-hidden="true">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </header>
+
+        <!-- Inledande texter i flera sidor före quizet -->
+        <!-- Här skedde en uppdatering: Lade till sidindikator för att visa progression -->
+        <section id="introSection" class="intro-section" aria-live="polite">
+            <div class="intro-card">
+                <!-- Sidindikator med text och visuella prickar -->
+                <div class="page-indicator">
+                    <div class="page-number" id="pageNumber">Sida 1 av 5</div>
+                    <div class="page-dots" id="pageDots"></div>
+                </div>
+                <h2 class="intro-title" id="introPageTitle"></h2>
+                <div class="intro-body" id="introPageBody"></div>
+                <div class="intro-nav">
+                    <button class="secondary-btn" id="introPrevBtn" type="button" aria-label="Föregående" disabled>⬅️ Föregående</button>
+                    <button class="primary-btn" id="introNextBtn" type="button" aria-label="Nästa">Nästa ➡️</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Startskärm med bild och knapp för att gå vidare till quizet -->
+        <section id="imageSection" class="image-section hidden" aria-labelledby="introTitle">
+            <img id="introImage" src="aufguss.jpg" alt="Aufguss - kallbad och bastu" class="quiz-image">
+            <p class="image-text" id="introTitle">Kallbad och bastu - Från fysiologi till samhällsnytta</p>
+            <button class="continue-btn" id="continueBtn" type="button">Gå vidare till Quiz ➡️</button>
+        </section>
+
+        <!-- Själva quiz-innehållet renderas dynamiskt via JavaScript -->
+        <section id="quizContent" class="hidden" aria-live="polite"></section>
+    </main>
+
+    <!-- Floating action buttons för teknisk info och källor -->
+    <div class="floating-buttons">
+        <button class="floating-btn tech-btn" id="techBtn" title="Teknisk beskrivning">🔧</button>
+        <button class="floating-btn prompt-btn" id="promptBtn" title="Visa källor">📄</button>
+    </div>
+
+    <!-- Modal: Teknisk beskrivning -->
+    <div id="techModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="techTitle">
+        <div class="modal-content">
+            <span class="close" data-close="#techModal" aria-label="Stäng">&times;</span>
+            <h2 id="techTitle">🔧 Teknisk beskrivning</h2>
+            <p><strong>Struktur:</strong> Allt i en HTML-fil (HTML5, CSS och JavaScript inbäddat). Återanvänder samma teknik från <code>quiz.html</code> men utan att ändra den filen.</p>
+            <ul>
+                <li><strong>UI:</strong> Responsivt design, progressbar, startskärm med bild och knapp</li>
+                <li><strong>Tillgänglighet:</strong> ARIA-attribut på dynamiska sektioner</li>
+                <li><strong>Interaktion:</strong> Val med färgkodning (grön/röd), gul bakgrund på inputfält (regel 18)</li>
+                <li><strong>Kommentarer:</strong> Tydliga kommentarer i koden om vad som händer (regel 6)</li>
+                <li><strong>Filer:</strong> Allt sammanslaget i index.html för detta quiz</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Modal: Källor och underlag -->
+    <div id="promptModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="promptTitle">
+        <div class="modal-content">
+            <span class="close" data-close="#promptModal" aria-label="Stäng">&times;</span>
+            <h2 id="promptTitle">📄 Källor & Underlag</h2>
+            <p>Quiz: Kallbad och bastu - Från fysiologi till samhällsnytta</p>
+            <p><strong>Frågor och fördjupade förklaringar baserade på:</strong></p>
+            <ul>
+                <li><a href="https://klel.wordpress.com/2025/10/17/kallbad-och-bastu-en-bild-av-fysiologi-psykologi-och-samhalle/" target="_blank" rel="noopener noreferrer">Källtext: Kallbad och bastu - En bild av fysiologi, psykologi och samhälle</a></li>
+                <li>Laukkanen et al. (2015-2016) - Kuopio-studien om bastufrekvens och demensrisk</li>
+                <li>Forskning om noradrenalin och kallbadseffekter</li>
+                <li>Socialpsykologisk forskning om nakenhet och social distans</li>
+                <li>Studier om brunt fett och metabol hälsa vid kylexponering</li>
+            </ul>
+            <p><strong>AI-granskning:</strong> Grok har granskat och bekräftat faktauppgifterna i källtexten.</p>
+        </div>
+    </div>
+
+    <!-- All JavaScript finns inbäddat här i filen enligt användarens önskemål -->
+    <script>
+// ============================================
+// QUIZ: Kallbad och bastu - Från fysiologi till samhällsnytta
+// Använder samma programmeringsteknik som quiz.html/script.js
+// ============================================
+
+// ============================================
+// INTRODUKTIONSTEXTER - Fem slides om kallbad och bastu
+// ============================================
+const introPages = [
+    {
+        title: "Välkommen till quizet om kallbad och bastu!",
+        body: `
+            <p>Detta quiz handlar om <strong>kallbad och bastu</strong> - två urgamla traditioner som fått förnyad uppmärksamhet inom folkhälsa, fysiologi och samhällsvetenskap.</p>
+            <p>Du kommer att få testa dina kunskaper om de fysiologiska mekanismerna, de sociala effekterna och de samhällsekonomiska konsekvenserna av regelbundet kallbad och bastubad.</p>
+            <p>Innan vi börjar med quizet vill vi introducera dig till ämnet genom fem informativa sidor om varför kallbad och bastu är mer än bara wellness - det är faktiskt en viktig folkhälsofråga!</p>
+        `
+    },
+    {
+        title: "Fysiologi: Vad händer i kroppen?",
+        body: `
+            <h3>Bastuns värmeeffekter</h3>
+            <p>När du sitter i bastun händer något remarkabelt i din kropp. Temperaturen stiger, hjärtfrekvensen ökar och blodkärlen vidgas - precis som vid måttlig fysisk aktivitet. Detta kallas <strong>passiv värmeterapi</strong>.</p>
+            <ul>
+                <li><strong>Kardiovaskulär träning:</strong> Hjärtat arbetar mer, vilket förbättrar cirkulationen</li>
+                <li><strong>Demensförebyggande:</strong> Den finska Kuopio-studien visar att frekvent bastubad (4-7 gånger/vecka) minskar demensrisken med 66%</li>
+                <li><strong>Stressreduktion:</strong> Värmen aktiverar parasympatiska nervsystemet (vila och återhämtning)</li>
+            </ul>
+            
+            <h3>Kallbadets kylaeffekter</h3>
+            <p>Vid kallbad händer motsatsen - men med lika kraftfulla effekter. Kroppen aktiverar sitt överlevnadssystem:</p>
+            <ul>
+                <li><strong>Noradrenalinfrisättning:</strong> Kan öka med 200-300%, vilket ger fokus, energi och förbättrat stämningsläge</li>
+                <li><strong>Brunt fett aktiveras:</strong> En speciell typ av fettväv som bränner kalorier för att producera värme</li>
+                <li><strong>Förbättrad insulinkänslighet:</strong> Regelbunden kylexponering kan motverka metabola sjukdomar</li>
+            </ul>
+            
+            <p><em>Källor: Laukkanen et al. (2015-2016); forskning om brunt fett och noradrenalin</em></p>
+        `
+    },
+    {
+        title: "Psykologi och mental hälsa",
+        body: `
+            <h3>Från stress till återhämtning</h3>
+            <p>Både kallbad och bastu fungerar som <strong>hormesis</strong> - en mild stressor som tränar kroppen att hantera påfrestningar bättre. Detta har direkta effekter på mental hälsa:</p>
+            <ul>
+                <li><strong>Dopamin och serotonin:</strong> Båda aktiviteterna kan öka "lyckohormonerna" i hjärnan</li>
+                <li><strong>Stressresiliens:</strong> Regelbunden exponering tränar kroppens stressystem att återhämta sig snabbare</li>
+                <li><strong>Sömnkvalitet:</strong> Temperaturförändringarna hjälper kroppen att reglera dygnsrytmen</li>
+                <li><strong>Mindfulness:</strong> Intensiteten i upplevelsen tvingar dig att vara närvarande i nuet</li>
+            </ul>
+            
+            <h3>Samhörighet och gemenskap</h3>
+            <p>Det är inte bara de fysiologiska effekterna som spelar roll. Bastun och kallbadsplatsen blir <strong>sociala mötesplatser</strong> där människor samlas utan distraktioner från telefoner eller skärmar.</p>
+            <p>I den nordiska kulturen har bastun varit en plats för viktiga samtal, beslut och bonding över generationer.</p>
+            
+            <p><em>Källor: Forskning om hormesis, dopamin och social psykologi</em></p>
+        `
+    },
+    {
+        title: "Sociologi: Demokratisering och inkludering",
+        body: `
+            <h3>När statusmarkörer försvinner</h3>
+            <p>En av de mest fascinerande aspekterna av bastu och kallbad är hur <strong>nakenheten utjämnar hierarkier</strong>. När kläderna försvinner, försvinner också symbolerna för status:</p>
+            <ul>
+                <li>Inga dyra kostymer eller designerkläder</li>
+                <li>Ingen uniform som visar makt eller position</li>
+                <li>Ingen skillnad mellan direktören och snickaren</li>
+            </ul>
+            <p>Forskning inom socialpsykologi visar att <strong>fysisk sårbarhet ökar empati</strong> och minskar social distans mellan människor. Detta skapar en ovanlig form av <strong>demokratisk jämlikhet</strong>.</p>
+            
+            <h3>En mötesplats för alla</h3>
+            <p>I Finland ses bastun som en nationell institution där viktiga samtal förs - till och med diplomatiska förhandlingar har historiskt genomförts i bastun. Det är en plats där:</p>
+            <ul>
+                <li>Ärliga samtal förs utan pretentioner</li>
+                <li>Tillit byggs genom delad sårbarhet</li>
+                <li>Gränser överbryggas - mellan generationer, klasser och kulturer</li>
+            </ul>
+            
+            <p><em>Källa: <a href="https://klel.wordpress.com/2025/10/17/kallbad-och-bastu-en-bild-av-fysiologi-psykologi-och-samhalle/" target="_blank" rel="noopener noreferrer">Källtext: Kallbad och bastu - En bild av fysiologi, psykologi och samhälle</a></em></p>
+        `
+    },
+    {
+        title: "Samhällsnytta och folkhälsa",
+        body: `
+            <h3>Kostnadseffektiv folkhälsoinsats</h3>
+            <p>När beslutsfattare utvärderar folkhälsoinsatser handlar det ofta om <strong>cost-benefit</strong> - vad får vi för pengarna? När det gäller bastu och kallbad är argumenten starka:</p>
+            <ul>
+                <li><strong>Förebyggande effekt:</strong> 66% lägre demensrisk vid frekvent bastubad (Kuopio-studien)</li>
+                <li><strong>Minskade vårdkostnader:</strong> Bättre kardiovaskulär hälsa = färre hjärtinfarkter och stroke</li>
+                <li><strong>Mental folkhälsa:</strong> Stressreduktion och förbättrat välbefinnande</li>
+                <li><strong>Social inkludering:</strong> Mötesplatser som bygger gemenskap över gränser</li>
+            </ul>
+            
+            <h3>Kommunalt ansvar och tillgänglighet</h3>
+            <p>Kommuner kan stötta bastu- och kallbadsverksamhet genom:</p>
+            <ul>
+                <li>Ekonomiska bidrag till ideella vinterbadsföreningar</li>
+                <li>Subventionerade priser för barn, studenter och pensionärer</li>
+                <li>Tillgång till lokaler eller mark vid stränder och sjöar</li>
+                <li>Tillstånd och säkerhetsstöd för anläggningar</li>
+                <li>Information och utbildning om säker praktik</li>
+            </ul>
+            
+            <p><strong>Nu är det din tur!</strong> Klicka vidare för att se startbilden och sedan börja quizet. Lycka till! 🎯</p>
+            
+            <p><em>Källa: <a href="https://klel.wordpress.com/2025/10/17/kallbad-och-bastu-en-bild-av-fysiologi-psykologi-och-samhalle/" target="_blank" rel="noopener noreferrer">Källtext: Kallbad och bastu - En bild av fysiologi, psykologi och samhälle</a></em></p>
+        `
+    }
+];
+
+// ============================================
+// QUIZFRÅGOR - Kallbad och bastu
+// ============================================
+const quizData = [
+    {
+        question: "Enligt forskning från den finska Kuopio-studien, hur mycket lägre risk för demens hade män som bastade 4-7 gånger per vecka jämfört med de som endast bastade en gång i veckan?",
+        answers: [
+            "25 procent lägre risk",
+            "45 procent lägre risk",
+            "66 procent lägre risk",
+            "85 procent lägre risk"
+        ],
+        correct: 2, // Index 2 = "66 procent lägre risk"
+        explanation: `
+            <strong>Rätt svar: 66 procent lägre risk</strong>
+            <p>Den finska Kuopio-studien (Laukkanen et al., 2015-2016) visade att män som bastade 4-7 gånger per vecka hade 66 procent lägre risk för demens jämfört med de som endast bastade en gång i veckan. Detta är en signifikant hälsoeffekt som motiverar kommunala investeringar i bastubadande från ett folkhälso- och kostnadseffektivitetsperspektiv.</p>
+            <p>Studien följde en kohort av medelålders män och visar tydligt på bastuns förebyggande potential när det gäller kognitiv hälsa. Groks granskning bekräftar: "Den finska studien (Kuopio-studien) visar att frekvent bastubad (4–7 gånger/vecka) minskar demensrisk med cirka 66% jämfört med 1 gång/vecka."</p>
+            <p><em>Källa: Laukkanen et al. (2015-2016); <a href="https://klel.wordpress.com/2025/10/17/kallbad-och-bastu-en-bild-av-fysiologi-psykologi-och-samhalle/" target="_blank" rel="noopener noreferrer">Källtext</a></em></p>
+        `
+    },
+    {
+        question: "Vilken signalsubstans frisätts i stora mängder vid kallbad och kan öka med 200-300 procent, vilket bidrar till ökat fokus, vakenhet och förbättrat stämningsläge?",
+        answers: [
+            "Serotonin",
+            "Dopamin",
+            "Noradrenalin",
+            "Kortisol"
+        ],
+        correct: 2, // Index 2 = "Noradrenalin"
+        explanation: `
+            <strong>Rätt svar: Noradrenalin</strong>
+            <p>Vid exponering för kallt vatten frisätts noradrenalin i stora mängder. Studier visar att noradreninnivåerna kan öka med 200-300 procent vid kallbad, vilket ger en naturlig känsla av energi och mentalt välbefinnande som kan vara kvar i timmar efteråt.</p>
+            <p>Noradrenalin fungerar både som hormon och neurotransmittor och spelar en viktig roll för fokus, vakenhet och stämningsläge. Groks granskning bekräftar detta: "För kyla: [...] noradrenalin kan öka med 200–300%, vilket förbättrar metabolism och insulinkänslighet vid regelbunden exponering."</p>
+            <p>Detta är relevant kunskap för beslutsfattare när man utvärderar bastuns och kallbadets effekter på stresshantering och mental hälsa hos medborgarna.</p>
+            <p><em>Källa: Forskning om noradrenalin; <a href="https://klel.wordpress.com/2025/10/17/kallbad-och-bastu-en-bild-av-fysiologi-psykologi-och-samhalle/" target="_blank" rel="noopener noreferrer">Källtext</a></em></p>
+        `
+    },
+    {
+        question: "Vad är den främsta sociala mekanismen som gör bastu och kallbad till en demokratiserande kraft enligt forskning inom socialpsykologi?",
+        answers: [
+            "Det höga priset för bastubiljetter skapar en exklusiv miljö",
+            "Nakenheten tar bort statusmarkörer och utjämnar hierarkier",
+            "Ljudnivån i bastun gör det svårt att samtala",
+            "Den fysiska ansträngningen kräver god kondition"
+        ],
+        correct: 1, // Index 1 = "Nakenheten tar bort statusmarkörer och utjämnar hierarkier"
+        explanation: `
+            <strong>Rätt svar: Nakenheten tar bort statusmarkörer och utjämnar hierarkier</strong>
+            <p>Forskning inom socialpsykologi visar att fysisk sårbarhet, som att vara naken, ökar empati och minskar social distans mellan människor. När kläderna försvinner försvinner också de symboler som signalerar status, klass och position - dyra kostymer, designerkläder eller uniformer.</p>
+            <p>Detta skapar en ovanlig form av social jämlikhet där direktören och snickaren, professorn och studenten sitter på samma träbänk, lika sårbara och lika mänskliga.</p>
+            <p>Groks granskning bekräftar: "I finsk och nordisk kultur ses bastun som en 'demokratiserande' plats där status försvinner i nakenheten, främjande ärliga samtal och empati. Socialpsykologi stödjer att sårbarhet (nakenhet) minskar social distans och bygger tillit."</p>
+            <p>Detta är viktigt för politiker och tjänstemän att förstå när man planerar för socialt inkluderande mötesplatser.</p>
+            <p><em>Källa: Socialpsykologisk forskning; <a href="https://klel.wordpress.com/2025/10/17/kallbad-och-bastu-en-bild-av-fysiologi-psykologi-och-samhalle/" target="_blank" rel="noopener noreferrer">Källtext</a></em></p>
+        `
+    },
+    {
+        question: "Vilket av följande är INTE ett sätt som kommunen kan stötta bastu- och kallbadsverksamhet enligt texten?",
+        answers: [
+            "Ekonomiska bidrag till ideella vinterbadsföreningar",
+            "Subventionerade priser för barn, studenter och pensionärer",
+            "Krav på att alla kommuninvånare ska bada minst en gång per vecka",
+            "Tillgång till lokaler eller mark vid stränder och sjöar för föreningar"
+        ],
+        correct: 2, // Index 2 = "Krav på att alla kommuninvånare ska bada minst en gång per vecka"
+        explanation: `
+            <strong>Rätt svar: Krav på att alla kommuninvånare ska bada minst en gång per vecka</strong>
+            <p>Texten beskriver flera frivilliga stödåtgärder som kommuner kan vidta, men nämner aldrig tvingande krav på att medborgare ska bada. Istället handlar det kommunala ansvaret om att skapa möjligheter och sänka trösklar genom ekonomiska bidrag, subventionerade priser, tillgång till lokaler, hjälp med tillstånd samt information och utbildning om säker praktik.</p>
+            <p>Groks granskning noterar att detta är "normativt" men stöds av samhällsvetenskap: "Badhus ses som investeringar i förebyggande hälsa, minskande vårdkostnader via lägre CVD-risk och bättre mental hälsa. Tillgänglighet (ramper, subventioner) främjar inkludering."</p>
+            <p>För beslutsfattare är det viktigt att förstå att stödet ska vara möjliggörande och inkluderande, inte tvingande.</p>
+            <p><em>Källa: <a href="https://klel.wordpress.com/2025/10/17/kallbad-och-bastu-en-bild-av-fysiologi-psykologi-och-samhalle/" target="_blank" rel="noopener noreferrer">Källtext</a></em></p>
+        `
+    },
+    {
+        question: "Vad händer med det bruna fettet vid regelbunden exponering för kyla?",
+        answers: [
+            "Det försvinner helt eftersom kroppen inte längre behöver det",
+            "Det omvandlas till vitt fett för energilagring",
+            "Mängden brunt fett ökar och insulinkänsligheten förbättras",
+            "Det blir mindre aktivt och kräver värmetäcken för att fungera"
+        ],
+        correct: 2, // Index 2 = "Mängden brunt fett ökar och insulinkänsligheten förbättras"
+        explanation: `
+            <strong>Rätt svar: Mängden brunt fett ökar och insulinkänsligheten förbättras</strong>
+            <p>Vid regelbundet kallbad ökar mängden brunt fett i kroppen, och insulinkänsligheten förbättras. Det bruna fettet är en speciell typ av fettväv som är rik på mitokondrier och aktiveras vid kylexponering. Det producerar värme genom icke-frysande termogenes, en process där energi omvandlas direkt till värme utan att musklerna behöver arbeta.</p>
+            <p>Den upprepade exponeringen för kyla tränar upp kroppens adaptiva termogenes och effektiviserar det metabola systemet.</p>
+            <p>Groks granskning bekräftar: "Brunt fett aktiveras via icke-frysande termogenes, och noradrenalin kan öka med 200–300%, vilket förbättrar metabolism och insulinkänslighet vid regelbunden exponering."</p>
+            <p>För kommunala beslutsfattare som arbetar med folkhälsa är detta relevant information när man utvärderar bastuns och kallbadets effekter på metabola sjukdomar som diabetes typ 2.</p>
+            <p><em>Källa: Forskning om brunt fett och metabol hälsa; <a href="https://klel.wordpress.com/2025/10/17/kallbad-och-bastu-en-bild-av-fysiologi-psykologi-och-samhalle/" target="_blank" rel="noopener noreferrer">Källtext</a></em></p>
+        `
+    }
+];
+
+// ============================================
+// GLOBALA VARIABLER FÖR QUIZ-STATE
+// Här hanterar vi programmets tillstånd
+// ============================================
+let currentIntroPage = 0; // Nuvarande introduktionssida
+let currentQuestion = 0; // Nuvarande fråga i quizet
+let score = 0; // Användarens poäng
+let answered = false; // Om användaren har svarat på aktuell fråga
+
+// ============================================
+// DOM-ELEMENT
+// Här hämtar vi alla viktiga element från HTML:en för att kunna manipulera dem
+// ============================================
+const introSection = document.getElementById('introSection');
+const imageSection = document.getElementById('imageSection');
+const quizContent = document.getElementById('quizContent');
+const progressFill = document.getElementById('progressFill');
+
+// Intro-navigering
+const introPageTitle = document.getElementById('introPageTitle');
+const introPageBody = document.getElementById('introPageBody');
+const introPrevBtn = document.getElementById('introPrevBtn');
+const introNextBtn = document.getElementById('introNextBtn');
+
+// Sidindikator-element
+const pageNumber = document.getElementById('pageNumber');
+const pageDots = document.getElementById('pageDots');
+
+// Bildsektion
+const continueBtn = document.getElementById('continueBtn');
+
+// Modaler
+const techBtn = document.getElementById('techBtn');
+const promptBtn = document.getElementById('promptBtn');
+const techModal = document.getElementById('techModal');
+const promptModal = document.getElementById('promptModal');
+const closeButtons = document.querySelectorAll('.close');
+
+// ============================================
+// INITIALISERING - Körs när sidan laddas
+// ============================================
+document.addEventListener('DOMContentLoaded', () => {
+    // Skapa sidindikator-prickar först
+    createPageDots();
+    
+    // Visa första introduktionssidan
+    showIntroPage(0);
+    
+    // Lyssna på knappar
+    setupEventListeners();
+});
+
+// ============================================
+// EVENT LISTENERS - Kopplar knappar till funktioner
+// ============================================
+function setupEventListeners() {
+    // Intro-navigering
+    introPrevBtn.addEventListener('click', () => navigateIntro(-1));
+    introNextBtn.addEventListener('click', () => navigateIntro(1));
+    
+    // Fortsätt-knapp från bildskärm
+    continueBtn.addEventListener('click', startQuiz);
+    
+    // Modal-knappar
+    techBtn.addEventListener('click', () => openModal(techModal));
+    promptBtn.addEventListener('click', () => openModal(promptModal));
+    
+    // Stäng-knappar i modaler
+    closeButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const modalId = e.target.getAttribute('data-close');
+            const modal = document.querySelector(modalId);
+            closeModal(modal);
+        });
+    });
+    
+    // Stäng modal vid klick utanför
+    window.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal')) {
+            closeModal(e.target);
+        }
+    });
+}
+
+// ============================================
+// SKAPA SIDINDIKATOR-PRICKAR
+// Skapar visuella prickar för varje introduktionssida
+// ============================================
+function createPageDots() {
+    pageDots.innerHTML = ''; // Rensa först
+    
+    // Skapa en prick för varje sida
+    for (let i = 0; i < introPages.length; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'page-dot';
+        dot.setAttribute('data-page', i);
+        dot.setAttribute('title', `Gå till sida ${i + 1}`);
+        
+        // Klick på prick för att hoppa till sida
+        dot.addEventListener('click', () => {
+            currentIntroPage = i;
+            showIntroPage(i);
+        });
+        
+        pageDots.appendChild(dot);
+    }
+}
+
+// ============================================
+// INTRODUKTIONSNAVIGERING
+// Här hanterar vi navigering mellan introduktionssidorna
+// ============================================
+function showIntroPage(pageIndex) {
+    const page = introPages[pageIndex];
+    introPageTitle.textContent = page.title;
+    introPageBody.innerHTML = page.body;
+    
+    // Uppdatera sidnummer-text
+    pageNumber.textContent = `Sida ${pageIndex + 1} av ${introPages.length}`;
+    
+    // Uppdatera aktiv prick
+    const dots = pageDots.querySelectorAll('.page-dot');
+    dots.forEach((dot, index) => {
+        if (index === pageIndex) {
+            dot.classList.add('active');
+        } else {
+            dot.classList.remove('active');
+        }
+    });
+    
+    // Uppdatera knappar
+    introPrevBtn.disabled = (pageIndex === 0);
+    
+    // Om sista sidan, ändra text på nästa-knapp
+    if (pageIndex === introPages.length - 1) {
+        introNextBtn.textContent = 'Se startbild ➡️';
+    } else {
+        introNextBtn.textContent = 'Nästa ➡️';
+    }
+}
+
+function navigateIntro(direction) {
+    currentIntroPage += direction;
+    
+    // Om vi är på sista sidan och klickar nästa, gå till bildskärm
+    if (currentIntroPage >= introPages.length) {
+        introSection.classList.add('hidden');
+        imageSection.classList.remove('hidden');
+        return;
+    }
+    
+    // Annars visa rätt sida
+    showIntroPage(currentIntroPage);
+}
+
+// ============================================
+// STARTA QUIZ
+// Döljer bildskärm och visar första frågan
+// ============================================
+function startQuiz() {
+    imageSection.classList.add('hidden');
+    quizContent.classList.remove('hidden');
+    
+    // Återställ quiz-state
+    currentQuestion = 0;
+    score = 0;
+    answered = false;
+    
+    // Visa första frågan
+    displayQuestion();
+    updateProgress();
+}
+
+// ============================================
+// VISA FRÅGA
+// Renderar en fråga med svarsalternativ dynamiskt
+// ============================================
+function displayQuestion() {
+    const question = quizData[currentQuestion];
+    
+    // Skapa HTML för frågan
+    const questionHTML = `
+        <div class="question-container">
+            <div class="question-number">Fråga ${currentQuestion + 1} av ${quizData.length}</div>
+            <h2 class="question-text">${question.question}</h2>
+            <div class="answers-container">
+                ${question.answers.map((answer, index) => `
+                    <button class="answer-btn" data-index="${index}">
+                        ${String.fromCharCode(65 + index)}) ${answer}
+                    </button>
+                `).join('')}
+            </div>
+            <div id="feedback"></div>
+        </div>
+    `;
+    
+    quizContent.innerHTML = questionHTML;
+    
+    // Lyssna på svar
+    const answerButtons = quizContent.querySelectorAll('.answer-btn');
+    answerButtons.forEach(btn => {
+        btn.addEventListener('click', () => handleAnswer(parseInt(btn.dataset.index)));
+    });
+    
+    answered = false;
+}
+
+// ============================================
+// HANTERA SVAR
+// Körs när användaren klickar på ett svar
+// Här sker färgkodning (grön/röd) och feedback
+// ============================================
+function handleAnswer(selectedIndex) {
+    // Om redan svarat, gör inget
+    if (answered) return;
+    
+    answered = true;
+    const question = quizData[currentQuestion];
+    const answerButtons = quizContent.querySelectorAll('.answer-btn');
+    const feedbackDiv = document.getElementById('feedback');
+    
+    // Markera rätt och fel svar med färgkodning
+    answerButtons.forEach((btn, index) => {
+        btn.disabled = true;
+        if (index === question.correct) {
+            btn.classList.add('correct'); // Grön bakgrund
+        } else if (index === selectedIndex && selectedIndex !== question.correct) {
+            btn.classList.add('incorrect'); // Röd bakgrund
+        }
+    });
+    
+    // Visa feedback
+    if (selectedIndex === question.correct) {
+        score++;
+        feedbackDiv.className = 'feedback correct';
+        feedbackDiv.innerHTML = question.explanation;
+    } else {
+        feedbackDiv.className = 'feedback incorrect';
+        feedbackDiv.innerHTML = `
+            <strong>Tyvärr, det var inte rätt!</strong>
+            ${question.explanation}
+        `;
+    }
+    
+    // Lägg till nästa-knapp
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'next-question-btn';
+    nextBtn.textContent = currentQuestion < quizData.length - 1 ? 'Nästa fråga ➡️' : 'Se resultat 🎉';
+    nextBtn.addEventListener('click', nextQuestion);
+    feedbackDiv.appendChild(nextBtn);
+    
+    // Uppdatera progress
+    updateProgress();
+}
+
+// ============================================
+// NÄSTA FRÅGA
+// Går till nästa fråga eller visar resultat om alla frågor är besvarade
+// ============================================
+function nextQuestion() {
+    currentQuestion++;
+    
+    if (currentQuestion < quizData.length) {
+        displayQuestion();
+        updateProgress();
+    } else {
+        showResults();
+    }
+}
+
+// ============================================
+// VISA RESULTAT
+// Visar slutresultat och möjlighet att starta om
+// ============================================
+function showResults() {
+    const percentage = Math.round((score / quizData.length) * 100);
+    
+    let message = '';
+    if (percentage === 100) {
+        message = 'Perfekt! Du har koll på kallbad och bastu! 🌟';
+    } else if (percentage >= 80) {
+        message = 'Mycket bra! Du har god insikt i ämnet! 👍';
+    } else if (percentage >= 60) {
+        message = 'Bra jobbat! Det finns mer att lära, men du har en god grund! 📚';
+    } else {
+        message = 'Det finns mycket att lära! Läs gärna källtexten och försök igen! 💪';
+    }
+    
+    const resultsHTML = `
+        <div class="result-container">
+            <h2 class="result-title">Quiz slutfört! 🎉</h2>
+            <div class="result-score">${score} av ${quizData.length} rätt</div>
+            <div class="result-score">${percentage}%</div>
+            <p class="result-message">${message}</p>
+            <div class="result-buttons">
+                <button class="restart-btn" onclick="restartQuiz()">Starta om quiz 🔄</button>
+                <a href="https://kentlundgren.se/program/quiz/0/" class="browse-quiz-btn" target="_blank" rel="noopener noreferrer">Se alla quiz 📚</a>
+            </div>
+        </div>
+    `;
+    
+    quizContent.innerHTML = resultsHTML;
+    updateProgress();
+}
+
+// ============================================
+// STARTA OM QUIZ
+// Återställer allt och börjar om från början
+// ============================================
+function restartQuiz() {
+    currentQuestion = 0;
+    score = 0;
+    answered = false;
+    currentIntroPage = 0;
+    
+    // Visa intro igen
+    quizContent.classList.add('hidden');
+    introSection.classList.remove('hidden');
+    showIntroPage(0);
+    updateProgress();
+}
+
+// ============================================
+// UPPDATERA PROGRESSBAR
+// Visar hur långt användaren har kommit i quizet
+// ============================================
+function updateProgress() {
+    // Om vi är i intro-fasen (inklusive bildskärm), visa 0%
+    if (quizContent.classList.contains('hidden')) {
+        progressFill.style.width = '0%';
+        return;
+    }
+    
+    // Om vi är i quiz-fasen, visa progress baserat på frågor
+    const progress = ((currentQuestion + (answered ? 1 : 0)) / quizData.length) * 100;
+    progressFill.style.width = `${progress}%`;
+}
+
+// ============================================
+// MODAL-HANTERING
+// Öppna och stänga modaler
+// ============================================
+function openModal(modal) {
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden', 'false');
+}
+
+function closeModal(modal) {
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden', 'true');
+}
+
+// ============================================
+// SLUT PÅ SCRIPT
+// Quiz är nu redo att användas!
+// ============================================
+    </script>
+</body>
+</html>
+

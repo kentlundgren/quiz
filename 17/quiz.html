@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Fritidskortet möter Kulturskolan 2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Extern CSS-fil enligt best practice -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- ============================================
+         NYTT TILLÄGG VERSION 2: FIREBASE INTEGRATION
+         ============================================
+         Nedan finns Content Security Policy (CSP) och Firebase-moduler
+         för att möjliggöra lagring av användardata i Firebase Realtime Database.
+         
+         FUNKTIONALITET SOM LAGTS TILL:
+         1. Namnruta i början - användaren måste ange sitt namn
+         2. Svårighetsbetyg 1-10 efter quizet
+         3. Sparar namn + betyg + poäng + datum till Firebase
+         ============================================ -->
+
+    <!-- NYTT: CSP FÖR FIREBASE - TILLÅTER ANSLUTNING TILL FIREBASE -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self' https://*.firebaseio.com https://*.firebasedatabase.app https://*.googleapis.com;
+        connect-src 'self' https://*.firebaseio.com https://*.firebasedatabase.app https://*.googleapis.com https://www.googleapis.com wss://*.firebaseio.com wss://*.firebasedatabase.app;
+        script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.firebaseio.com https://*.firebasedatabase.app https://www.gstatic.com https://www.gstatic.com/firebasejs/11.0.0/ https://*.googleapis.com;
+        script-src-elem 'self' 'unsafe-inline' 'unsafe-eval' https://*.firebaseio.com https://*.firebasedatabase.app https://www.gstatic.com https://www.gstatic.com/firebasejs/11.0.0/ https://*.googleapis.com;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src 'self' https://fonts.gstatic.com;
+        frame-src 'self' https://*.firebaseapp.com;
+        img-src 'self' data:;
+    ">
+
+    <!-- NYTT: FIREBASE SETUP - VERSION 11.0.0 -->
+    <script type="module">
+        // ============================================
+        // FIREBASE INITIALISERING - NYTT I VERSION 2
+        // ============================================
+        // Använder Firebase SDK v11.0.0 för att spara quizresultat
+        // Data som sparas: namn, svårighetsgrad, poäng, datum
+        // ============================================
+        
+        import { initializeApp, getApps } from 'https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js';
+        import { getDatabase, ref, set, push, onValue, remove } from 'https://www.gstatic.com/firebasejs/11.0.0/firebase-database.js';
+
+        console.log('FIREBASE v11.0.0 MODULER LADDADE');
+
+        const initFirebase = async () => {
+            console.log('INITIERAR FIREBASE...');
+
+            try {
+                // FIREBASE KONFIGURATION - ANVÄNDER SAMMA SOM test_databas_59.html
+                const firebaseConfig = {
+                    apiKey: "AIzaSyDCbsFdT8up5b_niUzFh9jLP6Lhhj8UFFk",
+                    authDomain: "borgholm-registration.firebaseapp.com",
+                    databaseURL: "https://borgholm-registration-default-rtdb.europe-west1.firebasedatabase.app",
+                    projectId: "borgholm-registration",
+                    storageBucket: "borgholm-registration.appspot.com",
+                    messagingSenderId: "203337885231",
+                    appId: "1:203337885231:web:30fdc40a452f46040348da"
+                };
+
+                // Kontrollera om en Firebase-app redan är initialiserad
+                if (!getApps().length) {
+                    const app = initializeApp(firebaseConfig);
+                    console.log('FIREBASE APP INITIERAD MED VERSION 11.0.0');
+                } else {
+                    console.log('FIREBASE APP REDAN INITIALISERAD');
+                }
+
+                const db = getDatabase();
+                console.log('FIREBASE DATABASE REFERENS SKAPAD');
+
+                // Gör Firebase tillgängligt globalt för script_ver2.js
+                window.firebaseDb = db;
+                window.firebaseRef = ref;
+                window.firebaseSet = set;
+                window.firebasePush = push;
+                window.firebaseOnValue = onValue; // FÖR ATT LÄSA DATA
+                window.firebaseRemove = remove;   // NYTT: FÖR ATT RADERA DATA
+                window.firebaseReady = true;
+
+                // Skicka event så att script_ver2.js vet att Firebase är redo
+                window.dispatchEvent(new Event('firebaseReady'));
+                console.log('FIREBASE ÄR REDO FÖR ANVÄNDNING');
+
+            } catch (error) {
+                console.error('FEL VID FIREBASE-INITIERING:', error);
+                window.firebaseReady = false;
+                window.dispatchEvent(new CustomEvent('firebaseError', { detail: error }));
+            }
+        };
+
+        // Starta Firebase när sidan laddas
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initFirebase);
+        } else {
+            initFirebase();
+        }
+    </script>
+
+    <!-- NYTT: EXTRA CSS FÖR NAMNRUTA OCH SVÅRIGHETSBETYG -->
+    <style>
+        /* ============================================
+           NYTT I VERSION 2: STYLING FÖR NAMNRUTA
+           ============================================ */
+        
+        /* NAMNRUTA-SEKTION - VISAS FÖRST INNAN INTRO */
+        .name-section {
+            padding: 40px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .name-card {
+            background: var(--card-bg);
+            text-align: center;
+        }
+        
+        .name-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .name-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        /* NAMNFÄLT MED GUL BAKGRUND - ENLIGT REGEL 18 */
+        .name-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 16px 20px;
+            font-size: 1.2rem;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            background-color: #fef3c7; /* GUL BAKGRUND FÖR INMATNINGSFÄLT */
+            color: var(--text-primary);
+            font-family: 'Source Sans Pro', sans-serif;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        .name-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background-color: #fde68a; /* LJUSARE GUL VID FOKUS */
+            box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+        }
+        
+        .name-input::placeholder {
+            color: #9ca3af;
+        }
+        
+        .name-error {
+            color: var(--error-color);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            display: none;
+        }
+        
+        .name-error.show {
+            display: block;
+        }
+        
+        .start-name-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+        
+        .start-name-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .start-name-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* UPPDATERAT: STYLING FÖR TRE SPARALTERNATIV */
+        .save-consent-container {
+            margin: 20px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 12px;
+            border: 1px solid rgba(30, 58, 95, 0.2);
+            text-align: left;
+        }
+        
+        .save-consent-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+        }
+        
+        .save-option-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+            padding: 12px 15px;
+            margin: 8px 0;
+            background: white;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .save-option-label:hover {
+            border-color: var(--primary-color);
+            background: #f8fafc;
+        }
+        
+        .save-option-label:has(input:checked) {
+            border-color: var(--primary-color);
+            background: #e0f2fe;
+        }
+        
+        .save-option-radio {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            cursor: pointer;
+            accent-color: var(--primary-color);
+            flex-shrink: 0;
+        }
+        
+        .save-option-text {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        
+        .save-option-text strong {
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+        
+        .save-option-text small {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+        
+        .save-consent-info {
+            cursor: help;
+            font-size: 1rem;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        
+        .save-consent-info:hover {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+        
+        .save-consent-description {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+            text-align: center;
+            cursor: help;
+        }
+
+        /* ============================================
+           NYTT I VERSION 2: STYLING FÖR SVÅRIGHETSBETYG
+           ============================================ */
+        
+        .difficulty-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: #f0f9ff;
+            border-radius: 12px;
+            border: 2px solid var(--primary-color);
+        }
+        
+        .difficulty-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .difficulty-description {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .difficulty-scale {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .difficulty-btn {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #d1d5db;
+            border-radius: 50%;
+            background: #fef3c7; /* GUL BAKGRUND - INDIKERAR INTERAKTIVT ELEMENT */
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-primary);
+        }
+        
+        .difficulty-btn:hover {
+            border-color: var(--primary-color);
+            background: #fde68a;
+            transform: scale(1.1);
+        }
+        
+        .difficulty-btn.selected {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+            transform: scale(1.15);
+            box-shadow: 0 4px 12px rgba(30, 58, 95, 0.3);
+        }
+        
+        .difficulty-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            padding: 0 10px;
+        }
+        
+        .submit-rating-btn {
+            display: block;
+            margin: 0 auto;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+        
+        .submit-rating-btn:hover:not(:disabled) {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .submit-rating-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* BEKRÄFTELSEMEDDELANDE EFTER SPARNING */
+        .save-confirmation {
+            margin-top: 20px;
+            padding: 15px;
+            background: #d1fae5;
+            border-radius: 8px;
+            border-left: 4px solid var(--success-color);
+            color: #065f46;
+            text-align: center;
+            font-weight: 600;
+            animation: slideDown 0.3s ease;
+        }
+        
+        .save-error {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fee2e2;
+            border-radius: 8px;
+            border-left: 4px solid var(--error-color);
+            color: #991b1b;
+            text-align: center;
+        }
+
+        /* VÄLKOMSTMEDDELANDE MED NAMN */
+        .welcome-name {
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+            padding: 15px 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            border: 1px solid rgba(30, 58, 95, 0.2);
+        }
+        
+        .welcome-name strong {
+            color: var(--accent-color);
+        }
+
+        /* RESPONSIV DESIGN FÖR SVÅRIGHETSBETYG */
+        @media (max-width: 768px) {
+            .difficulty-btn {
+                width: 42px;
+                height: 42px;
+                font-size: 1rem;
+            }
+            
+            .difficulty-scale {
+                gap: 8px;
+            }
+            
+            .name-input {
+                max-width: 100%;
+            }
+        }
+
+        /* ============================================
+           NYTT I VERSION 2: FIREBASE-KNAPP OCH RESULTATVISNING
+           ============================================ */
+        
+        /* Firebase-knappen (orange/röd som Firebase-loggan) */
+        .firebase-btn {
+            background: linear-gradient(135deg, #FFA000 0%, #F57C00 100%);
+        }
+        
+        .firebase-btn:hover {
+            background: linear-gradient(135deg, #FFB300 0%, #FF8F00 100%);
+        }
+
+        /* Sparade resultat-tabell */
+        .saved-results-container {
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
+        
+        .saved-results-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        
+        .saved-results-table th,
+        .saved-results-table td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .saved-results-table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+        
+        .saved-results-table tr:hover {
+            background: #f8fafc;
+        }
+        
+        .saved-results-table tr:nth-child(even) {
+            background: #f1f5f9;
+        }
+        
+        .saved-results-table tr:nth-child(even):hover {
+            background: #e2e8f0;
+        }
+        
+        .results-loading {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-secondary);
+        }
+        
+        .results-empty {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
+        .firebase-link-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFA000 0%, #F57C00 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .firebase-link-btn:hover {
+            background: linear-gradient(135deg, #FFB300 0%, #FF8F00 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 160, 0, 0.3);
+            color: white;
+        }
+        
+        .backend-alternatives {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+        
+        .backend-alternatives h4 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .backend-list {
+            display: grid;
+            gap: 12px;
+        }
+        
+        .backend-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            border-left: 3px solid var(--accent-color);
+        }
+        
+        .backend-item strong {
+            color: var(--primary-color);
+            display: block;
+            margin-bottom: 3px;
+        }
+        
+        .backend-item small {
+            color: var(--text-secondary);
+        }
+        
+        /* Container för databas-knappar */
+        .database-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        
+        .refresh-results-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .refresh-results-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+        
+        /* NYTT: Rensa databasen-knapp */
+        .clear-database-btn {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .clear-database-btn:hover {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+        }
+        
+        /* Tooltip-styling för hover-texter */
+        .refresh-results-btn[title],
+        .clear-database-btn[title] {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <main class="quiz-container" role="main">
+        <header class="quiz-header">
+            <div class="quiz-header-content">
+                <div class="quiz-header-text">
+                    <h1 class="quiz-title">Quiz: Fritidskortet möter Kulturskolan</h1>
+                    <p class="quiz-subtitle">Kultur för alla barn – vad säger forskningen och verkligheten?</p>
+                </div>
+                <a href="https://kentlundgren.se/program/quiz/0/" class="all-quiz-btn" target="_blank" rel="noopener noreferrer" title="Se alla Fredagsquiz">
+                    📚 Alla Quiz
+                </a>
+            </div>
+            <div class="progress-bar" aria-hidden="true">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </header>
+
+        <!-- ============================================
+             NYTT I VERSION 2: NAMNRUTA-SEKTION
+             ============================================
+             Denna sektion visas FÖRST innan intro-sidorna.
+             Användaren måste ange sitt namn för att fortsätta.
+             Namnfältet har GUL BAKGRUND enligt regel 18.
+             ============================================ -->
+        <section id="nameSection" class="name-section" aria-live="polite">
+            <div class="name-card">
+                <h2 class="name-title">👋 Välkommen till quizet!</h2>
+                <p class="name-description">
+                    Innan vi börjar – vad heter du?<br>
+                    <small>Ditt namn visas tillsammans med ditt resultat.</small>
+                </p>
+                <div>
+                    <!-- NAMNFÄLT MED GUL BAKGRUND -->
+                    <input 
+                        type="text" 
+                        id="userName" 
+                        class="name-input" 
+                        placeholder="Skriv ditt namn här..."
+                        maxlength="50"
+                        autocomplete="name"
+                    >
+                    
+                    <!-- UPPDATERAT: TRE ALTERNATIV FÖR VAD SOM SKA SPARAS -->
+                    <div class="save-consent-container">
+                        <p class="save-consent-title">
+                            <strong>Vad vill du spara?</strong>
+                            <span class="save-consent-info" title="Du är värdefull och älskvärd oavsett hur det går på detta quiz! 💖 Resultatet säger inget om ditt värde som människa.">ℹ️</span>
+                        </p>
+                        
+                        <!-- Alternativ 1: Helt anonymt -->
+                        <label class="save-option-label">
+                            <input 
+                                type="radio" 
+                                name="saveOption" 
+                                value="anonymous"
+                                class="save-option-radio"
+                            >
+                            <span class="save-option-text">
+                                <strong>🔒 Helt anonymt</strong>
+                                <small>Inget sparas – du gör quizet helt privat</small>
+                            </span>
+                        </label>
+                        
+                        <!-- Alternativ 2: Namn och svårighetsgrad (ej resultat) -->
+                        <label class="save-option-label">
+                            <input 
+                                type="radio" 
+                                name="saveOption" 
+                                value="partial"
+                                class="save-option-radio"
+                            >
+                            <span class="save-option-text">
+                                <strong>📝 Namn + svårighetsgrad</strong>
+                                <small>Ditt quizresultat (antal rätt) sparas INTE</small>
+                            </span>
+                        </label>
+                        
+                        <!-- Alternativ 3: Spara allt (standard) -->
+                        <label class="save-option-label">
+                            <input 
+                                type="radio" 
+                                name="saveOption" 
+                                value="full"
+                                class="save-option-radio"
+                                checked
+                            >
+                            <span class="save-option-text">
+                                <strong>📊 Spara allt</strong>
+                                <small>Namn, svårighetsgrad och resultat sparas</small>
+                            </span>
+                        </label>
+                        
+                        <p class="save-consent-description" title="Du är värdefull och älskvärd oavsett hur det går på detta quiz! 💖">
+                            Välj hur mycket du vill dela. Du är älskvärd oavsett resultat! 💖
+                        </p>
+                    </div>
+                    <!-- SLUT PÅ SPARALTERNATIV -->
+                    
+                    <p id="nameError" class="name-error">⚠️ Vänligen ange ditt namn för att fortsätta</p>
+                    <button id="startWithNameBtn" class="start-name-btn" type="button">
+                        Fortsätt ➡️
+                    </button>
+                </div>
+            </div>
+        </section>
+        <!-- SLUT PÅ NYTT: NAMNRUTA-SEKTION -->
+
+        <!-- Inledande texter i fem sidor före quizet -->
+        <!-- UPPDATERAD: Nu dold från start (hidden class tillagd) -->
+        <section id="introSection" class="intro-section hidden" aria-live="polite">
+            <div class="intro-card">
+                <!-- NYTT: Välkomstmeddelande med användarens namn -->
+                <div id="welcomeMessage" class="welcome-name hidden">
+                    Hej <strong id="displayName"></strong>! 👋 Lycka till med quizet!
+                </div>
+                
+                <!-- Sidindikator med text och visuella prickar -->
+                <div class="page-indicator">
+                    <div class="page-number" id="pageNumber">Sida 1 av 5</div>
+                    <div class="page-dots" id="pageDots"></div>
+                </div>
+                <h2 class="intro-title" id="introPageTitle"></h2>
+                <div class="intro-body" id="introPageBody"></div>
+                <div class="intro-nav">
+                    <button class="secondary-btn" id="introPrevBtn" type="button" aria-label="Föregående" disabled>⬅️ Föregående</button>
+                    <button class="primary-btn" id="introNextBtn" type="button" aria-label="Nästa">Nästa ➡️</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Startskärm med växlande bilder och knapp för att gå vidare till quizet -->
+        <!-- Bilderna kultur1.jpg och kultur2.jpg växlar automatiskt var 3:e sekund -->
+        <section id="imageSection" class="image-section hidden" aria-labelledby="introTitle">
+            <div class="quiz-image-container">
+                <img id="img1" src="kultur1.jpg" alt="Barn och kultur - illustration 1" class="quiz-image active">
+                <img id="img2" src="kultur2.jpg" alt="Barn och kultur - illustration 2" class="quiz-image">
+            </div>
+            <p class="image-text" id="introTitle">Nu är du redo! Testa dina kunskaper om Fritidskortet, Barnkonventionen och Kulturskolan! 🎨</p>
+            <button class="continue-btn" id="continueBtn" type="button">Starta Quizet ➡️</button>
+        </section>
+
+        <!-- Själva quiz-innehållet renderas dynamiskt via JavaScript -->
+        <section id="quizContent" class="hidden" aria-live="polite"></section>
+    </main>
+
+    <!-- Floating action buttons för teknisk info, källor, prompt och Firebase -->
+    <!-- UPPDATERAD: Lagt till Firebase-knapp -->
+    <div class="floating-buttons">
+        <button class="floating-btn tech-btn" id="techBtn" title="Teknisk beskrivning">🔧</button>
+        <button class="floating-btn prompt-btn" id="promptBtn" title="Visa källor">📄</button>
+        <a href="promt.html" class="floating-btn original-prompt-btn" title="Visa ursprunglig AI-prompt">📝</a>
+        <!-- NYTT: FIREBASE-KNAPP -->
+        <button class="floating-btn firebase-btn" id="firebaseBtn" title="Firebase & Sparade resultat">🔥</button>
+    </div>
+
+    <!-- Modal: Teknisk beskrivning -->
+    <!-- UPPDATERAD MED INFORMATION OM VERSION 2 -->
+    <div id="techModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="techTitle">
+        <div class="modal-content">
+            <span class="close" data-close="#techModal" aria-label="Stäng">&times;</span>
+            <h2 id="techTitle">🔧 Teknisk beskrivning</h2>
+            
+            <h3>Struktur och organisation</h3>
+            <p><strong>Filstruktur:</strong> Detta quiz är byggt med separation of concerns-principen, där HTML, CSS och JavaScript är uppdelade i separata filer:</p>
+            <ul>
+                <li><strong>index.html:</strong> Innehåller HTML-strukturen och semantisk markup</li>
+                <li><strong>styles.css:</strong> All styling och responsiv design</li>
+                <li><strong>script.js:</strong> All JavaScript-logik och interaktivitet</li>
+            </ul>
+            
+            <!-- NYTT: INFORMATION OM VERSION 2 TILLÄGG -->
+            <div class="info-box">
+                <strong>🆕 NYTT I VERSION 2 - Firebase-integration</strong>
+                <p>Denna version har följande nya funktioner:</p>
+                <ul>
+                    <li><strong>Namnregistrering:</strong> Användaren anger sitt namn innan quizet börjar</li>
+                    <li><strong>Svårighetsbetyg:</strong> Efter quizet betygsätter användaren svårighetsgraden (1-10)</li>
+                    <li><strong>Firebase-lagring:</strong> Namn, betyg, poäng och datum sparas i Firebase Realtime Database</li>
+                    <li><strong>Firebase SDK v11.0.0:</strong> Använder senaste versionen av Firebase</li>
+                </ul>
+            </div>
+            
+            <div class="info-box">
+                <strong>💡 Varför separata filer?</strong>
+                <p>Att dela upp kod i separata filer ger flera fördelar:</p>
+                <ul>
+                    <li><strong>Underhållbarhet:</strong> Lättare att hitta och uppdatera specifik kod</li>
+                    <li><strong>Återanvändbarhet:</strong> CSS och JavaScript kan användas i flera HTML-filer</li>
+                    <li><strong>Läsbarhet:</strong> Tydligare struktur och mindre filer att hantera</li>
+                    <li><strong>Cachning:</strong> Webbläsaren kan cacha CSS och JS separat för bättre prestanda</li>
+                    <li><strong>Samarbete:</strong> Flera utvecklare kan arbeta med olika filer samtidigt</li>
+                    <li><strong>Best practice:</strong> Följer webbutvecklingens standarder och konventioner</li>
+                </ul>
+            </div>
+            
+            <h3>Teknisk implementation</h3>
+            <ul>
+                <li><strong>HTML5:</strong> Semantisk markup med ARIA-attribut för tillgänglighet</li>
+                <li><strong>CSS3:</strong> Responsiv design med CSS-variabler och flexbox</li>
+                <li><strong>JavaScript (ES6+):</strong> Modern JavaScript med arrow functions, template literals och DOM-manipulation</li>
+                <li><strong>Firebase v11.0.0:</strong> Realtime Database för datalagring</li>
+                <li><strong>UI:</strong> Progressbar, sidindikator med klickbara prickar, växlande bilder</li>
+                <li><strong>Bildväxling:</strong> Automatisk växling mellan två bilder var 3:e sekund</li>
+                <li><strong>Interaktion:</strong> Val med färgkodning (grön/röd), gul bakgrund på svarsalternativ</li>
+                <li><strong>Responsivitet:</strong> Fungerar på både dator och mobil</li>
+            </ul>
+            
+            <h3>Skapad information</h3>
+            <p><strong>Skapad:</strong> 2025-12-05, uppdaterad 2025-12-09 med Firebase-integration</p>
+            <p><strong>Baserad på:</strong> Information om Fritidskortet, FN:s barnkonvention, Sveriges Kommuner och Regioners kulturskolerapporter samt akademisk forskning om breddat deltagande</p>
+            <p><strong>Fokus:</strong> Detta quiz fokuserar på Fritidskortet som folkhälsoreform, barns rätt till kultur enligt barnkonventionen, och kulturskolans roll och utmaningar i Sverige.</p>
+        </div>
+    </div>
+
+    <!-- Modal: Källor och underlag -->
+    <div id="promptModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="promptTitle">
+        <div class="modal-content">
+            <span class="close" data-close="#promptModal" aria-label="Stäng">&times;</span>
+            <h2 id="promptTitle">📄 Källor & Referenser</h2>
+            <p>Quiz: Fritidskortet möter Kulturskolan 2025</p>
+            <p><strong>Frågor och fördjupade förklaringar baserade på (i Harvard-format):</strong></p>
+            
+            <div class="info-box">
+                <strong>📚 Om detta quiz</strong>
+                <p>Detta quiz är skapat för att utforska Fritidskortet, barnens rätt till kultur enligt FN:s barnkonvention, och kulturskolans roll i att nå alla barn och unga i Sverige.</p>
+                <p><strong>🎨 Fokus:</strong> Breddat deltagande och hur ekonomiska, sociala och kulturella faktorer påverkar barns tillgång till kulturaktiviteter.</p>
+            </div>
+            
+            <h3>Blogginlägg med analys</h3>
+            <ul>
+                <li>Lundgren, K. (2025) <em>Fritidskortet möter kulturskolan</em>. Controller utan gränser, 5 december. Tillgänglig: <a href="https://controllerutangranser.wordpress.com/2025/12/05/fritidskortet-moter-kulturskolan/" target="_blank" rel="noopener noreferrer">controllerutangranser.wordpress.com</a> [Hämtad: 2025-12-05].</li>
+            </ul>
+            
+            <h3>Myndigheter och organisationer</h3>
+            <ul>
+                <li>Folkhälsomyndigheten (2025) <em>Fritidskortet för barn och ungdomar</em>. Tillgänglig: <a href="https://www.folkhalsomyndigheten.se/livsvillkor-levnadsvanor/halsa-i-olika-grupper/barn-och-unga/fritidskort-for-barn-och-ungdomar/" target="_blank" rel="noopener noreferrer">folkhälsomyndigheten.se</a> [Hämtad: 2025-12-05].</li>
+                <li>Folkhälsomyndigheten (2025) <em>Nu lanseras Fritidskortet för barn och unga</em>. Tillgänglig: <a href="https://www.folkhalsomyndigheten.se/nyheter-och-press/nyhetsarkiv/2025/september/nu-lanseras-fritidskortet-for-barn-och-unga/" target="_blank" rel="noopener noreferrer">folkhälsomyndigheten.se</a> [Hämtad: 2025-12-05].</li>
+                <li>Folkhälsomyndigheten (2025) <em>Fritidskortet: Brett utbud av aktiviteter</em>. Tillgänglig: <a href="https://www.folkhalsomyndigheten.se/nyheter-och-press/nyhetsarkiv/2025/november/fritidskortet-brett-utbud-av-aktiviteter/" target="_blank" rel="noopener noreferrer">folkhälsomyndigheten.se</a> [Hämtad: 2025-12-05].</li>
+                <li>SKR (2025) <em>Kultur- och musikskolor</em>. Sveriges Kommuner och Regioner. Tillgänglig: <a href="https://skr.se/kulturochfritid/kulturochmusikskolor.7675.html" target="_blank" rel="noopener noreferrer">skr.se</a> [Hämtad: 2025-12-05].</li>
+            </ul>
+            
+            <h3>Barnkonventionen</h3>
+            <ul>
+                <li>Rädda Barnen (2018) <em>Kort version av barnkonventionen</em>. Tillgänglig: <a href="https://www.raddabarnen.se/rad-och-kunskap/skolmaterial/barnkonventionen/barnkonventionen-kort-version/" target="_blank" rel="noopener noreferrer">raddabarnen.se</a> [Hämtad: 2025-12-05].</li>
+                <li>UNICEF Sverige (2025) <em>Läs barnkonventionen</em>. Tillgänglig: <a href="https://unicef.se/barnkonventionen/las-texten" target="_blank" rel="noopener noreferrer">unicef.se</a> [Hämtad: 2025-12-05].</li>
+            </ul>
+            
+            <h3>Kommunala exempel</h3>
+            <ul>
+                <li>Simrishamns kommun (2025) <em>Kulturgarantin</em>. Tillgänglig: <a href="https://www.simrishamn.se/barn-och-utbildning/kulturskolan/kulturgarantin" target="_blank" rel="noopener noreferrer">simrishamn.se</a> [Hämtad: 2025-12-05].</li>
+            </ul>
+            
+            <h3>Akademisk forskning</h3>
+            <ul>
+                <li>Jeppsson, C. (2020) <em>Rörlig och stabil, bred och spetsig: Kulturell reproduktion och strategier för breddat deltagande i den svenska kulturskolan</em>. Doktorsavhandling. Göteborgs universitet.</li>
+                <li>Skolporten (2020) <em>Stor variation i kulturskolans strategier för breddat deltagande</em>. Tillgänglig: <a href="https://www.skolporten.se/forskning/intervju/stor-variation-i-kulturskolans-strategier-for-breddat-deltagande/" target="_blank" rel="noopener noreferrer">skolporten.se</a> [Hämtad: 2025-12-05].</li>
+            </ul>
+            
+            <div class="warning-box">
+                <strong>📚 Fler källor</strong>
+                <p>Den fullständiga referenslistan med alla källor finns i bloggtexten: <a href="https://controllerutangranser.wordpress.com/2025/12/05/fritidskortet-moter-kulturskolan/" target="_blank" rel="noopener noreferrer">"Fritidskortet möter kulturskolan"</a>.</p>
+            </div>
+            
+            <h3>💡 Mer information</h3>
+            <p><strong>Fritidskortet:</strong> <a href="https://www.folkhalsomyndigheten.se/livsvillkor-levnadsvanor/halsa-i-olika-grupper/barn-och-unga/fritidskort-for-barn-och-ungdomar/" target="_blank" rel="noopener noreferrer">folkhalsomyndigheten.se</a></p>
+            <p><strong>Kulturskolan:</strong> <a href="https://skr.se/kulturochfritid/kulturochmusikskolor.7675.html" target="_blank" rel="noopener noreferrer">skr.se</a></p>
+            <p><strong>Läs mer på bloggen:</strong> <a href="https://controllerutangranser.wordpress.com/2025/12/05/fritidskortet-moter-kulturskolan/" target="_blank" rel="noopener noreferrer">Controller utan gränser</a></p>
+        </div>
+    </div>
+
+    <!-- ============================================
+         NYTT I VERSION 2: FIREBASE-MODAL
+         ============================================
+         Modal som förklarar Firebase-kopplingen och visar sparade resultat
+         Utökad med detaljerad information om Firebase historia, funktion och jämförelser
+         ============================================ -->
+    <div id="firebaseModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="firebaseTitle">
+        <div class="modal-content">
+            <span class="close" data-close="#firebaseModal" aria-label="Stäng">&times;</span>
+            <h2 id="firebaseTitle">🔥 Firebase & Sparade resultat</h2>
+            
+            <div class="info-box">
+                <strong>📊 Vad sparas?</strong>
+                <p>När du slutför quizet och betygsätter svårighetsgraden sparas följande information:</p>
+                <ul>
+                    <li><strong>Namn:</strong> Det namn du angav i början</li>
+                    <li><strong>Svårighetsgrad:</strong> Ditt betyg 1-10</li>
+                    <li><strong>Poäng:</strong> Antal rätt av antal frågor</li>
+                    <li><strong>Datum:</strong> När du gjorde quizet</li>
+                </ul>
+            </div>
+            
+            <h3>📋 Sparade resultat från alla som gjort quizet</h3>
+            <div class="database-actions">
+                <button 
+                    class="refresh-results-btn" 
+                    id="refreshResultsBtn"
+                    title="TEKNISKT: Anropar Firebase onValue() eller get() för att hämta data från 'quiz-resultat/fritidskortet-kulturskolan/' i Realtime Database. Returnerar en snapshot med alla poster som sedan parsas till JSON och renderas i en HTML-tabell."
+                >🔄 Uppdatera</button>
+                <button 
+                    class="clear-database-btn" 
+                    id="clearDatabaseBtn"
+                    title="TEKNISKT: Anropar Firebase remove() på referensen 'quiz-resultat/fritidskortet-kulturskolan/' vilket tar bort ALLA poster under den noden. Detta är en destruktiv operation som inte går att ångra! Kräver skrivbehörighet i Firebase-reglerna."
+                >🗑️ Rensa databasen</button>
+            </div>
+            <div id="savedResultsContainer" class="saved-results-container">
+                <p class="results-loading">⏳ Laddar resultat...</p>
+            </div>
+            
+            <p style="text-align: center; margin-top: 15px;">
+                <a href="https://console.firebase.google.com/project/borgholm-registration/database/borgholm-registration-default-rtdb/data/quiz-resultat" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="firebase-link-btn">
+                    🔗 Öppna Firebase Console
+                </a>
+            </p>
+            <p style="text-align: center; font-size: 0.85rem; color: var(--text-secondary);">
+                <em>OBS: Kräver inloggning med behörigt Google-konto</em>
+            </p>
+
+            <!-- ============================================
+                 UTÖKAD INFORMATION OM FIREBASE
+                 ============================================ -->
+            
+            <hr style="margin: 30px 0; border: none; border-top: 2px solid #e2e8f0;">
+            
+            <h3>🔥 Vad är Firebase?</h3>
+            
+            <div class="info-box">
+                <strong>📜 Historia</strong>
+                <ul>
+                    <li><strong>2011:</strong> Firebase grundades av James Tamplin och Andrew Lee i San Francisco</li>
+                    <li><strong>2012:</strong> Lanserade sin första produkt – Realtime Database</li>
+                    <li><strong>2014:</strong> Google köpte Firebase för uppskattningsvis 100+ miljoner dollar</li>
+                    <li><strong>2016:</strong> Google integrerade Firebase med sin molnplattform och utökade kraftigt</li>
+                    <li><strong>Idag:</strong> Firebase är en av världens mest populära Backend-as-a-Service (BaaS) plattformar</li>
+                </ul>
+                <p style="margin-top: 10px;"><strong>Ägare:</strong> Google (Alphabet Inc.) sedan 2014. Del av Google Cloud Platform.</p>
+            </div>
+            
+            <h3>📊 Hur fungerar Firebase Realtime Database?</h3>
+            
+            <p>Firebase använder <strong>JSON-träd</strong> (inte tabeller som SQL-databaser). Så här ser datastrukturen ut:</p>
+            
+            <div style="background: #1e293b; color: #e2e8f0; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 0.85rem; overflow-x: auto; margin: 15px 0;">
+<pre style="margin: 0;">borgholm-registration/
+├── quiz-resultat/
+│   └── fritidskortet-kulturskolan/
+│       ├── 1765307080277/
+│       │   ├── namn: "Anna"
+│       │   ├── svårighetsgrad: 7
+│       │   └── poäng: "4 av 5"
+│       └── ...
+└── borgholm-test/
+    └── persons/</pre>
+            </div>
+            
+            <div class="info-box">
+                <strong>⚡ Realtidssynkronisering</strong>
+                <ul>
+                    <li>Data synkroniseras <strong>automatiskt</strong> till alla anslutna klienter</li>
+                    <li>Använder <strong>WebSocket</strong> för snabb kommunikation</li>
+                    <li>Perfekt för appar som behöver live-uppdateringar (chat, spel, quiz)</li>
+                </ul>
+            </div>
+            
+            <h3>💰 Gratis-nivån (Spark Plan)</h3>
+            
+            <table style="width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.9rem;">
+                <thead>
+                    <tr style="background: var(--primary-color); color: white;">
+                        <th style="padding: 10px; text-align: left; border: 1px solid #e2e8f0;">Resurs</th>
+                        <th style="padding: 10px; text-align: left; border: 1px solid #e2e8f0;">Gräns</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #e2e8f0;"><strong>Lagring</strong></td>
+                        <td style="padding: 10px; border: 1px solid #e2e8f0;">1 GB</td>
+                    </tr>
+                    <tr style="background: #f8fafc;">
+                        <td style="padding: 10px; border: 1px solid #e2e8f0;"><strong>Nedladdningar</strong></td>
+                        <td style="padding: 10px; border: 1px solid #e2e8f0;">10 GB/månad</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #e2e8f0;"><strong>Samtidiga anslutningar</strong></td>
+                        <td style="padding: 10px; border: 1px solid #e2e8f0;">100</td>
+                    </tr>
+                    <tr style="background: #f8fafc;">
+                        <td style="padding: 10px; border: 1px solid #e2e8f0;"><strong>Skrivningar</strong></td>
+                        <td style="padding: 10px; border: 1px solid #e2e8f0;">50 000/dag</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p><strong>För detta quiz räcker gratisplanen gott och väl!</strong> Du kan lagra tusentals quizresultat utan kostnad.</p>
+            
+            <h3>⚖️ Firebase vs andra databaser</h3>
+            
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.85rem; min-width: 500px;">
+                    <thead>
+                        <tr style="background: var(--primary-color); color: white;">
+                            <th style="padding: 8px; text-align: left; border: 1px solid #e2e8f0;">Egenskap</th>
+                            <th style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">Firebase</th>
+                            <th style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">MySQL</th>
+                            <th style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">MongoDB</th>
+                            <th style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">Supabase</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 8px; border: 1px solid #e2e8f0;"><strong>Typ</strong></td>
+                            <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">NoSQL (JSON)</td>
+                            <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">SQL (Tabeller)</td>
+                            <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">NoSQL (Dok.)</td>
+                            <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">SQL (PostgreSQL)</td>
+                        </tr>
+                        <tr style="background: #f8fafc;">
+                            <td style="padding: 8px; border: 1px solid #e2e8f0;"><strong>Realtid</strong></td>
+                            <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">✅ Inbyggd</td>
+                            <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">❌ Nej</td>
+                            <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">❌ Nej</td>
+                            <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">✅ Inbyggd</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; border: 1px solid #e2e8f0;"><strong>Svårighetsgrad</strong></td>
+                            <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">⭐ Lätt</td>
+                            <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">⭐⭐⭐ Medel</td>
+                            <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">⭐⭐ Medel</td>
+                            <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">⭐⭐ Medel</td>
+                        </tr>
+                        <tr style="background: #f8fafc;">
+                            <td style="padding: 8px; border: 1px solid #e2e8f0;"><strong>Backend-kod</strong></td>
+                            <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">❌ Behövs ej</td>
+                            <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">✅ Krävs</td>
+                            <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">✅ Krävs</td>
+                            <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">❌ Behövs ej</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; border: 1px solid #e2e8f0;"><strong>Ägare</strong></td>
+                            <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">Google</td>
+                            <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">Oracle</td>
+                            <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">MongoDB Inc.</td>
+                            <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">Community</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3>👍 Fördelar med Firebase</h3>
+            <ul>
+                <li><strong>Ingen backend-kod behövs</strong> – JavaScript i webbläsaren räcker</li>
+                <li><strong>Snabb att komma igång</strong> – Fungerar på minuter</li>
+                <li><strong>Automatisk skalning</strong> – Google hanterar infrastrukturen</li>
+                <li><strong>Bra dokumentation</strong> – Mycket tutorials och exempel</li>
+                <li><strong>Generös gratisplan</strong> – Räcker för hobbyprojekt och små appar</li>
+                <li><strong>SDK för många plattformar</strong> – Web, iOS, Android, Flutter, Unity</li>
+            </ul>
+            
+            <h3>👎 Nackdelar med Firebase</h3>
+            <ul>
+                <li><strong>Vendor lock-in</strong> – Svårt att flytta till annan plattform</li>
+                <li><strong>Prismodell kan bli dyr</strong> – Vid stor skala ökar kostnaderna snabbt</li>
+                <li><strong>Begränsade queries</strong> – Inte lika kraftfullt som SQL</li>
+                <li><strong>NoSQL-struktur</strong> – Kräver annorlunda tänk än relationsdatabaser</li>
+                <li><strong>Säkerhetsregler</strong> – Kan vara knepiga att konfigurera rätt</li>
+            </ul>
+            
+            <div class="warning-box">
+                <strong>🔐 Säkerhet</strong>
+                <p>Databasen har konfigurerats för att tillåta läsning och skrivning utan autentisering. Detta fungerar bra för ett publikt quiz, men för känslig data bör striktare säkerhetsregler användas i Firebase Console under "Rules".</p>
+            </div>
+
+            <hr style="margin: 30px 0; border: none; border-top: 2px solid #e2e8f0;">
+            
+            <h3>🔧 Teknisk koppling i detta quiz</h3>
+            
+            <div class="info-box">
+                <strong>Så här fungerar det:</strong>
+                <ol style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>Firebase SDK v11.0.0</strong> laddas via CDN från Google</li>
+                    <li><strong>Konfiguration</strong> kopplar till projektet "borgholm-registration"</li>
+                    <li><strong>Realtime Database</strong> lagrar data i JSON-format</li>
+                    <li><strong>WebSocket</strong> möjliggör realtidsuppdateringar</li>
+                    <li>Data sparas under sökvägen: <code>quiz-resultat/fritidskortet-kulturskolan/</code></li>
+                </ol>
+            </div>
+            
+            <div class="backend-alternatives">
+                <h4>💡 Andra backend-lösningar</h4>
+                <p>Här är andra smidiga sätt att lagra data:</p>
+                
+                <div class="backend-list">
+                    <div class="backend-item">
+                        <span>📊</span>
+                        <div>
+                            <strong>Google Sheets</strong>
+                            <small>Gratis, enkelt att se data i kalkylblad. Använder Google Apps Script.</small>
+                        </div>
+                    </div>
+                    
+                    <div class="backend-item">
+                        <span>⚡</span>
+                        <div>
+                            <strong>Supabase</strong>
+                            <small>Open-source alternativ till Firebase. PostgreSQL-databas med REST API.</small>
+                        </div>
+                    </div>
+                    
+                    <div class="backend-item">
+                        <span>🐘</span>
+                        <div>
+                            <strong>PHP + MySQL</strong>
+                            <small>Klassisk lösning för webbhotell. Kräver server-side kod.</small>
+                        </div>
+                    </div>
+                    
+                    <div class="backend-item">
+                        <span>📁</span>
+                        <div>
+                            <strong>JSON-fil (PHP)</strong>
+                            <small>Enklaste lösningen. Sparar till en JSON-fil på servern.</small>
+                        </div>
+                    </div>
+                    
+                    <div class="backend-item">
+                        <span>🌐</span>
+                        <div>
+                            <strong>Netlify Forms / Formspree</strong>
+                            <small>Serverlös formulärhantering. Bra för enkel datainsamling.</small>
+                        </div>
+                    </div>
+                    
+                    <div class="backend-item">
+                        <span>🗄️</span>
+                        <div>
+                            <strong>Airtable</strong>
+                            <small>Kombination av kalkylblad och databas. Vackert gränssnitt.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-box" style="margin-top: 20px;">
+                <strong>📚 Läs mer om Firebase</strong>
+                <ul>
+                    <li><a href="https://firebase.google.com/docs/database" target="_blank" rel="noopener noreferrer">Firebase Realtime Database Docs</a></li>
+                    <li><a href="https://firebase.google.com/pricing" target="_blank" rel="noopener noreferrer">Firebase Priser (Spark = Gratis)</a></li>
+                    <li><a href="https://firebase.google.com/docs/database/security" target="_blank" rel="noopener noreferrer">Säkerhetsregler för Firebase</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- SLUT PÅ FIREBASE-MODAL -->
+
+    <!-- Extern JavaScript-fil enligt best practice -->
+    <script src="script.js"></script>
+</body>
+</html>
+

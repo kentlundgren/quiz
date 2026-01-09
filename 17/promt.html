@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ursprunglig Prompt – Samhällsbyggnadsanalys</title>
+    <style>
+        /* 
+         * Grundläggande styling för promptsidan
+         * Designad för god läsbarhet och enkel kopiering av prompttext
+         */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #1a5276 0%, #2e86ab 50%, #48a9a6 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        /* Header-sektion med titel och emoji */
+        header {
+            background: linear-gradient(135deg, #1a5276 0%, #2980b9 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        /* Huvudinnehåll */
+        main {
+            padding: 40px;
+        }
+        
+        /* Informationsruta om vad prompten är */
+        .info-box {
+            background: linear-gradient(135deg, #e8f6f3 0%, #d5f5e3 100%);
+            border-left: 5px solid #1abc9c;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .info-box h2 {
+            color: #16a085;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+        
+        .info-box p {
+            color: #1e8449;
+        }
+        
+        /* Promptcontainer med monospace-font för teknisk känsla */
+        .prompt-container {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 30px;
+            border-radius: 10px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.8;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        
+        /* Styling för olika element i prompttexten */
+        .prompt-container .section-title {
+            color: #569cd6;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .prompt-container .step-title {
+            color: #4ec9b0;
+            font-weight: bold;
+        }
+        
+        .prompt-container .warning {
+            color: #f44747;
+            font-weight: bold;
+        }
+        
+        .prompt-container .highlight {
+            color: #ce9178;
+        }
+        
+        .prompt-container .bullet {
+            color: #6a9955;
+        }
+        
+        /* Metadata-sektion längst ned */
+        .metadata {
+            background: #f8f9fa;
+            padding: 25px 40px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .metadata p {
+            margin: 8px 0;
+            color: #495057;
+        }
+        
+        .metadata strong {
+            color: #1a5276;
+        }
+        
+        .metadata a {
+            color: #2980b9;
+            text-decoration: none;
+        }
+        
+        .metadata a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Tillbaka-länk */
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #1a5276 0%, #2980b9 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .back-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(41, 128, 185, 0.4);
+        }
+        
+        /* Responsiv design för mindre skärmar */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            header {
+                padding: 25px;
+            }
+            
+            header h1 {
+                font-size: 1.6em;
+            }
+            
+            main {
+                padding: 20px;
+            }
+            
+            .prompt-container {
+                padding: 15px;
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidhuvud med titel -->
+        <header>
+            <h1>📝 Ursprunglig Prompt</h1>
+            <p>Den AI-prompt som skapade quizet om samhällsbyggnad</p>
+        </header>
+        
+        <main>
+            <!-- Förklarande informationsruta -->
+            <div class="info-box">
+                <h2>💡 Vad är detta?</h2>
+                <p>Nedan visas den ursprungliga prompten som användes för att instruera AI-assistenten (Claude) att skapa bloggtexten, slides och quizfrågorna om samhällsbyggnad. Prompten visar hur man kan strukturera ett komplext uppdrag i flera steg för att få ett genomarbetat resultat.</p>
+            </div>
+            
+            <!-- Själva prompttexten i kodformat -->
+            <div class="prompt-container">
+<span class="section-title">PROMPT FÖR SAMHÄLLSBYGGNADSANALYS (Tredelt uppdrag)</span>
+
+<span class="section-title">UPPDRAGETS STRUKTUR</span>
+Detta är ett tredelt uppdrag som ska genomföras i följande steg:
+<span class="step-title">STEG 1:</span> Temaidentifiering och godkännande
+<span class="step-title">STEG 2:</span> Bloggtext (3000 ord)
+<span class="step-title">STEG 3:</span> Slides (5 st) och Quiz (5 frågor)
+
+<span class="step-title">STEG 1: TEMAIDENTIFIERING OCH GODKÄNNANDE</span>
+
+<span class="highlight">Instruktion:</span>
+Genomför en web search för att identifiera aktuella händelser,
+nyheter och fenomen inom samhällsbyggnadsområdet i södra
+Sverige/Skåne under den senaste veckan.
+
+Baserat på din analys, föreslå ETT konkret tema för bloggtexten.
+
+<span class="highlight">Tänkbara temaområden kan vara:</span>
+<span class="bullet">•</span> Hållbart byggande och klimatanpassning
+<span class="bullet">•</span> Infrastruktur och trafikplanering
+<span class="bullet">•</span> Grönstruktur, parker och biologisk mångfald
+<span class="bullet">•</span> VA-frågor och dagvattenhantering
+<span class="bullet">•</span> Exploatering och bostadsförsörjning
+<span class="bullet">•</span> Bygglov och planprocesser
+<span class="bullet">•</span> Drift och underhåll av offentliga miljöer
+<span class="bullet">•</span> Belysning och trygghet i utemiljöer
+<span class="bullet">•</span> Digitalisering inom samhällsbyggnad
+<span class="bullet">•</span> Andra aktuella teman du identifierar
+
+<span class="highlight">Presentera ditt föreslagna tema med:</span>
+<span class="bullet">•</span> Tematitel
+<span class="bullet">•</span> Kort motivering (varför just detta tema är aktuellt nu)
+<span class="bullet">•</span> Vilka aktuella händelser/nyheter som ligger till grund för valet
+<span class="bullet">•</span> Eventuell koppling till nationella mål, lagstiftning eller 
+   branschstandarder (om relevant)
+
+<span class="warning">⚠️ VÄNTA PÅ ANVÄNDARENS GODKÄNNANDE innan du fortsätter till steg 2.</span>
+
+<span class="step-title">STEG 2: BLOGGTEXT (efter godkänt tema)</span>
+
+<span class="highlight">Ramverk:</span>
+<span class="bullet">•</span> Omfattning: Ca 3000 ord
+<span class="bullet">•</span> Språk: Svenska
+<span class="bullet">•</span> Målgrupp: Tjänstemän inom samhällsbyggnad i svenska kommuner
+<span class="bullet">•</span> Ton: Balanserat akademisk med några kul och anmärkningsvärda inslag
+<span class="bullet">•</span> Blogg: https://controllerutangranser.wordpress.com/
+
+<span class="highlight">Geografisk avgränsning:</span>
+<span class="bullet">•</span> Primärt fokus: Simrishamn kommun (18 000 invånare, sydöstra Skåne)
+   - Ansvarig nämnd: Samhällsbyggnadsnämnden (SBN)
+   - Webbplats: https://www.simrishamn.se/gata-park-och-natur
+<span class="bullet">•</span> Sekundärt fokus: Jämförelser med Lunds kommun kan göras om det
+   är relevant och lämpligt för analysen
+<span class="bullet">•</span> Kontext: Södra Sverige/Skåne
+<span class="bullet">•</span> OBS: Samma uppgifter som SBN hanterar i Simrishamn kan i andra 
+   kommuner ligga under nämnder med andra namn, t.ex. Teknisk nämnd,
+   Miljö- och samhällsbyggnadsnämnd, Stadsbyggnadsnämnd eller liknande.
+
+<span class="highlight">Innehållskrav:</span>
+<span class="bullet">•</span> Utgå från det godkända temat och aktuella händelser
+<span class="bullet">•</span> Gör kopplingar till relevanta regelverk, lagar eller nationella mål 
+   där så är möjligt (t.ex. PBL, miljöbalken, Boverkets riktlinjer)
+<span class="bullet">•</span> Integrera tekniska och praktiska perspektiv där det är relevant
+<span class="bullet">•</span> Inkludera konkreta exempel från Simrishamn kommun (och eventuellt Lund)
+<span class="bullet">•</span> Använd Harvardstil för källhänvisningar där det är lämpligt
+<span class="bullet">•</span> Verifiera att eventuella länkar till källor fungerar
+<span class="bullet">•</span> Föreslå minst EN bild/illustration som passar texten
+   (beskriv innehåll och eventuell bildkälla)
+
+<span class="highlight">Format:</span>
+<span class="bullet">•</span> Textformat som kan klistras direkt in i WordPress-blogg
+<span class="bullet">•</span> Tydlig struktur med rubriker och underrubriker
+<span class="bullet">•</span> Välformaterad för god läsbarhet
+
+<span class="step-title">STEG 3A: SLIDES (5 st)</span>
+
+Skapa 5 slides i textformat som sammanfattar bloggtexten:
+
+<span class="highlight">Format för varje slide:</span>
+SLIDE [nummer]: [Rubrik]
+- Punkt 1
+- Punkt 2
+- Punkt 3
+[osv]
+Källa: [Harvardstil-referens med länk om möjligt]
+
+<span class="highlight">Krav:</span>
+<span class="bullet">•</span> Varje slide ska ha MINST EN källa i Harvardformat
+<span class="bullet">•</span> Källorna ska ha fungerande länkar där det är möjligt
+<span class="bullet">•</span> Slides ska täcka de viktigaste insikterna från bloggtexten
+
+<span class="step-title">STEG 3B: QUIZ (5 frågor)</span>
+
+Skapa ett quiz med 5 frågor:
+
+<span class="highlight">Struktur för varje fråga:</span>
+FRÅGA [nummer]: [Frågetext]
+
+A) [Svarsalternativ]
+B) [Svarsalternativ]
+C) [Svarsalternativ]
+D) [Svarsalternativ]
+
+RÄTT SVAR: [X]
+
+MOTIVERING:
+[Utförlig förklaring på 3-5 meningar om varför detta är rätt svar
+och varför de andra alternativen är felaktiga]
+
+KÄLLA: [Harvardstil-referens med länk om möjligt]
+
+<span class="highlight">Fördelning av frågetyper:</span>
+<span class="bullet">•</span> Fråga 1-4: Faktakunskap från bloggtexten
+   (t.ex. statistik, händelser, begrepp, exempel, regelverk)
+<span class="bullet">•</span> Fråga 5: Förståelse och analys
+   (t.ex. tolkning, konsekvenser, framtidsperspektiv)
+
+<span class="highlight">Krav:</span>
+<span class="bullet">•</span> Varje rätt svar ska ha MINST EN källa i Harvardformat
+<span class="bullet">•</span> Källorna ska ha fungerande länkar där det är möjligt
+<span class="bullet">•</span> Motiveringar ska vara pedagogiska och tydliga
+
+<span class="section-title">KÖR DENNA PROMPT GENOM ATT:</span>
+1. Först göra web search och föreslå tema
+2. Vänta på godkännande
+3. Sedan producera bloggtext, slides och quiz enligt specifikationerna ovan
+
+Fråga om något är oklart.
+            </div>
+        </main>
+        
+        <!-- Metadata om prompten -->
+        <div class="metadata">
+            <p><strong>🤖 AI-modell:</strong> Claude Opus 4.5 (Anthropic)</p>
+            <p><strong>📅 Datum:</strong> [DATUM]</p>
+            <p><strong>📝 Resultat:</strong> Bloggtexten "[BLOGGTITEL]" samt detta quiz</p>
+            <p><strong>👤 Promptförfattare:</strong> Kent Lundgren</p>
+            
+            <a href="index.html" class="back-link">⬅️ Tillbaka till quizet</a>
+        </div>
+    </div>
+</body>
+</html>

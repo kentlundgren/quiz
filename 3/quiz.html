@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 Quiz: Svenska kulturkanon och Simrishamn</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /*
+        .gitignore-filen används för att tala om för Git vilka filer eller mappar som inte ska spåras av versionshanteringen.
+        Det är praktiskt för att undvika att tillfälliga filer, loggar, byggmappar eller känslig information oavsiktligt laddas upp till ett Git-repo.
+        Exempel: node_modules/, dist/, .env, och liknande filer läggs ofta till i .gitignore.
+        */
+
+        /* Reset och grundläggande styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(135deg, #f5f3f0 0%, #e6f3ff 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2c3e50;
+        }
+
+        /* Quiz-container med modern design */
+        .quiz-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Dekorativ topp-bar med gradient */
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+        }
+
+        /* Quiz header med titel och subtitle */
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .quiz-title {
+            font-family: 'Fredoka', cursive;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .quiz-subtitle {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+
+        /* Progressbar för att visa framsteg */
+        .progress-bar {
+            background: #ecf0f1;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* Bildsektion för att visa bild_till_quiz1.jpg */
+        .image-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+            text-align: center;
+        }
+
+        .quiz-image {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .quiz-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Modal för bildvisning i större format */
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 3000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .image-modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 95%;
+            max-height: 95%;
+            border-radius: 8px;
+        }
+
+        .enlarged-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .image-close {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            color: white;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 3001;
+        }
+
+        .image-close:hover {
+            color: #ccc;
+        }
+
+        .image-text {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+
+        /* Frågecontainer */
+        .question-container {
+            margin-bottom: 30px;
+        }
+
+        .question-number {
+            font-family: 'Fredoka', cursive;
+            font-size: 1.2rem;
+            color: #8e44ad;
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        /* Svarsalternativ med hover-effekter */
+        .options-container {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 16px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option:hover {
+            background: #e9ecef;
+            border-color: #4ecdc4;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(78, 205, 196, 0.2);
+        }
+
+        .option.selected {
+            background: #4ecdc4;
+            color: white;
+            border-color: #4ecdc4;
+        }
+
+        .option.correct {
+            background: #2ecc71;
+            color: white;
+            border-color: #27ae60;
+        }
+
+        .option.incorrect {
+            background: #e74c3c;
+            color: white;
+            border-color: #c0392b;
+        }
+
+        .option.disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        /* Nästa-knapp styling */
+        .next-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 0 auto;
+            min-width: 150px;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .next-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Feedback-system med animationer */
+        .answer-feedback {
+            background: #e8f5e8;
+            border-left: 4px solid #2ecc71;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.5s ease;
+        }
+
+        .answer-feedback.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .correct-answer {
+            font-weight: 600;
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+
+        .source-link {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .source-link:hover {
+            text-decoration: underline;
+        }
+
+        .cultural-connection {
+            background: #f8f9fa;
+            border-left: 4px solid #8e44ad;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .cultural-connection h4 {
+            color: #8e44ad;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .cultural-connection p {
+            color: #555;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        /* Resultatsektion */
+        .results-container {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .results-title {
+            font-family: 'Fredoka', cursive;
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .score {
+            font-size: 3rem;
+            font-weight: 600;
+            color: #4ecdc4;
+            margin-bottom: 20px;
+        }
+
+        .score-message {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+
+        .restart-btn {
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+        }
+
+        /* Floating action buttons nere till höger */
+        .floating-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .floating-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .tech-btn {
+            background: linear-gradient(135deg, #8e44ad, #9b59b6);
+            color: white;
+        }
+
+        .prompt-btn {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Modal-fönster för teknisk info och prompt */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: translateY(-50px);
+            animation: slideIn 0.3s ease forwards;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: -10px;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .modal h2 {
+            font-family: 'Fredoka', cursive;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .modal p, .modal li {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .modal ul {
+            margin-left: 20px;
+        }
+
+        .modal code {
+            background: #f1f2f6;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        /* Dold klass för att dölja element */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Animationer */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Responsiv design för mobiler */
+        @media (max-width: 768px) {
+            .quiz-container {
+                padding: 25px;
+                margin: 10px;
+            }
+
+            .quiz-title {
+                font-size: 2rem;
+            }
+
+            .question-text {
+                font-size: 1.1rem;
+            }
+
+            .floating-buttons {
+                bottom: 15px;
+                right: 15px;
+            }
+
+            .floating-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+
+            .modal-content {
+                margin: 10% auto;
+                padding: 20px;
+            }
+
+            .quiz-image {
+                max-height: 200px;
+            }
+
+            /* Fullskärmsbild på mobiler */
+            .image-modal-content {
+                max-width: 95%;
+                max-height: 95%;
+                width: 95vw;
+                height: 90vh;
+                margin: 2.5vh 2.5vw;
+            }
+
+            .enlarged-image {
+                object-fit: contain;
+                border-radius: 8px;
+            }
+
+            .image-close {
+                top: 10px;
+                right: 15px;
+                font-size: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Huvud quiz-container -->
+    <div class="quiz-container">
+        <!-- Quiz header med titel, subtitle och progressbar -->
+        <div class="quiz-header">
+            <h1 class="quiz-title">🧠 Quiz: Svenska kulturkanon och Simrishamn</h1>
+            <p class="quiz-subtitle">🎨 5 frågor om kultur, kommunal verksamhet och svenska kulturarv</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <!-- Bildsektion som visas i början, mellan frågor och efter resultat -->
+        <div id="imageSection" class="image-section">
+            <img src="bild_till_quiz1.jpg" alt="Quiz-bild om svenska kulturkanon och Simrishamn" class="quiz-image" onclick="openImageModal()">
+            <p class="image-text">Svenska kulturkanon möter kommunal verksamhet i Simrishamn</p>
+        </div>
+
+        <!-- Quiz-innehåll som byts ut dynamiskt -->
+        <div id="quizContent" class="hidden">
+            <!-- Quiz content will be inserted here by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Floating action buttons nere till höger -->
+    <div class="floating-buttons">
+        <button class="floating-btn tech-btn" onclick="openModal('techModal')" title="Teknisk beskrivning">🔧</button>
+        <button class="floating-btn prompt-btn" onclick="openModal('promptModal')" title="Visa prompt">📄</button>
+    </div>
+
+    <!-- Modal för teknisk beskrivning -->
+    <div id="techModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('techModal')">&times;</span>
+            <h2>🔧 Teknisk beskrivning</h2>
+            <p><strong>Teknologier:</strong></p>
+            <ul>
+                <li><strong>HTML5:</strong> Semantisk struktur och tillgänglighet</li>
+                <li><strong>CSS3:</strong> Flexbox, Grid, animationer och gradients</li>
+                <li><strong>Vanilla JavaScript:</strong> Ingen externa ramverk, ren ES6+</li>
+                <li><strong>Google Fonts:</strong> Fredoka för rubriker, Open Sans för brödtext</li>
+            </ul>
+            
+            <p><strong>Funktioner:</strong></p>
+            <ul>
+                <li>Interaktivt quiz med 5 frågor om svenska kulturkanon och Simrishamn</li>
+                <li>Progressbar som visar framsteg genom quizet</li>
+                <li>Bildvisning med timing: 2s början, 5s mellan frågor, 15s efter resultat</li>
+                <li>Animerade övergångar och hover-effekter</li>
+                <li>Responsiv design för alla enheter</li>
+                <li>Modal-fönster med teknisk info och prompt</li>
+                <li>Automatisk visning av rätta svar och förklaringar</li>
+                <li>Färgkodade svar (grön för rätt, röd för fel)</li>
+                <li>Kulturkanonkopplingar i feedback-systemet</li>
+            </ul>
+
+            <p><strong>Design:</strong></p>
+            <ul>
+                <li>Ljusbeige/pastellblå bakgrund med gradient</li>
+                <li>Rundade hörn och skuggor för modern look</li>
+                <li>Färgrik progressbar och dekorativ topp-bar</li>
+                <li>Floating action buttons nere till höger</li>
+                <li>Speciella kulturkopplingsboxar för att visa svenska kulturkanon-anknytningar</li>
+            </ul>
+
+            <p><strong>Kompatibilitet:</strong> Fungerar i alla moderna webbläsare</p>
+        </div>
+    </div>
+
+    <!-- Modal för att visa ursprunglig prompt -->
+    <div id="promptModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('promptModal')">&times;</span>
+            <h2>📄 Ursprunglig prompt</h2>
+            <p>Jag vill att du återanvänder samma programmeringsteknik som finns i <strong>quiz.html</strong> filen. Använd på samma sätt HTML, JavaScript och CSS för att skapa ett snyggt och lättnavigerat quiz.</p>
+            
+            <p>Men att du skapar ett nytt quiz i en <strong>index.html</strong> fil. Filen quiz.html ska hela tiden vara oförändrad.</p>
+
+            <p><strong>Nya quiz-frågor om svenska kulturkanon:</strong></p>
+            <ul>
+                <li>Vilket projekt i Simrishamns kommun kombinerade kulturmiljövård med social inkludering?</li>
+                <li>Vilken utställning på Österlens museum hade tema om könsroller och normer?</li>
+                <li>Vilken ekonomisk utmaning påverkar ungdomsverksamhetens matlagning?</li>
+                <li>Vilken aktivitet planeras i Gärsnäs som folkhälsoprojekt med kulturfokus?</li>
+                                 <li>Vilken föreläsning var i maj 2025 om psykisk ohälsa och ensamhet?</li>
+            </ul>
+
+            <p><strong>Kulturkanonkopplingar:</strong> Varje fråga kopplas till svenska kulturkanon med verk som Carl Larssons Sundborn, Strindbergs Fröken Julie, TV-serien "Hem till byn", Selma Lagerlöfs "Gösta Berlings saga" och Bergmans "Nattvardsgästerna".</p>
+
+            <p><strong>Designkrav:</strong> Samma färgtema och funktionalitet som quiz.html, med responsiv design och moderna interaktionseffekter.</p>
+        </div>
+    </div>
+
+    <!-- Modal för bildvisning i större format -->
+    <div id="imageModal" class="image-modal">
+        <span class="image-close" onclick="closeImageModal()">&times;</span>
+        <div class="image-modal-content">
+            <img src="bild_till_quiz1.jpg" alt="Quiz-bild om svenska kulturkanon och Simrishamn" class="enlarged-image">
+        </div>
+    </div>
+
+    <script>
+        // Quiz-data med frågor, svarsalternativ, rätta svar och förklaringar
+        // Här skedde en uppdatering - ersatte de ursprungliga frågorna om Simrishamn och Lund
+        // med nya frågor om svenska kulturkanon och kommunal verksamhet
+        const quizData = [
+            {
+                question: "Vilket projekt i Simrishamns kommun under våren 2025 kombinerade kulturmiljövård med social inkludering, genom att engagera personer inom LSS och långtidsarbetslösa?",
+                options: [
+                    "A. Kulturhävare",
+                    "B. Se och vårda",
+                    "C. Kulturhälsoslingan",
+                    "D. Vård och värde"
+                ],
+                correct: 1,
+                explanation: "✅ Rätt svar: B. Se och vårda",
+                source: "📚 Källa: Uppsiktsplikt nämnder april år 2025 – Museiverksamhet, samarbete med socialförvaltningen.<br><em>\"Projektet Se och vårda går under våren in i ett samarbete med två enheter inom socialförvaltningen. Syftet är att skapa meningsfulla arbetsuppgifter för personer inom LSS eller som står långt från arbetsmarknaden samtidigt som vi vårdar forn- och kulturlämningarna på Österlen.\"</em>",
+                culturalConnection: {
+                    title: "🎨 Kulturkanonkoppling",
+                    text: "Projektet speglar ideal från Carl Larssons hem i Sundborn – ett kulturarv där vardagsliv och konst möts i social harmoni (Lilla Hyttnäs, Sundborn)."
+                }
+            },
+            {
+                question: "Vilken utställning på Österlens museum under våren 2025 hade ett tema som bäst kan kopplas till samtidens diskussion om könsroller och normer?",
+                options: [
+                    "A. Hjässan är kal",
+                    "B. Duktig flicka",
+                    "C. Äggen är slut",
+                    "D. Flickan från Österlen"
+                ],
+                correct: 1,
+                explanation: "✅ Rätt svar: B. Duktig flicka",
+                source: "📚 Källa: Uppsiktsplikt nämnder april år 2025 – Museiverksamhet, ny utställning under påsk.<br><em>\"Ny utställning 'Duktig flicka' öppnar under påsk.\"</em>",
+                culturalConnection: {
+                    title: "📖 Kulturkanonkoppling",
+                    text: "Utställningen kan relateras till Fröken Julie av August Strindberg – ett verk som utmanar könsroller och klassgränser (Fröken Julie)."
+                }
+            },
+            {
+                question: "Vilken ekonomisk utmaning nämns specifikt som påverkade ungdomsverksamhetens matlagning under våren 2025?",
+                options: [
+                    "A. Minskade statsbidrag",
+                    "B. Höjda energipriser",
+                    "C. Ökad inflation",
+                    "D. Försenade upphandlingar"
+                ],
+                correct: 2,
+                explanation: "✅ Rätt svar: C. Ökad inflation",
+                source: "📚 Källa: Budget 2025 - Delårsrapport 1 – Kommentar under driftsredovisning.<br><em>\"Livsmedelspriserna har stigit markant vilket påverkar matlagningen i ungdomsverksamheten. Inflationen påverkar även andra verksamhetskostnader...\"</em>",
+                culturalConnection: {
+                    title: "📚 Kulturkanonkoppling",
+                    text: "Frågan anknyter till \"Kris i befolkningsfrågan\" av Alva och Gunnar Myrdal, ett verk i svenska kulturkanonen som behandlar ekonomiska och sociala utmaningar i samhället."
+                }
+            },
+            {
+                question: "Vilken aktivitet planeras i Gärsnäs under hösten 2025 som en del av ett folkhälsoprojekt med kulturfokus?",
+                options: [
+                    "A. Kulturhävsslingan",
+                    "B. Gärsnäs går",
+                    "C. Kulturhälsoslingan",
+                    "D. Österlen rör sig"
+                ],
+                correct: 2,
+                explanation: "✅ Rätt svar: C. Kulturhälsoslingan",
+                source: "📚 Källa: Uppsiktsplikt nämnder april år 2025 – Museiverksamhet, samverkan med flera förvaltningar.<br><em>\"Även arbetet med en ny kulturhälsoslinga har påbörjats, museet är motorn i ett samarbete med flera förvaltningar och föreningar. Under sommaren ska resultaten sammanställas och hösten 2025 kommer den nya slingan i Gärsnäs att produceras.\"</em>",
+                culturalConnection: {
+                    title: "🚶‍♀️ Kulturkanonkoppling",
+                    text: "Projektet kan relateras till Selma Lagerlöfs \"Gösta Berlings saga\", där landskapet och rörelsen genom det är centralt för människans utveckling (Gösta Berlings saga)."
+                }
+            },
+            {
+                question: "Vilken föreläsning var i maj 2025 för att stärka föreningars kunskap om psykisk ohälsa och ofrivillig ensamhet?",
+                options: [
+                    "A. Ledare som lyssnar",
+                    "B. Samtal som stärker",
+                    "C. Ensamhetens pris",
+                    "D. Föreningskraft"
+                ],
+                correct: 0,
+                explanation: "✅ Rätt svar: A. Ledare som lyssnar",
+                source: "📚 Källa: Budget 2025 - Delårsrapport 1 – Kommentar under måluppföljning, hälsa och välbefinnande.<br><em>\"Inbjudan till föreläsningen 'Ledare som lyssnar' den 12 maj är utskickad till föreningarna. Föreläsningen syftar till att stärka föreningarnas kunskap kring ofrivillig ensamhet och psykisk ohälsa.\"</em>",
+                culturalConnection: {
+                    title: "🎭 Kulturkanonkoppling",
+                    text: "Temat anknyter till Ingmar Bergmans film \"Nattvardsgästerna\", där ensamhet och mänsklig kontakt står i centrum (Nattvardsgästerna)."
+                }
+            }
+        ];
+
+        // Globala variabler för quiz-status
+        let currentQuestion = 0;
+        let score = 0;
+        let selectedAnswer = null;
+        let answered = false;
+        let quizPhase = 'initial'; // 'initial', 'question', 'between', 'result', 'final'
+
+        // DOM-element referenser
+        const imageSection = document.getElementById('imageSection');
+        const quizContent = document.getElementById('quizContent');
+        const progressFill = document.getElementById('progressFill');
+
+        // Funktion för att visa bild under en viss tid
+        function showImage(duration, callback, text = "Svenska kulturkanon möter kommunal verksamhet i Simrishamn") {
+            imageSection.classList.remove('hidden');
+            quizContent.classList.add('hidden');
+            
+            // Uppdatera bildtext
+            const imageText = document.querySelector('.image-text');
+            imageText.textContent = text;
+            
+            setTimeout(() => {
+                if (callback) callback();
+            }, duration);
+        }
+
+        // Funktion för att dölja bild och visa quiz-innehåll
+        function hideImageShowQuiz() {
+            imageSection.classList.add('hidden');
+            quizContent.classList.remove('hidden');
+        }
+
+        // Funktion för att uppdatera progressbaren
+        function updateProgress() {
+            const progress = (currentQuestion / quizData.length) * 100;
+            progressFill.style.width = progress + '%';
+        }
+
+        // Funktion för att visa en fråga
+        function showQuestion() {
+            quizPhase = 'question';
+            hideImageShowQuiz();
+            
+            const questionData = quizData[currentQuestion];
+            
+            quizContent.innerHTML = `
+                <div class="question-container">
+                    <div class="question-number">Fråga ${currentQuestion + 1} av ${quizData.length}</div>
+                    <div class="question-text">${questionData.question}</div>
+                    <div class="options-container" id="optionsContainer">
+                        ${questionData.options.map((option, index) => `
+                            <div class="option" onclick="selectAnswer(${index})" data-index="${index}">
+                                ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="answer-feedback" id="answerFeedback"></div>
+                    <button class="next-btn" id="nextBtn" onclick="nextQuestion()" disabled>
+                        ${currentQuestion === quizData.length - 1 ? 'Se resultat 🎉' : 'Nästa fråga ➡️'}
+                    </button>
+                </div>
+            `;
+            
+            selectedAnswer = null;
+            answered = false;
+        }
+
+        // Funktion för att hantera svar på frågor
+        function selectAnswer(answerIndex) {
+            if (answered) return;
+            
+            selectedAnswer = answerIndex;
+            const options = document.querySelectorAll('.option');
+            const questionData = quizData[currentQuestion];
+            
+            // Ta bort tidigare markeringar
+            options.forEach(option => option.classList.remove('selected'));
+            
+            // Markera valt svar
+            options[answerIndex].classList.add('selected');
+            
+            // Visa rätt/fel svar efter kort fördröjning
+            setTimeout(() => {
+                answered = true;
+                
+                options.forEach((option, index) => {
+                    option.classList.add('disabled');
+                    if (index === questionData.correct) {
+                        option.classList.add('correct');
+                    } else if (index === answerIndex && index !== questionData.correct) {
+                        option.classList.add('incorrect');
+                    }
+                });
+                
+                // Uppdatera poäng
+                if (answerIndex === questionData.correct) {
+                    score++;
+                }
+                
+                // Visa feedback
+                showFeedback();
+                
+                // Aktivera nästa-knappen
+                document.getElementById('nextBtn').disabled = false;
+            }, 500);
+        }
+
+        // Funktion för att visa feedback efter svar
+        // Här skedde en uppdatering - la till kulturkanonkoppling i feedback-systemet
+        function showFeedback() {
+            const questionData = quizData[currentQuestion];
+            const feedbackDiv = document.getElementById('answerFeedback');
+            
+            feedbackDiv.innerHTML = `
+                <div class="correct-answer">${questionData.explanation}</div>
+                <div>${questionData.source}</div>
+                <div class="cultural-connection">
+                    <h4>${questionData.culturalConnection.title}</h4>
+                    <p>${questionData.culturalConnection.text}</p>
+                </div>
+            `;
+            
+            feedbackDiv.classList.add('show');
+        }
+
+        // Funktion för att gå till nästa fråga eller visa resultat
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                currentQuestion++;
+                updateProgress();
+                // Gå direkt till nästa fråga utan bildvisning
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        // Funktion för att visa slutresultat
+        function showResults() {
+            quizPhase = 'result';
+            hideImageShowQuiz();
+            
+            const percentage = Math.round((score / quizData.length) * 100);
+            let message = "";
+            let emoji = "";
+            
+            if (percentage >= 80) {
+                message = "Fantastiskt! Du är en riktig expert på svenska kulturkanon och kommunal verksamhet! 🌟";
+                emoji = "🏆";
+            } else if (percentage >= 60) {
+                message = "Bra jobbat! Du vet en hel del om kulturen och verksamheten i Simrishamn! 👏";
+                emoji = "🎉";
+            } else if (percentage >= 40) {
+                message = "Inte illa! Det finns mer att lära om svenska kulturkanon och kommunens arbete! 📚";
+                emoji = "👍";
+            } else {
+                message = "En bra start! Svenska kulturkanon och kommunal verksamhet har mycket att erbjuda - utforska mer! 🔍";
+                emoji = "🌱";
+            }
+            
+            quizContent.innerHTML = `
+                <div class="results-container">
+                    <div class="results-title">${emoji} Quiz slutförd!</div>
+                    <div class="score">${score}/${quizData.length}</div>
+                    <div class="score-message">${message}</div>
+                    <div class="score-message">Du fick ${percentage}% rätt!</div>
+                    <button class="restart-btn" onclick="restartQuiz()">Kör igen 🔄</button>
+                </div>
+            `;
+            
+            updateProgress();
+            
+            // Visa bild i 15 sekunder efter att resultatet visats i 5 sekunder
+            setTimeout(() => {
+                quizPhase = 'final';
+                showImage(15000, null, "Tack för att du genomförde quizet om svenska kulturkanon! 🎉");
+            }, 5000);
+        }
+
+        // Funktion för att starta om quizet
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            selectedAnswer = null;
+            answered = false;
+            startQuiz();
+        }
+
+        // Funktion för att starta quizet
+        function startQuiz() {
+            quizPhase = 'initial';
+            updateProgress();
+            // Här skedde en uppdatering - förkortade tiden från 5 till 2 sekunder för snabbare start
+            // Visa bild i 2 sekunder, sedan starta första frågan
+            showImage(2000, showQuestion, "Välkommen till quizet om svenska kulturkanon och Simrishamn!");
+        }
+
+        // Funktioner för modal-fönster
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Funktioner för bildmodal
+        function openImageModal() {
+            document.getElementById('imageModal').style.display = 'block';
+        }
+
+        function closeImageModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // Stäng modal när man klickar utanför
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // Stäng bildmodal om man klickar utanför bilden
+            const imageModal = document.getElementById('imageModal');
+            if (event.target === imageModal) {
+                closeImageModal();
+            }
+        }
+
+        // Starta quizet när sidan laddas
+        // Använder ES2023 funktionalitet med modern event handling
+        window.addEventListener('load', startQuiz);
+    </script>
+</body>
+</html>
+

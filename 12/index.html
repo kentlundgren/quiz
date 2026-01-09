@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Små kommuner, stora skillnader - Simrishamn och Tomelilla</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Extern CSS-fil enligt användarens preferenser (regel 1-3) -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="quiz-container" role="main">
+        <header class="quiz-header">
+            <div class="quiz-header-content">
+                <div class="quiz-header-text">
+                    <h1 class="quiz-title">Quiz: Små kommuner, stora skillnader</h1>
+                    <p class="quiz-subtitle">Ekonomistyrning i Simrishamn och Tomelilla</p>
+                </div>
+                <a href="https://kentlundgren.se/program/quiz/0/" class="all-quiz-btn" target="_blank" rel="noopener noreferrer" title="Se alla Fredagsquiz">
+                    📚 Alla Quiz
+                </a>
+            </div>
+            <div class="progress-bar" aria-hidden="true">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </header>
+
+        <!-- Inledande texter i flera sidor före quizet -->
+        <!-- Här presenteras grundläggande information om ekonomistyrning i kommunerna -->
+        <section id="introSection" class="intro-section" aria-live="polite">
+            <div class="intro-card">
+                <!-- Sidindikator med text och visuella prickar -->
+                <div class="page-indicator">
+                    <div class="page-number" id="pageNumber">Sida 1 av 5</div>
+                    <div class="page-dots" id="pageDots"></div>
+                </div>
+                <h2 class="intro-title" id="introPageTitle"></h2>
+                <div class="intro-body" id="introPageBody"></div>
+                <div class="intro-nav">
+                    <button class="secondary-btn" id="introPrevBtn" type="button" aria-label="Föregående" disabled>⬅️ Föregående</button>
+                    <button class="primary-btn" id="introNextBtn" type="button" aria-label="Nästa">Nästa ➡️</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Startskärm med växlande bilder och knapp för att gå vidare till quizet -->
+        <!-- Uppdatering 2025-11-14: Bilderna Simrishamn.jpg och Tomelilla_station.jpg växlar automatiskt var 3:e sekund -->
+        <section id="imageSection" class="image-section hidden" aria-labelledby="introTitle">
+            <div class="quiz-image-container">
+                <img id="img1" src="Simrishamn.jpg" alt="Simrishamn illustration" class="quiz-image active">
+                <img id="img2" src="Tomelilla_station.jpg" alt="Tomelilla station" class="quiz-image">
+            </div>
+            <p class="image-text" id="introTitle">Små kommuner, stora skillnader - Testa dina kunskaper!</p>
+            <button class="continue-btn" id="continueBtn" type="button">Gå vidare till Quiz ➡️</button>
+        </section>
+
+        <!-- Själva quiz-innehållet renderas dynamiskt via JavaScript -->
+        <section id="quizContent" class="hidden" aria-live="polite"></section>
+    </main>
+
+    <!-- Floating action buttons för teknisk info och källor -->
+    <div class="floating-buttons">
+        <button class="floating-btn tech-btn" id="techBtn" title="Teknisk beskrivning">🔧</button>
+        <button class="floating-btn prompt-btn" id="promptBtn" title="Visa källor">📄</button>
+    </div>
+
+    <!-- Modal: Teknisk beskrivning -->
+    <div id="techModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="techTitle">
+        <div class="modal-content">
+            <span class="close" data-close="#techModal" aria-label="Stäng">&times;</span>
+            <h2 id="techTitle">🔧 Teknisk beskrivning</h2>
+            
+            <h3>Struktur och organisation</h3>
+            <p><strong>Filstruktur:</strong> Detta quiz är byggt med separation av concerns-principen, där HTML, CSS och JavaScript är uppdelade i separata filer:</p>
+            <ul>
+                <li><strong>index.html:</strong> Innehåller HTML-strukturen och semantisk markup</li>
+                <li><strong>styles.css:</strong> All styling och responsiv design</li>
+                <li><strong>script.js:</strong> All JavaScript-logik och interaktivitet</li>
+            </ul>
+            
+            <div class="info-box">
+                <strong>💡 Varför separata filer?</strong>
+                <p>Att dela upp kod i separata filer ger flera fördelar:</p>
+                <ul>
+                    <li><strong>Underhållbarhet:</strong> Lättare att hitta och uppdatera specifik kod</li>
+                    <li><strong>Återanvändbarhet:</strong> CSS och JavaScript kan användas i flera HTML-filer</li>
+                    <li><strong>Läsbarhet:</strong> Tydligare struktur och mindre filer att hantera</li>
+                    <li><strong>Cachning:</strong> Webbläsaren kan cacha CSS och JS separat för bättre prestanda</li>
+                    <li><strong>Samarbete:</strong> Flera utvecklare kan arbeta med olika filer samtidigt</li>
+                    <li><strong>Best practice:</strong> Följer webbutvecklingens standarder och konventioner</li>
+                </ul>
+            </div>
+            
+            <h3>Teknisk implementation</h3>
+            <ul>
+                <li><strong>HTML5:</strong> Semantisk markup med ARIA-attribut för tillgänglighet</li>
+                <li><strong>CSS3:</strong> Responsiv design med CSS-variabler och flexbox</li>
+                <li><strong>JavaScript (ES6+):</strong> Modern JavaScript med arrow functions, template literals och DOM-manipulation</li>
+                <li><strong>UI:</strong> Progressbar, sidindikator med klickbara prickar, växlande bilder</li>
+                <li><strong>Bildväxling:</strong> Automatisk växling mellan Simrishamn.jpg och Tomelilla_station.jpg var 3:e sekund</li>
+                <li><strong>Interaktion:</strong> Val med färgkodning (grön/röd), gul bakgrund på inputfält (regel 18)</li>
+                <li><strong>Responsivitet:</strong> Fungerar på både dator och mobil</li>
+            </ul>
+            
+            <h3>Skapad information</h3>
+            <p><strong>Skapad:</strong> 2025-11-14 med AI-assistans (Claude 4.5 Sonnet)</p>
+            <p><strong>Baserad på:</strong> Analysrapporter från Kolada och blogg om kommunal ekonomistyrning</p>
+            <p><strong>Uppdatering 2025-11-14:</strong> Skapad ny quiz om ekonomistyrning i Simrishamn och Tomelilla med fokus på kultur, fritid och omsorg. Programmet använder separata filer för HTML, CSS och JavaScript för bättre underhållbarhet och struktur.</p>
+        </div>
+    </div>
+
+    <!-- Modal: Källor och underlag -->
+    <div id="promptModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="promptTitle">
+        <div class="modal-content">
+            <span class="close" data-close="#promptModal" aria-label="Stäng">&times;</span>
+            <h2 id="promptTitle">📄 Källor & Referenser</h2>
+            <p>Quiz: Små kommuner, stora skillnader - Ekonomistyrning i Simrishamn och Tomelilla</p>
+            <p><strong>Frågor och fördjupade förklaringar baserade på (i Harvard-format):</strong></p>
+            
+            <div class="info-box">
+                <strong>🤖 Fantastiskt verktyg: AI-genererade analysrapporter för alla svenska kommuner!</strong>
+                <p>Det är nu <strong>supersmidigt att få fram en intelligent analysrapport för vilken svensk kommun som helst</strong> via Kolada. Dessa AI-genererade rapporter analyserar automatiskt din kommuns nyckeltal och jämför med andra kommuner.</p>
+                <p>📊 <strong>Prova själv:</strong> Besök <a href="https://www.kolada.se/rapporter/laget/" target="_blank" rel="noopener noreferrer">Koladas rapportsida "Läget i X"</a> och välj din kommun!</p>
+            </div>
+            
+            <h3>Primära källor - Koladas AI-analysrapporter</h3>
+            <ul>
+                <li><a href="https://kolada.se/wp-content/uploads/2025/11/laget_i_Simrishamn_2025.pdf" target="_blank" rel="noopener noreferrer">Kolada (2025a) <em>Läget i Simrishamn 2025 – Intelligent analysrapport</em></a>. Sveriges Kommuner och Regioner (SKR) och Rådet för främjande av kommunala analyser (RKA). (Hämtad: 2025-11-12).</li>
+                <li><a href="https://www.kolada.se/wp-content/uploads/2025/11/laget_i_Tomelilla_2025.pdf" target="_blank" rel="noopener noreferrer">Kolada (2025b) <em>Läget i Tomelilla 2025 – Intelligent analysrapport</em></a>. Sveriges Kommuner och Regioner (SKR) och Rådet för främjande av kommunala analyser (RKA). (Hämtad: 2025-11-12).</li>
+                <li><a href="https://rka.nu/radetforframjandeavkommunalaanalyser/koladastod/fragorochsvaromkolada.44676.html" target="_blank" rel="noopener noreferrer">Rådet för främjande av kommunala analyser (RKA) (2025) <em>Frågor och svar om Kolada</em></a>. (Hämtad: 2025-11-14).</li>
+            </ul>
+            
+            <h3>Blogg och sekundära källor</h3>
+            <ul>
+                <li><a href="https://controllerutangranser.wordpress.com/2025/11/12/sma-kommuner-stora-skillnader-en-djupdykning-i-ekonomistyrning-for-kultur-fritid-och-omsorg/" target="_blank" rel="noopener noreferrer">Lundgren, K. (2025) <em>Små kommuner, stora skillnader: En djupdykning i ekonomistyrning för kultur, fritid och omsorg</em></a>. Controller utan gränser, 12 november. (Hämtad: 2025-11-14).</li>
+                <li><a href="https://www.ekonomifakta.se/regional-statistik/din-kommun-i-siffror/simrishamn/" target="_blank" rel="noopener noreferrer">Ekonomifakta (2024a) <em>Simrishamn – Kommun i siffror</em></a>. (Hämtad: 2025-11-14).</li>
+                <li><a href="https://www.ekonomifakta.se/regional-statistik/din-kommun-i-siffror/tomelilla/" target="_blank" rel="noopener noreferrer">Ekonomifakta (2024b) <em>Tomelilla – Kommun i siffror</em></a>. (Hämtad: 2025-11-14).</li>
+            </ul>
+            
+            <h3>💡 Mer information om Kolada</h3>
+            <p>Kolada är en öppen databas för kommunal analys och jämförelser. Verktyget använder AI för att automatiskt generera intelligenta analysrapporter för alla Sveriges 290 kommuner.</p>
+            <p><strong>Alla "Läget i X"-rapporter finns på:</strong> <a href="https://www.kolada.se/rapporter/laget/" target="_blank" rel="noopener noreferrer">www.kolada.se/rapporter/laget/</a></p>
+        </div>
+    </div>
+
+    <!-- Extern JavaScript-fil enligt användarens preferenser (regel 1-3) -->
+    <script src="script.js"></script>
+</body>
+</html>
+

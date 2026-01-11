@@ -77,11 +77,20 @@ Utöver de 19 numrerade quizen finns några specialmappar med unikt innehåll:
 - **Mapp 000** ([länk](https://kentlundgren.github.io/quiz/000/)): Pedagogisk genomgång av utvecklingsprocessen med utförlig dokumentation om hur AI-verktyg (Claude, Cursor) användes
 - **Mapp S** ([länk](https://kentlundgren.github.io/quiz/S/)): "Fräckt Fredagsquiz" - specialquiz med svart humor, katter och lite av varje!
 
-### 📘 Om GitHub Pages
+### 📘 Dokumentation och guider
 
-Vill du förstå hur GitHub Pages fungerar och varför dina quiz automatiskt blir tillgängliga online? Läs vår pedagogiska förklaring:
+Utöver själva quizen finns pedagogiska guider som förklarar tekniken bakom projektet:
 
-- **[GitHub_pages.html](https://kentlundgren.github.io/quiz/GitHub_pages.html)** - En omfattande guide som förklarar:
+#### 🔀 Git och GitHub
+- **[GitHub.html](https://kentlundgren.github.io/quiz/GitHub.html)** - Pedagogisk guide om versionshantering:
+  - Skillnaden mellan Git och GitHub
+  - Viktiga Git-kommandon (fetch, pull, push, commit)
+  - Vad betyder Cursors fråga om "git fetch"?
+  - Vanliga arbetsflöden och best practices
+  - PowerShell-specifika tips
+
+#### 📘 GitHub Pages
+- **[GitHub_pages.html](https://kentlundgren.github.io/quiz/GitHub_pages.html)** - Omfattande guide om GitHub Pages:
   - Vad GitHub Pages är och hur det fungerar
   - Hur du aktiverar GitHub Pages för ditt repository
   - Hur filstrukturen blir till webbadresser

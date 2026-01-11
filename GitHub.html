@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git och GitHub - En pedagogisk guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #E6F2FF 0%, #FFE6E6 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 102, 179, 0.2);
+        }
+
+        h1 {
+            color: #0066B3;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #0066B3;
+            font-size: 1.8em;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-left: 5px solid #FFB81C;
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: #E3000F;
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .intro {
+            background: linear-gradient(135deg, #F0F8FF 0%, #E6F2FF 100%);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #0066B3;
+        }
+
+        .cursor-question {
+            background: #FFF5E6;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+            border-left: 5px solid #FFB81C;
+        }
+
+        .cursor-question h3 {
+            color: #FFB81C;
+            margin-top: 0;
+        }
+
+        .code-block {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-left: 4px solid #FFB81C;
+        }
+
+        .info-box {
+            background: #E6F9E6;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #28a745;
+        }
+
+        .warning-box {
+            background: #FFE6E6;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #E3000F;
+        }
+
+        .tip-box {
+            background: #FFF5E6;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #FFB81C;
+        }
+
+        .command-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .command-card {
+            background: #F8F9FA;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #0066B3;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .command-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 102, 179, 0.3);
+        }
+
+        .command-card h4 {
+            color: #0066B3;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .command-card code {
+            background: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 10px 0;
+            color: #E3000F;
+            font-weight: bold;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: #0066B3;
+            text-decoration: none;
+            font-weight: bold;
+            border-bottom: 2px solid #FFB81C;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: #E3000F;
+            border-bottom-color: #E3000F;
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #E6F2FF;
+            color: #666;
+        }
+
+        strong {
+            color: #0066B3;
+        }
+
+        code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #E3000F;
+        }
+
+        .diagram {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+            border: 2px solid #E6F2FF;
+            text-align: center;
+        }
+
+        .diagram-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .diagram-box {
+            background: linear-gradient(135deg, #E6F2FF 0%, #F0F8FF 100%);
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #0066B3;
+            min-width: 150px;
+            font-weight: bold;
+            color: #0066B3;
+        }
+
+        .diagram-arrow {
+            font-size: 30px;
+            color: #FFB81C;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #0066B3;
+            color: white;
+        }
+
+        tr:hover {
+            background: #F0F8FF;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            background: linear-gradient(135deg, #0066B3 0%, #004d87 100%);
+            color: white !important;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            border: none;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover {
+            transform: scale(1.05);
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🔀</div>
+        <h1>Git och GitHub - En pedagogisk guide</h1>
+        
+        <div class="intro">
+            <p><strong>Har du fått en fråga från Cursor om "git fetch"?</strong> Den här guiden förklarar vad det betyder och mycket mer om hur Git och GitHub fungerar tillsammans!</p>
+        </div>
+
+        <div class="nav-links">
+            <a href="GitHub_pages.html" class="nav-link">📘 Läs om GitHub Pages</a>
+            <a href="README.md" class="nav-link">📄 Tillbaka till README</a>
+            <a href="index.html" class="nav-link">🏠 Startsida</a>
+        </div>
+
+        <div class="cursor-question">
+            <h3>🤔 Den fråga du fick från Cursor:</h3>
+            <p><strong>"Would you like Cursor to periodically run 'git fetch'?"</strong></p>
+            <p>Översättning: "Vill du att Cursor regelbundet ska köra 'git fetch'?"</p>
+            
+            <h4>Vad betyder det?</h4>
+            <p>Cursor frågar om den automatiskt ska hämta information om ändringar som gjorts på GitHub (din remote) utan att faktiskt ändra dina lokala filer. Detta hjälper dig att se om någon annan (eller du själv från en annan dator) har pushat nya ändringar.</p>
+            
+            <div class="tip-box" style="margin-top: 20px;">
+                <p><strong>💡 Mitt svar till dig:</strong></p>
+                <p><strong>Klicka "Yes"!</strong> Det är en bra funktion som hjälper dig att hålla koll på vad som händer i ditt projekt utan att störa ditt arbete.</p>
+                <p><strong>Vad händer?</strong> Cursor kontrollerar var 10:e minut om det finns nya ändringar på GitHub. Du får ett meddelande om det finns något nytt, men dina filer ändras inte automatiskt.</p>
+            </div>
+        </div>
+
+        <h2>🎯 Skillnaden mellan Git och GitHub</h2>
+
+        <p>Många blandar ihop dessa två, men de är olika saker som fungerar tillsammans:</p>
+
+        <div class="diagram">
+            <h3>Visuell förklaring:</h3>
+            <div class="diagram-flow">
+                <div class="diagram-box">
+                    <div style="font-size: 40px;">💻</div>
+                    <strong>Git</strong><br>
+                    (Lokalt verktyg)
+                </div>
+                <div class="diagram-arrow">↔️</div>
+                <div class="diagram-box">
+                    <div style="font-size: 40px;">☁️</div>
+                    <strong>GitHub</strong><br>
+                    (Molntjänst)
+                </div>
+            </div>
+        </div>
+
+        <h3>🔧 Git (Versionshanteringssystemet)</h3>
+        <div class="info-box">
+            <p><strong>Vad:</strong> Ett program som körs på din dator</p>
+            <p><strong>Gör:</strong> Håller reda på alla ändringar i dina filer</p>
+            <p><strong>Var:</strong> Jobbar lokalt på din dator</p>
+            <p><strong>Analogi:</strong> Som ett "Save Game"-system för din kod - du kan spara (commit) och gå tillbaka till tidigare versioner</p>
+        </div>
+
+        <h3>☁️ GitHub (Molnlagringstjänsten)</h3>
+        <div class="info-box">
+            <p><strong>Vad:</strong> En webbplats på internet (github.com)</p>
+            <p><strong>Gör:</strong> Lagrar dina Git-repositories i molnet</p>
+            <p><strong>Var:</strong> På internet, tillgänglig överallt</p>
+            <p><strong>Analogi:</strong> Som Google Drive eller OneDrive, fast specialiserat för kod och Git-repositories</p>
+        </div>
+
+        <h3>🤝 Hur de fungerar tillsammans:</h3>
+        <ol>
+            <li><strong>Git</strong> håller reda på dina ändringar lokalt</li>
+            <li><strong>GitHub</strong> tar emot dessa ändringar och sparar dem i molnet</li>
+            <li>Du kan sedan hämta ändringar från GitHub till andra datorer</li>
+            <li>Flera personer kan arbeta tillsammans på samma projekt</li>
+        </ol>
+
+        <h2>📚 Viktiga Git-kommandon att känna till</h2>
+
+        <p>Här är de viktigaste kommandona du kommer använda, förklarade på ett enkelt sätt:</p>
+
+        <h3>🌟 De grundläggande kommandona</h3>
+
+        <div class="command-grid">
+            <div class="command-card">
+                <h4>1. Kontrollera status</h4>
+                <code>git status</code>
+                <p>Visar vilka filer som är ändrade, vilka som är stagade (redo att committas), och vilken branch du är på.</p>
+                <p><strong>Använd:</strong> Ofta! När som helst du vill se läget.</p>
+            </div>
+
+            <div class="command-card">
+                <h4>2. Lägg till filer</h4>
+                <code>git add .</code>
+                <p>Lägger till alla ändrade filer till "staging area" (redo att sparas).</p>
+                <p><strong>Tips:</strong> <code>git add filnamn</code> för en specifik fil.</p>
+            </div>
+
+            <div class="command-card">
+                <h4>3. Spara ändringar (commit)</h4>
+                <code>git commit -m "Meddelande"</code>
+                <p>Sparar alla stagade ändringar med ett beskrivande meddelande.</p>
+                <p><strong>Exempel:</strong> <code>git commit -m "Uppdaterade README"</code></p>
+            </div>
+
+            <div class="command-card">
+                <h4>4. Skicka till GitHub (push)</h4>
+                <code>git push</code>
+                <p>Skickar dina lokala commits till GitHub så de blir synliga online.</p>
+                <p><strong>När:</strong> Efter du gjort en eller flera commits.</p>
+            </div>
+
+            <div class="command-card">
+                <h4>5. Hämta info (fetch)</h4>
+                <code>git fetch</code>
+                <p>Hämtar information om ändringar på GitHub, men ändrar INTE dina lokala filer.</p>
+                <p><strong>Säkert:</strong> Kan aldrig förstöra ditt arbete!</p>
+            </div>
+
+            <div class="command-card">
+                <h4>6. Hämta och slå samman (pull)</h4>
+                <code>git pull</code>
+                <p>Hämtar ändringar från GitHub och slår samman dem med dina lokala filer.</p>
+                <p><strong>OBS:</strong> Kan orsaka konflikter om samma filer ändrats.</p>
+            </div>
+        </div>
+
+        <h2>🔍 Fördjupning: git fetch vs git pull</h2>
+
+        <p>Detta är en viktig skillnad att förstå:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Kommando</th>
+                    <th>Vad händer?</th>
+                    <th>Ändrar lokala filer?</th>
+                    <th>Säkerhet</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>git fetch</code></td>
+                    <td>Hämtar info om ändringar från GitHub</td>
+                    <td>❌ NEJ - Bara information</td>
+                    <td>✅ 100% säkert</td>
+                </tr>
+                <tr>
+                    <td><code>git pull</code></td>
+                    <td>Hämtar ändringar OCH slår samman dem</td>
+                    <td>✅ JA - Uppdaterar dina filer</td>
+                    <td>⚠️ Kan orsaka konflikter</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="tip-box">
+            <h4>💡 Best Practice:</h4>
+            <ol>
+                <li>Kör <code>git fetch</code> för att se vad som finns</li>
+                <li>Kontrollera ändringarna</li>
+                <li>Kör sedan <code>git pull</code> om du vill ha ändringarna</li>
+            </ol>
+            <p>Detta är precis vad Cursor vill göra automatiskt åt dig!</p>
+        </div>
+
+        <h2>🔄 Vanliga arbetsflöden</h2>
+
+        <h3>📝 Scenario 1: Du har gjort ändringar lokalt och vill pusha till GitHub</h3>
+        <div class="code-block">
+# 1. Se vad som har ändrats
+git status
+
+# 2. Lägg till alla ändringar
+git add .
+
+# 3. Spara med ett meddelande
+git commit -m "Uppdaterade README med Git-guide"
+
+# 4. Skicka till GitHub
+git push
+        </div>
+
+        <h3>🌐 Scenario 2: Någon annan har gjort ändringar på GitHub</h3>
+        <div class="code-block">
+# 1. Hämta information om ändringar
+git fetch
+
+# 2. Se vilka ändringar som finns
+git status
+
+# 3. Hämta och slå samman ändringarna
+git pull
+        </div>
+
+        <h3>🔍 Scenario 3: Kontrollera vad som är olika mellan lokalt och GitHub</h3>
+        <div class="code-block">
+# 1. Hämta senaste info
+git fetch
+
+# 2. Se skillnader
+git diff origin/main
+
+# 3. Se commit-historik
+git log
+        </div>
+
+        <h2>⚙️ PowerShell-specifika tips</h2>
+
+        <div class="warning-box">
+            <h4>⚠️ OBS för PowerShell-användare!</h4>
+            <p>I PowerShell fungerar INTE <code>&&</code> för att kedja kommandon!</p>
+            
+            <p><strong>❌ Detta fungerar INTE i PowerShell:</strong></p>
+            <div class="code-block">git add . && git commit -m "Meddelande" && git push</div>
+
+            <p><strong>✅ Gör istället så här i PowerShell:</strong></p>
+            <div class="code-block">git add .
+git commit -m "Meddelande"
+git push</div>
+
+            <p><strong>Eller använd semikolon:</strong></p>
+            <div class="code-block">git add . ; git commit -m "Meddelande" ; git push</div>
+        </div>
+
+        <h2>🎓 Vanliga frågor och svar</h2>
+
+        <h3>❓ När ska jag använda git fetch?</h3>
+        <div class="info-box">
+            <p><strong>Svar:</strong> Använd <code>git fetch</code> när du:</p>
+            <ul>
+                <li>Vill kolla om det finns nya ändringar på GitHub</li>
+                <li>Inte är säker på om du vill ha ändringarna än</li>
+                <li>Arbetar i ett team och vill se vad andra har gjort</li>
+                <li>Vill vara säker innan du kör <code>git pull</code></li>
+            </ul>
+        </div>
+
+        <h3>❓ Vad händer om jag har lokala ändringar och kör git pull?</h3>
+        <div class="warning-box">
+            <p><strong>Svar:</strong> Det kan hända två saker:</p>
+            <ol>
+                <li><strong>Inga konflikter:</strong> Git slår samman ändringarna automatiskt ✅</li>
+                <li><strong>Konflikter:</strong> Om samma filer ändrats måste du lösa konflikterna manuellt ⚠️</li>
+            </ol>
+            <p><strong>Rekommendation:</strong> Committa alltid dina ändringar först!</p>
+            <div class="code-block"># Säkert arbetsflöde:
+git add .
+git commit -m "Mina ändringar"
+git pull
+git push</div>
+        </div>
+
+        <h3>❓ Vad är en "merge conflict"?</h3>
+        <div class="info-box">
+            <p><strong>Svar:</strong> En merge conflict uppstår när:</p>
+            <ul>
+                <li>Samma rad i samma fil har ändrats både lokalt och på GitHub</li>
+                <li>Git inte vet vilken version som är rätt</li>
+            </ul>
+            <p><strong>Lösning:</strong> Du måste öppna filen och välja vilken version du vill ha (eller kombinera dem).</p>
+        </div>
+
+        <h3>❓ Kan jag ångra en commit?</h3>
+        <div class="tip-box">
+            <p><strong>Svar:</strong> Ja! Men var försiktig:</p>
+            
+            <p><strong>Om du INTE pushat än:</strong></p>
+            <div class="code-block"># Ångra senaste commit men behåll ändringarna
+git reset HEAD~1
+
+# Ångra senaste commit OCH ta bort ändringarna (farligt!)
+git reset --hard HEAD~1</div>
+
+            <p><strong>Om du redan pushat:</strong></p>
+            <div class="code-block"># Skapa en ny commit som ångrar den gamla
+git revert HEAD</div>
+        </div>
+
+        <h2>🔗 Hur GitHub Pages passar in</h2>
+
+        <p>Nu när du förstår Git och GitHub, låt oss koppla ihop med GitHub Pages:</p>
+
+        <div class="diagram">
+            <h3>Komplett flöde:</h3>
+            <div class="diagram-flow">
+                <div class="diagram-box">
+                    💻<br>
+                    <strong>Lokalt arbete</strong><br>
+                    (Git)
+                </div>
+                <div class="diagram-arrow">git push →</div>
+                <div class="diagram-box">
+                    ☁️<br>
+                    <strong>GitHub</strong><br>
+                    (Lagring)
+                </div>
+                <div class="diagram-arrow">→ aktiverar</div>
+                <div class="diagram-box">
+                    🌐<br>
+                    <strong>GitHub Pages</strong><br>
+                    (Webbplats)
+                </div>
+            </div>
+        </div>
+
+        <ol>
+            <li>Du gör ändringar lokalt (t.ex. uppdaterar README.md)</li>
+            <li>Du använder <code>git add</code>, <code>git commit</code> och <code>git push</code></li>
+            <li>GitHub tar emot ändringarna</li>
+            <li>GitHub Pages upptäcker att något ändrats</li>
+            <li>Efter ~1-5 minuter är webbplatsen uppdaterad!</li>
+        </ol>
+
+        <div class="info-box">
+            <p><strong>🎯 Därför är Git viktigt för GitHub Pages:</strong></p>
+            <p>Varje gång du pushar kod till GitHub uppdateras automatiskt din live-webbplats! Det är därför det är så smidigt att använda GitHub Pages - du behöver aldrig logga in någonstans eller ladda upp filer manuellt.</p>
+        </div>
+
+        <h2>📖 Sammanfattning - Allt du behöver komma ihåg</h2>
+
+        <div class="tip-box">
+            <h3>De 6 viktigaste kommandona:</h3>
+            <ol>
+                <li><code>git status</code> - Se vad som hänt</li>
+                <li><code>git add .</code> - Lägg till ändringar</li>
+                <li><code>git commit -m "meddelande"</code> - Spara ändringar</li>
+                <li><code>git push</code> - Skicka till GitHub</li>
+                <li><code>git fetch</code> - Kolla om det finns nytt på GitHub</li>
+                <li><code>git pull</code> - Hämta ändringar från GitHub</li>
+            </ol>
+        </div>
+
+        <div class="info-box">
+            <h3>Svar på Cursors fråga:</h3>
+            <p><strong>"Would you like Cursor to periodically run 'git fetch'?"</strong></p>
+            <p>✅ <strong>Mitt råd: Klicka "Yes"!</strong></p>
+            <p>Cursor kommer då automatiskt köra <code>git fetch</code> var 10:e minut för att hålla dig informerad om ändringar på GitHub, utan att någonsin ändra dina lokala filer.</p>
+        </div>
+
+        <h2>🔗 Relaterade resurser</h2>
+
+        <div class="command-grid">
+            <div class="command-card">
+                <h4>📘 GitHub Pages</h4>
+                <p>Läs om hur GitHub Pages fungerar och hur dina quiz blir webbsidor</p>
+                <a href="GitHub_pages.html">Läs guiden →</a>
+            </div>
+
+            <div class="command-card">
+                <h4>📄 README</h4>
+                <p>Översikt över hela projektet och alla quiz</p>
+                <a href="README.md">Tillbaka till README →</a>
+            </div>
+
+            <div class="command-card">
+                <h4>🌐 Officiell dokumentation</h4>
+                <p>Git: <a href="https://git-scm.com/doc" target="_blank">git-scm.com/doc</a></p>
+                <p>GitHub: <a href="https://docs.github.com" target="_blank">docs.github.com</a></p>
+            </div>
+
+            <div class="command-card">
+                <h4>🏠 Startsida</h4>
+                <p>Se alla fredagsquiz</p>
+                <a href="index.html">Till startsidan →</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>Skapad 2026-01-11 för Fredagsquiz-projektet</strong></p>
+            <p>Del av <a href="https://kentlundgren.se/program/quiz/0/">Fredagsquiz - Kent Lundgren</a></p>
+            <p><em>En pedagogisk guide för att förstå Git, GitHub och versionshantering</em></p>
+        </div>
+    </div>
+</body>
+</html>

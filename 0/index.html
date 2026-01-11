@@ -536,6 +536,18 @@
             <p style="margin-top: 20px; color: #0066B3;">
                 <strong>Skapad med ❤️ för Simrishamns kommun</strong>
             </p>
+            
+            <!-- Diskreta länkar till GitHub Pages och Repository -->
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #E6F2FF; font-size: 0.85em; color: #666;">
+                <!-- Länk till GitHub Pages (visas endast om sidan ligger på kentlundgren.se) -->
+                <p id="githubPagesLink" style="display: none; margin-bottom: 8px;">
+                    🌐 <a href="https://kentlundgren.github.io/quiz/0/" target="_blank" style="color: #0066B3; text-decoration: none; border-bottom: 1px dotted #0066B3;">Se även på GitHub Pages</a>
+                </p>
+                <!-- Länk till GitHub Repository -->
+                <p style="margin-bottom: 0;">
+                    📂 <a href="https://github.com/kentlundgren/quiz" target="_blank" style="color: #0066B3; text-decoration: none; border-bottom: 1px dotted #0066B3;">Öppen källkod på GitHub</a>
+                </p>
+            </div>
         </footer>
     </div>
 
@@ -903,6 +915,22 @@
         // Kör funktionen när sidan har laddats klart
         // Detta säkerställer att alla HTML-element finns innan vi försöker ändra dem
         document.addEventListener('DOMContentLoaded', loadQuizzes);
+
+        // Funktion som visar GitHub Pages-länken endast om sidan ligger på kentlundgren.se
+        // UPPDATERING 2026-01-11: Tillagd för att visa alternativ länk till GitHub Pages-versionen
+        function showGitHubPagesLink() {
+            // Kontrollera om sidan ligger på kentlundgren.se
+            if (window.location.hostname.includes('kentlundgren.se')) {
+                // Visa GitHub Pages-länken
+                const githubPagesLink = document.getElementById('githubPagesLink');
+                if (githubPagesLink) {
+                    githubPagesLink.style.display = 'block';
+                }
+            }
+        }
+
+        // Kör funktionen när sidan laddas
+        document.addEventListener('DOMContentLoaded', showGitHubPagesLink);
     </script>
 </body>
 </html>

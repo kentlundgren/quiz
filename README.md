@@ -7,7 +7,7 @@ Detta repository innehåller en samling interaktiva fredagsquiz som jag har skap
 Projektet är organiserat i numrerade undermappar där varje mapp innehåller ett komplett fredagsquiz:
 
 - **0/** - Sammanställning och översikt över alla fredagsquiz
-- **00/** - Quiz nr 12 (med dokumentation om AI-samarbete)
+- **00/** - "Hur Fredagsquizet Skapas" - beskriver AI-samarbetet mellan Claude och Cursor
 - **000/** - Quiz med utförlig dokumentation om utvecklingsprocessen
 - **1-19/** - Individuella fredagsquiz (varje nummer är ett separat quiz)
 - **S/** - Specialquiz

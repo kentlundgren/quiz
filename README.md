@@ -36,6 +36,17 @@ Fredagsquizen finns tillgänglig på två ställen:
    - Repository: [https://github.com/kentlundgren/quiz](https://github.com/kentlundgren/quiz)
    - Öppen källkod - klona, forka eller bidra!
 
+### 🔗 Direktlänkar till varje quiz
+
+**Viktigt att veta:** Varje undermapp har sin egen direktlänk på GitHub Pages! Du kan nå varje individuellt quiz direkt genom att lägga till mappnamnet i URL:en:
+
+- **Quiz 1:** [https://kentlundgren.github.io/quiz/1/](https://kentlundgren.github.io/quiz/1/)
+- **Quiz 2:** [https://kentlundgren.github.io/quiz/2/](https://kentlundgren.github.io/quiz/2/)
+- **Quiz 3:** [https://kentlundgren.github.io/quiz/3/](https://kentlundgren.github.io/quiz/3/)
+- **...osv ända till Quiz 19**
+
+Detta gäller alla undermappar (0, 00, 000, 1-19, S) - varje mapp blir automatiskt tillgänglig som en egen webbsida!
+
 ## 🚀 Hur man använder (för utvecklare)
 
 1. Klona detta repository:
@@ -59,8 +70,23 @@ Fredagsquizen är interaktiva kunskapstester som behandlar olika ämnen. De är 
 
 ## 📊 Specialmappar
 
-- **Mapp 0**: Innehåller en sammanställning och översikt över alla fredagsquiz
-- **Mapp 00 & 000**: Innehåller extra dokumentation om utvecklingsprocessen och hur AI-verktyg (Claude, Cursor) användes i skapandet
+Utöver de 19 numrerade quizen finns några specialmappar med unikt innehåll:
+
+- **Mapp 0** ([länk](https://kentlundgren.github.io/quiz/0/)): Sammanställning och översikt över alla fredagsquiz
+- **Mapp 00** ([länk](https://kentlundgren.github.io/quiz/00/)): "Hur Fredagsquizet Skapas" - beskriver AI-samarbetet mellan Claude och Cursor
+- **Mapp 000** ([länk](https://kentlundgren.github.io/quiz/000/)): Pedagogisk genomgång av utvecklingsprocessen med utförlig dokumentation om hur AI-verktyg (Claude, Cursor) användes
+- **Mapp S** ([länk](https://kentlundgren.github.io/quiz/S/)): "Fräckt Fredagsquiz" - specialquiz med svart humor, katter och lite av varje!
+
+### 📘 Om GitHub Pages
+
+Vill du förstå hur GitHub Pages fungerar och varför dina quiz automatiskt blir tillgängliga online? Läs vår pedagogiska förklaring:
+
+- **[GitHub_pages.html](https://kentlundgren.github.io/quiz/GitHub_pages.html)** - En omfattande guide som förklarar:
+  - Vad GitHub Pages är och hur det fungerar
+  - Hur du aktiverar GitHub Pages för ditt repository
+  - Hur filstrukturen blir till webbadresser
+  - Fördelar och nackdelar med olika lösningar
+  - Vanliga problem och lösningar
 
 ## 🛠️ Teknologi
 

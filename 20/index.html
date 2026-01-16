@@ -43,8 +43,21 @@
                     <a href="https://controllerutangranser.wordpress.com/2026/01/16/att-forsta-synundersokningar-och-terminalglasogon/" class="all-quiz-btn" target="_blank" rel="noopener noreferrer" title="Läs blogginlägget">
                         📖 Läs först
                     </a>
-                    <a href="https://kentlundgren.se/program/quiz/0/" class="all-quiz-btn" target="_blank" rel="noopener noreferrer" title="Se alla Fredagsquiz">
+                    <a href="https://kentlundgren.se/program/quiz/0/" id="allaQuizLink" class="all-quiz-btn" target="_blank" rel="noopener noreferrer" title="Se alla Fredagsquiz">
                         📚 Alla Quiz
+                    </a>
+                </div>
+                <!-- Info-ruta för GitHub Pages (visas endast på kentlundgren.github.io) -->
+                <div id="githubPagesInfo" style="display: none; margin-top: 15px; padding: 12px; background: rgba(255, 255, 255, 0.95); border-radius: 8px; border-left: 4px solid #FFB81C; font-size: 0.9rem;">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 5px;">
+                        <span style="font-size: 1.2rem;">🌐</span>
+                        <strong style="color: #0066B3;">Du är på GitHub Pages</strong>
+                    </div>
+                    <p style="margin: 5px 0; line-height: 1.5; color: #333;">
+                        Detta quiz körs via GitHub Pages. Se källkoden på:
+                    </p>
+                    <a href="https://github.com/kentlundgren/quiz/tree/main/20" target="_blank" rel="noopener noreferrer" style="color: #0066B3; text-decoration: none; font-weight: 600; border-bottom: 1px dotted #0066B3;">
+                        📂 GitHub Repository: quiz/20/
                     </a>
                 </div>
             </div>
@@ -196,6 +209,50 @@
         </div>
     </div>
 
+    <!-- JavaScript för att detektera GitHub Pages och uppdatera länkar -->
+    <script>
+        // UPPDATERING 2026-01-16: Dynamisk länkhantering för GitHub Pages
+        // Denna kod körs innan den externa script.js laddas för att säkerställa att länkarna är rätt från start
+        
+        (function() {
+            // Funktion som körs när DOM är redo
+            function updateLinksForGitHubPages() {
+                // Kontrollera om vi är på GitHub Pages (kentlundgren.github.io)
+                const isGitHubPages = window.location.hostname === 'kentlundgren.github.io';
+                
+                if (isGitHubPages) {
+                    // UPPDATERA "ALLA QUIZ"-LÄNKEN
+                    // Om vi är på GitHub Pages, peka länken till GitHub Pages-versionen av översikten
+                    const allaQuizLink = document.getElementById('allaQuizLink');
+                    if (allaQuizLink) {
+                        allaQuizLink.href = 'https://kentlundgren.github.io/quiz/0/';
+                        console.log('✓ "Alla Quiz"-länk uppdaterad till GitHub Pages-version');
+                    }
+                    
+                    // VISA GITHUB PAGES INFO-RUTA
+                    // Visa info-rutan som förklarar att man är på GitHub Pages
+                    const githubPagesInfo = document.getElementById('githubPagesInfo');
+                    if (githubPagesInfo) {
+                        githubPagesInfo.style.display = 'block';
+                        console.log('✓ GitHub Pages info-ruta visas');
+                    }
+                } else {
+                    // Om vi INTE är på GitHub Pages (t.ex. på kentlundgren.se)
+                    // Länken förblir som den är (kentlundgren.se/program/quiz/0/)
+                    console.log('ℹ️ Inte på GitHub Pages - länkar förblir oförändrade');
+                }
+            }
+            
+            // Kör funktionen när DOM är redo
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', updateLinksForGitHubPages);
+            } else {
+                // DOM är redan redo
+                updateLinksForGitHubPages();
+            }
+        })();
+    </script>
+    
     <!-- Extern JavaScript-fil -->
     <script src="script.js"></script>
 </body>

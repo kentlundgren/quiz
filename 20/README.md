@@ -211,7 +211,7 @@ GitHub Pages skapar automatiskt webbadresser baserat på mappstrukturen:
 | `/20/` | → | `kentlundgren.github.io/quiz/20/` |
 | `/20/index.html` | → | `kentlundgren.github.io/quiz/20/index.html` |
 
-**Läs mer:** Se filen [`github_undermappar.html`](github_undermappar.html) för en utförlig förklaring av hur GitHub trädstrukturer fungerar.
+**Läs mer:** 📚 [GitHub Trädstrukturer - Interaktiv Guide](https://kentlundgren.github.io/quiz/20/github_undermappar.html) - en utförlig och visuell förklaring av hur GitHub organiserar mappar och filer (öppnas i nytt fönster).
 
 ---
 

@@ -2,6 +2,27 @@
 
 Ett interaktivt fredagsquiz om synundersökningar i Sverige med fokus på terminalglasögon och bildskärmsarbete.
 
+## 📍 Plats i Trädstrukturen
+
+Detta quiz är en del av [Fredagsquiz-projektet](https://github.com/kentlundgren/quiz):
+
+```
+quiz/ (root)
+├── 0/              ← Översikt över alla quiz
+├── 1-19/           ← Tidigare quiz
+└── 20/ (DU ÄR HÄR) ← Detta quiz om synundersökningar
+    ├── index.html
+    ├── script.js
+    ├── styles.css
+    ├── README.md (denna fil)
+    └── ...
+```
+
+**Navigera:**
+- 🏠 [Huvudsida](https://kentlundgren.github.io/quiz/) - Projektets startsida
+- 📚 [Alla Quiz (Mapp 0)](https://kentlundgren.github.io/quiz/0/) - Översikt över alla fredagsquiz
+- 📖 [Källkod på GitHub](https://github.com/kentlundgren/quiz/tree/main/20) - Se filerna för detta quiz
+
 ## 🌐 Testa quizet
 
 **Live-version:** [https://kentlundgren.github.io/quiz/20/](https://kentlundgren.github.io/quiz/20/)
@@ -152,6 +173,45 @@ Quizet har en professionell design med:
 - **Alla Fredagsquiz:** [https://kentlundgren.github.io/quiz/0/](https://kentlundgren.github.io/quiz/0/)
 - **GitHub Repository:** [https://github.com/kentlundgren/quiz](https://github.com/kentlundgren/quiz)
 - **Blogg:** [Controller utan gränser](https://controllerutangranser.wordpress.com/)
+
+## 🌳 Förstå Trädstrukturen
+
+Detta quiz (mapp 20) är en del av en större samling quiz. Här är hur allt hänger ihop:
+
+### Hierarki
+
+```
+Fredagsquiz-projektet (root)
+│
+├─── Översikt (mapp 0)
+│    └─── Listar alla tillgängliga quiz (1-20+)
+│
+├─── Quiz 1-19
+│    └─── Tidigare fredagsquiz
+│
+└─── Quiz 20 (DENNA MAPP)
+     └─── Synundersökningar och Terminalglasögon
+```
+
+### Navigationslänkar
+
+**Från denna mapp kan du:**
+- 📚 Gå till [Översikten (mapp 0)](../0/) - Se alla quiz
+- 🏠 Gå till [Huvudsidan](../) - Projektets startsida
+- 🔙 Gå till [Quiz 19](../19/) - Föregående quiz
+- ➡️ Gå till Quiz 21 (när det blir tillgängligt)
+
+### URL-struktur
+
+GitHub Pages skapar automatiskt webbadresser baserat på mappstrukturen:
+
+| Mapp i Repository | → | Live-URL |
+|-------------------|---|----------|
+| `/0/` | → | `kentlundgren.github.io/quiz/0/` |
+| `/20/` | → | `kentlundgren.github.io/quiz/20/` |
+| `/20/index.html` | → | `kentlundgren.github.io/quiz/20/index.html` |
+
+**Läs mer:** Se filen [`github_undermappar.html`](github_undermappar.html) för en utförlig förklaring av hur GitHub trädstrukturer fungerar.
 
 ---
 

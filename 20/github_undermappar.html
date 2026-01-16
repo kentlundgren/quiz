@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Trädstrukturer - Hur Mappar och Filer Organiseras</title>
+    <style>
+        :root {
+            --primary-color: #1e3a5f;
+            --secondary-color: #3d6b8a;
+            --accent-color: #b8860b;
+            --bg-color: #f5f5f5;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --border-color: #ddd;
+            --code-bg: #f4f4f4;
+            --success-color: #059669;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            margin-top: 25px;
+            margin-bottom: 12px;
+            font-size: 1.4rem;
+        }
+
+        h4 {
+            color: var(--primary-color);
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        ul, ol {
+            margin-bottom: 20px;
+            margin-left: 30px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+            border-left: 4px solid var(--primary-color);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fffbeb 100%);
+            border-left: 4px solid var(--accent-color);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #d1fae5 0%, #ecfdf5 100%);
+            border-left: 4px solid var(--success-color);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            font-size: 0.95rem;
+        }
+
+        .tree-structure {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 20px 0;
+            overflow-x: auto;
+            line-height: 1.8;
+        }
+
+        .tree-structure .folder {
+            color: #4fc3f7;
+            font-weight: bold;
+        }
+
+        .tree-structure .file {
+            color: #a5d6a7;
+        }
+
+        .tree-structure .comment {
+            color: #888;
+            font-style: italic;
+        }
+
+        .url-example {
+            background: #f8f9fa;
+            border: 2px solid var(--primary-color);
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid var(--border-color);
+        }
+
+        th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            border-top: 2px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.4rem;
+            }
+
+            .tree-structure {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌳 GitHub Trädstrukturer</h1>
+            <p class="subtitle">Hur Mappar och Filer Organiseras i Git och GitHub</p>
+        </header>
+
+        <div class="content">
+            <h2>📁 Introduktion: Vad är en Trädstruktur?</h2>
+            
+            <p>En <strong>trädstruktur</strong> (tree structure) är det sätt som Git och GitHub organiserar filer och mappar i ett repository. Precis som filsystemet på din dator har GitHub en hierarkisk struktur där:</p>
+            
+            <ul>
+                <li><strong>Root (roten)</strong> - den översta nivån i ditt repository</li>
+                <li><strong>Mappar/kataloger</strong> - kan innehålla filer och andra mappar</li>
+                <li><strong>Filer</strong> - det faktiska innehållet (HTML, CSS, JS, bilder, etc.)</li>
+            </ul>
+
+            <div class="info-box">
+                <h4>💡 Varför kallas det "träd"?</h4>
+                <p>Namnet kommer från att strukturen liknar ett träd:</p>
+                <ul>
+                    <li><strong>Stammen</strong> = Root-mappen (huvudkatalogen)</li>
+                    <li><strong>Grenarna</strong> = Undermappar</li>
+                    <li><strong>Löven</strong> = Filer</li>
+                </ul>
+            </div>
+
+            <h2>🗂️ Fredagsquiz Repository - Exempel</h2>
+
+            <p>Låt oss titta på <strong>kentlundgren/quiz</strong> repository som ett konkret exempel:</p>
+
+            <div class="tree-structure">
+<span class="comment">// Root-nivå: https://github.com/kentlundgren/quiz/tree/main</span>
+quiz/                           <span class="comment">← Repository root</span>
+├── <span class="folder">0/</span>                           <span class="comment">← Översiktssida för alla quiz</span>
+│   ├── <span class="file">index.html</span>
+│   ├── <span class="file">script.js</span>
+│   └── <span class="file">styles.css</span>
+│
+├── <span class="folder">00/</span>                          <span class="comment">← "Hur Fredagsquizet Skapas"</span>
+│   ├── <span class="file">index.html</span>
+│   └── <span class="file">...</span>
+│
+├── <span class="folder">1/</span>                           <span class="comment">← Quiz nummer 1</span>
+│   ├── <span class="file">index.html</span>
+│   ├── <span class="file">script.js</span>
+│   └── <span class="file">styles.css</span>
+│
+├── <span class="folder">2/</span>                           <span class="comment">← Quiz nummer 2</span>
+│   └── <span class="file">...</span>
+│
+├── <span class="comment">...</span>                          <span class="comment">← Quiz 3-19</span>
+│
+├── <span class="folder">20/</span>                          <span class="comment">← Quiz nummer 20 (Synundersökningar)</span>
+│   ├── <span class="file">index.html</span>              <span class="comment">← Huvudfil för quizet</span>
+│   ├── <span class="file">script.js</span>               <span class="comment">← JavaScript-logik</span>
+│   ├── <span class="file">styles.css</span>              <span class="comment">← Styling</span>
+│   ├── <span class="file">README.md</span>               <span class="comment">← Dokumentation</span>
+│   ├── <span class="file">synundersokning1.jpg</span>    <span class="comment">← Bilder</span>
+│   ├── <span class="file">synundersokning2.jpg</span>
+│   └── <span class="file">SpecSavers...pdf</span>        <span class="comment">← PDF-dokument</span>
+│
+├── <span class="folder">S/</span>                           <span class="comment">← Specialquiz</span>
+│   └── <span class="file">...</span>
+│
+├── <span class="file">README.md</span>                   <span class="comment">← Huvuddokumentation</span>
+├── <span class="file">index.html</span>                  <span class="comment">← Startsida</span>
+├── <span class="file">.gitignore</span>                  <span class="comment">← Git-konfiguration</span>
+└── <span class="file">GitHub.html</span>                 <span class="comment">← Pedagogiska guider</span>
+            </div>
+
+            <h2>🔗 Hur URL:er Mappas till Trädstrukturen</h2>
+
+            <p>GitHub använder en logisk och förutsägbar URL-struktur som direkt speglar filsystemets trädstruktur:</p>
+
+            <h3>Grundläggande URL-struktur</h3>
+
+            <div class="code-block">
+https://github.com/<span class="highlight">användarnamn</span>/<span class="highlight">repository</span>/tree/<span class="highlight">branch</span>/<span class="highlight">sökväg</span>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>URL-del</th>
+                        <th>Beskrivning</th>
+                        <th>Exempel</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>användarnamn</strong></td>
+                        <td>Ditt GitHub-användarnamn</td>
+                        <td>kentlundgren</td>
+                    </tr>
+                    <tr>
+                        <td><strong>repository</strong></td>
+                        <td>Namnet på ditt repo</td>
+                        <td>quiz</td>
+                    </tr>
+                    <tr>
+                        <td><strong>branch</strong></td>
+                        <td>Gren (vanligen "main")</td>
+                        <td>main</td>
+                    </tr>
+                    <tr>
+                        <td><strong>sökväg</strong></td>
+                        <td>Mapp/fil-sökväg i repot</td>
+                        <td>20/index.html</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Konkreta exempel från Fredagsquiz:</h3>
+
+            <h4>1. Root-nivån (huvudkatalogen)</h4>
+            <div class="url-example">
+https://github.com/kentlundgren/quiz/tree/main
+            </div>
+            <p>Visar innehållet i huvudkatalogen (root) på main-grenen.</p>
+
+            <h4>2. Mapp 0 (översiktssida)</h4>
+            <div class="url-example">
+https://github.com/kentlundgren/quiz/tree/main/0
+            </div>
+            <p>Visar innehållet i undermappen "0" - översiktssidan för alla quiz.</p>
+
+            <h4>3. Mapp 20 (dagens quiz)</h4>
+            <div class="url-example">
+https://github.com/kentlundgren/quiz/tree/main/20
+            </div>
+            <p>Visar innehållet i undermappen "20" - quizet om synundersökningar.</p>
+
+            <h4>4. En specifik fil</h4>
+            <div class="url-example">
+https://github.com/kentlundgren/quiz/blob/main/20/README.md
+            </div>
+            <p><strong>Observera:</strong> För filer används <code>/blob/</code> istället för <code>/tree/</code>!</p>
+
+            <div class="warning-box">
+                <h4>⚠️ Viktigt att notera:</h4>
+                <ul>
+                    <li><code>/tree/</code> används för <strong>mappar</strong></li>
+                    <li><code>/blob/</code> används för <strong>filer</strong></li>
+                </ul>
+            </div>
+
+            <h2>🌐 GitHub Pages - Hur Live-versionen Fungerar</h2>
+
+            <p>När du aktiverar GitHub Pages för ditt repository skapas automatiskt en webbplats där trädstrukturen blir till faktiska webbadresser:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>GitHub Repository</th>
+                        <th>→</th>
+                        <th>GitHub Pages (Live)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>github.com/kentlundgren/quiz/tree/main</td>
+                        <td>→</td>
+                        <td>kentlundgren.github.io/quiz/</td>
+                    </tr>
+                    <tr>
+                        <td>github.com/kentlundgren/quiz/tree/main/0</td>
+                        <td>→</td>
+                        <td>kentlundgren.github.io/quiz/0/</td>
+                    </tr>
+                    <tr>
+                        <td>github.com/kentlundgren/quiz/tree/main/20</td>
+                        <td>→</td>
+                        <td>kentlundgren.github.io/quiz/20/</td>
+                    </tr>
+                    <tr>
+                        <td>github.com/kentlundgren/quiz/blob/main/20/index.html</td>
+                        <td>→</td>
+                        <td>kentlundgren.github.io/quiz/20/index.html</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="success-box">
+                <h4>✅ Automatisk URL-generering</h4>
+                <p>GitHub Pages gör automatiskt följande:</p>
+                <ul>
+                    <li>Tar bort <code>/tree/main/</code> från sökvägen</li>
+                    <li>Tar bort <code>/blob/main/</code> från sökvägen</li>
+                    <li>Använder din användare och repo-namn som domän</li>
+                    <li>Serverar <code>index.html</code> automatiskt när du besöker en mapp</li>
+                </ul>
+            </div>
+
+            <h2>📚 Hur Quiz-strukturen Hänger Ihop</h2>
+
+            <h3>Hierarkisk Relation</h3>
+
+            <div class="tree-structure">
+<span class="comment">// Hierarki i Fredagsquiz-projektet:</span>
+
+<span class="folder">quiz/</span> (root)
+│
+├── <span class="file">README.md</span>                    <span class="comment">← Beskriver hela projektet</span>
+├── <span class="file">index.html</span>                   <span class="comment">← Huvudstartsida</span>
+│
+├── <span class="folder">0/</span>                          <span class="comment">← ÖVERSIKTSSIDA</span>
+│   ├── <span class="file">index.html</span>               <span class="comment">← Listar alla quiz 1-20+</span>
+│   ├── <span class="file">README.md</span>                <span class="comment">← Förklarar översikten</span>
+│   └── <span class="comment">...länkar till alla andra quiz...</span>
+│
+├── <span class="folder">1-19/</span>                       <span class="comment">← INDIVIDUELLA QUIZ</span>
+│   └── <span class="comment">...varje quiz är självständigt...</span>
+│
+└── <span class="folder">20/</span>                         <span class="comment">← DAGENS QUIZ (Synundersökningar)</span>
+    ├── <span class="file">README.md</span>                <span class="comment">← Beskriver quiz 20</span>
+    ├── <span class="file">index.html</span>               <span class="comment">← Själva quizet</span>
+    ├── <span class="file">script.js</span>
+    ├── <span class="file">styles.css</span>
+    └── <span class="comment">...filer specifika för quiz 20...</span>
+            </div>
+
+            <h3>Navigationsmönster</h3>
+
+            <ol>
+                <li><strong>Användaren startar på:</strong>
+                    <div class="url-example">kentlundgren.github.io/quiz/</div>
+                    Ser huvudstartsidan med info om projektet
+                </li>
+
+                <li><strong>Klickar på "Alla Quiz":</strong>
+                    <div class="url-example">kentlundgren.github.io/quiz/0/</div>
+                    Ser en översiktssida med alla tillgängliga quiz
+                </li>
+
+                <li><strong>Väljer "Quiz 20 - Synundersökningar":</strong>
+                    <div class="url-example">kentlundgren.github.io/quiz/20/</div>
+                    Kommer till quiz 20 och kan starta quizet
+                </li>
+
+                <li><strong>Vill läsa mer om quiz 20:</strong>
+                    <div class="url-example">github.com/kentlundgren/quiz/tree/main/20</div>
+                    Ser README.md och alla källfiler för quiz 20
+                </li>
+            </ol>
+
+            <h2>💡 Viktiga Principer för GitHub Trädstrukturer</h2>
+
+            <h3>1. Varje mapp är självständig</h3>
+            <div class="info-box">
+                <p>Varje undermapp (0/, 1/, 2/, ... 20/) fungerar som en självständig "mini-webbplats" med sina egna filer:</p>
+                <ul>
+                    <li><code>index.html</code> - startsida för mappen</li>
+                    <li><code>README.md</code> - dokumentation för mappen</li>
+                    <li>Egna CSS/JS-filer</li>
+                    <li>Egna bilder och resurser</li>
+                </ul>
+            </div>
+
+            <h3>2. README.md visas automatiskt</h3>
+            <div class="info-box">
+                <p>När du besöker en mapp på GitHub (t.ex. <code>/tree/main/20</code>) så visas innehållet i <code>README.md</code> automatiskt under fillistan. Detta gör det enkelt att:</p>
+                <ul>
+                    <li>Dokumentera vad mappen innehåller</li>
+                    <li>Ge instruktioner för hur man använder filerna</li>
+                    <li>Länka till relaterade resurser</li>
+                </ul>
+            </div>
+
+            <h3>3. Relativa vs Absoluta sökvägar</h3>
+            
+            <h4>Relativa sökvägar (rekommenderat inom samma repo):</h4>
+            <div class="code-block">
+&lt;a href="../0/"&gt;Till översiktssidan&lt;/a&gt;
+&lt;a href="../20/"&gt;Till quiz 20&lt;/a&gt;
+&lt;img src="synundersokning1.jpg"&gt;  &lt;!-- Bild i samma mapp --&gt;
+            </div>
+
+            <h4>Absoluta sökvägar (för externa länkar):</h4>
+            <div class="code-block">
+&lt;a href="https://kentlundgren.github.io/quiz/20/"&gt;Quiz 20&lt;/a&gt;
+&lt;a href="https://github.com/kentlundgren/quiz"&gt;GitHub Repo&lt;/a&gt;
+            </div>
+
+            <h3>4. Namnkonventioner</h3>
+            <div class="warning-box">
+                <h4>⚠️ Viktiga regler för mappnamn:</h4>
+                <ul>
+                    <li>Använd <strong>enkla namn</strong> (siffror, bokstäver, bindestreck)</li>
+                    <li>Undvik mellanslag - använd bindestreck: <code>quiz-20</code> istället för <code>quiz 20</code></li>
+                    <li>Undvik svenska tecken (å, ä, ö) i mappnamn</li>
+                    <li>Använd <strong>små bokstäver</strong> för konsekvens</li>
+                    <li>GitHub är skiftlägeskänsligt: <code>Quiz/</code> ≠ <code>quiz/</code></li>
+                </ul>
+            </div>
+
+            <h2>🔍 Så Hittar du Runt i Strukturen</h2>
+
+            <h3>På GitHub (källkod):</h3>
+            <ol>
+                <li>Börja på root: <code>github.com/kentlundgren/quiz</code></li>
+                <li>Klicka på mappar för att navigera djupare</li>
+                <li>Använd "breadcrumbs" högst upp för att gå tillbaka</li>
+                <li>Läs README.md i varje mapp för information</li>
+            </ol>
+
+            <h3>På GitHub Pages (live-version):</h3>
+            <ol>
+                <li>Börja på: <code>kentlundgren.github.io/quiz/</code></li>
+                <li>Lägg till mappnamn i URL:en: <code>/0/</code>, <code>/20/</code>, etc.</li>
+                <li>Varje mapp serverar sin <code>index.html</code> automatiskt</li>
+                <li>Använd navigeringslänkar i quizen</li>
+            </ol>
+
+            <h2>📊 Sammanfattning: De Tre Viktiga Nivåerna</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nivå</th>
+                        <th>Funktion</th>
+                        <th>GitHub</th>
+                        <th>GitHub Pages</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1. Root</strong></td>
+                        <td>Huvudprojekt</td>
+                        <td><a href="https://github.com/kentlundgren/quiz" target="_blank">github.com/kentlundgren/quiz</a></td>
+                        <td><a href="https://kentlundgren.github.io/quiz/" target="_blank">kentlundgren.github.io/quiz/</a></td>
+                    </tr>
+                    <tr>
+                        <td><strong>2. Mapp 0</strong></td>
+                        <td>Översikt</td>
+                        <td><a href="https://github.com/kentlundgren/quiz/tree/main/0" target="_blank">github.com/kentlundgren/quiz/tree/main/0</a></td>
+                        <td><a href="https://kentlundgren.github.io/quiz/0/" target="_blank">kentlundgren.github.io/quiz/0/</a></td>
+                    </tr>
+                    <tr>
+                        <td><strong>3. Mapp 20</strong></td>
+                        <td>Specifikt quiz</td>
+                        <td><a href="https://github.com/kentlundgren/quiz/tree/main/20" target="_blank">github.com/kentlundgren/quiz/tree/main/20</a></td>
+                        <td><a href="https://kentlundgren.github.io/quiz/20/" target="_blank">kentlundgren.github.io/quiz/20/</a></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="success-box">
+                <h4>✅ Nyckeln till Förståelse</h4>
+                <p>Tänk på GitHub som ett filsystem:</p>
+                <ul>
+                    <li><strong>Root (/) = </strong> Huvudkatalogen</li>
+                    <li><strong>Mappar = </strong> Underkataloger med eget innehåll</li>
+                    <li><strong>Filer = </strong> Det faktiska innehållet</li>
+                    <li><strong>GitHub Pages = </strong> Gör mappstrukturen till en webbplats</li>
+                </ul>
+                <p>URL:en speglar alltid den exakta sökvägen i filsystemet!</p>
+            </div>
+
+            <h2>🎯 Praktiska Tips</h2>
+
+            <h3>För att skapa en ny undermapp (t.ex. quiz 21):</h3>
+            <ol>
+                <li>Skapa en ny mapp: <code>21/</code></li>
+                <li>Lägg till filer: <code>index.html</code>, <code>script.js</code>, <code>styles.css</code>, <code>README.md</code></li>
+                <li>Commita och pusha till GitHub</li>
+                <li>Mappen blir automatiskt tillgänglig på:
+                    <ul>
+                        <li>GitHub: <code>github.com/kentlundgren/quiz/tree/main/21</code></li>
+                        <li>GitHub Pages: <code>kentlundgren.github.io/quiz/21/</code></li>
+                    </ul>
+                </li>
+                <li>Uppdatera översiktssidan i mapp 0 med länk till det nya quizet</li>
+            </ol>
+
+            <h3>För att länka mellan quiz:</h3>
+            <div class="code-block">
+&lt;!-- Från quiz 20 till översiktssidan (mapp 0) --&gt;
+&lt;a href="../0/"&gt;Se alla quiz&lt;/a&gt;
+
+&lt;!-- Från quiz 20 till quiz 1 --&gt;
+&lt;a href="../1/"&gt;Till Quiz 1&lt;/a&gt;
+
+&lt;!-- Till GitHub repo --&gt;
+&lt;a href="https://github.com/kentlundgren/quiz"&gt;Källkod&lt;/a&gt;
+            </div>
+
+            <div class="info-box">
+                <h4>💡 Best Practice</h4>
+                <p>Varje quiz-mapp (1-20+) bör innehålla:</p>
+                <ul>
+                    <li><code>README.md</code> - Beskrivning av quizet</li>
+                    <li><code>index.html</code> - Själva quizet</li>
+                    <li><code>script.js</code> - JavaScript-logik</li>
+                    <li><code>styles.css</code> - Styling</li>
+                    <li>Länkar tillbaka till mapp 0 (översikten)</li>
+                    <li>Länkar till GitHub repo</li>
+                </ul>
+            </div>
+
+            <h2>🔄 Relationen mellan de Tre Nivåerna</h2>
+
+            <div class="tree-structure">
+<span class="comment">// Konceptuell struktur:</span>
+
+<span class="folder">ROOT (kentlundgren.github.io/quiz/)</span>
+│
+│   <span class="comment">↓ Huvudstart - övergripande info om projektet</span>
+│
+├──&gt; <span class="folder">MAPP 0</span> (kentlundgren.github.io/quiz/0/)
+│         │
+│         │   <span class="comment">↓ Översikt - listar alla tillgängliga quiz</span>
+│         │
+│         ├──&gt; <span class="folder">MAPP 1</span> (kentlundgren.github.io/quiz/1/)
+│         ├──&gt; <span class="folder">MAPP 2</span> (kentlundgren.github.io/quiz/2/)
+│         ├──&gt; <span class="comment">...</span>
+│         ├──&gt; <span class="folder">MAPP 19</span> (kentlundgren.github.io/quiz/19/)
+│         └──&gt; <span class="folder">MAPP 20</span> (kentlundgren.github.io/quiz/20/)
+│                   │
+│                   │   <span class="comment">↓ Specifikt quiz om Synundersökningar</span>
+│                   │
+│                   ├── <span class="file">index.html</span>
+│                   ├── <span class="file">script.js</span>
+│                   ├── <span class="file">styles.css</span>
+│                   ├── <span class="file">README.md</span>
+│                   └── <span class="comment">...bilder och PDF...</span>
+            </div>
+
+        </div>
+
+        <footer>
+            <p><strong>Skapad:</strong> 2026-01-16</p>
+            <p><strong>Författare:</strong> Kent Lundgren med AI-assistans (Claude Sonnet 4.5)</p>
+            <p><strong>Del av:</strong> <a href="https://github.com/kentlundgren/quiz" target="_blank">Fredagsquiz-projektet</a></p>
+            <p style="margin-top: 20px; font-style: italic;">
+                📚 Pedagogisk guide för att förstå hur GitHub organiserar filer och mappar
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

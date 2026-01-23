@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Danmark, Grönland och Sverige – Historia och Relationer</title>
+    <!-- 
+        Quiz nr 21: Danmark, Grönland och Sverige – Historia och Relationer
+        Skapad: 2026-01-23
+        
+        Detta quiz handlar om koloniala relationer och nordisk historia,
+        med fokus på relationen mellan Danmark och Grönland samt den
+        historiska bakgrunden med Sverige och Danmark.
+        
+        Quizet innehåller:
+        - 5 informationsslides om Danmarks koloniala arv, Grönland och Sverige-Danmark-relationen
+        - 5 frågor för att testa kunskaper
+        
+        VIKTIGT: Innan du gör quizet, läs igenom blogginlägget:
+        https://controllerutangranser.wordpress.com/2026/01/23/efter-21-krig-kom-freden-men-for-vem/
+        
+        Baserat på:
+        - Blogginlägg "Efter 21 krig kom freden – men för vem?"
+        - DIIS (Danish Institute for International Studies)
+        - Wikipedia och Britannica
+        - FN:s rapporter om Grönland
+    -->
+    
+    <!-- Typsnitt: Elegant kombination för läsbarhet -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Extern CSS-fil -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="quiz-container" role="main">
+        <!-- Header med titel och progressbar -->
+        <header class="quiz-header">
+            <div class="quiz-header-content">
+                <div class="quiz-header-text">
+                    <h1 class="quiz-title">Danmark, Grönland & Sverige</h1>
+                    <p class="quiz-subtitle">Historia, koloniala relationer och nordiskt broderskap</p>
+                </div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <a href="https://controllerutangranser.wordpress.com/2026/01/23/efter-21-krig-kom-freden-men-for-vem/" class="all-quiz-btn" target="_blank" rel="noopener noreferrer" title="Läs blogginlägget som quizet baseras på">
+                        📖 Läs först
+                    </a>
+                    <a href="https://kentlundgren.se/program/quiz/0/" id="allaQuizLink" class="all-quiz-btn" target="_blank" rel="noopener noreferrer" title="Se alla Fredagsquiz">
+                        📚 Alla Quiz
+                    </a>
+                </div>
+                <!-- Info-ruta för GitHub Pages (visas endast på kentlundgren.github.io) -->
+                <div id="githubPagesInfo" style="display: none; margin-top: 15px; padding: 12px; background: rgba(255, 255, 255, 0.95); border-radius: 8px; border-left: 4px solid #c41e3a; font-size: 0.9rem;">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 5px;">
+                        <span style="font-size: 1.2rem;">🌐</span>
+                        <strong style="color: #c41e3a;">Du är på GitHub Pages</strong>
+                    </div>
+                    <p style="margin: 5px 0; line-height: 1.5; color: #333;">
+                        Detta quiz körs via GitHub Pages. Se källkoden på:
+                    </p>
+                    <a href="https://github.com/kentlundgren/quiz/tree/main/21" target="_blank" rel="noopener noreferrer" style="color: #c41e3a; text-decoration: none; font-weight: 600; border-bottom: 1px dotted #c41e3a;">
+                        📂 GitHub Repository: quiz/21/
+                    </a>
+                </div>
+            </div>
+            <div class="progress-bar" aria-hidden="true">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </header>
+
+        <!-- Inledande texter i fem sidor före quizet -->
+        <section id="introSection" class="intro-section" aria-live="polite">
+            <div class="intro-card">
+                <!-- Sidindikator med text och visuella prickar -->
+                <div class="page-indicator">
+                    <div class="page-number" id="pageNumber">Sida 1 av 5</div>
+                    <div class="page-dots" id="pageDots"></div>
+                </div>
+                <h2 class="intro-title" id="introPageTitle"></h2>
+                <div class="intro-body" id="introPageBody"></div>
+                <div class="intro-nav">
+                    <button class="secondary-btn" id="introPrevBtn" type="button" aria-label="Föregående" disabled>⬅️ Föregående</button>
+                    <button class="primary-btn" id="introNextBtn" type="button" aria-label="Nästa">Nästa ➡️</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Startskärm med växlande bilder och knapp för att gå vidare till quizet -->
+        <!-- Bilderna Danmark_Gronland1.jpg och Danmark_Gronland2.jpg växlar automatiskt var 3:e sekund -->
+        <section id="imageSection" class="image-section hidden" aria-labelledby="introTitle">
+            <div class="quiz-image-container">
+                <img id="img1" src="Danmark_Gronland1.jpg" alt="Danmark och Grönland - historisk relation" class="quiz-image active">
+                <img id="img2" src="Danmark_Gronland2.jpg" alt="Grönland - vägen mot självständighet" class="quiz-image">
+            </div>
+            <p class="image-caption">
+                Bildkälla: Illustrationer av Danmark-Grönland-relationen
+            </p>
+            <p class="image-text" id="introTitle">Nu är du redo! Testa dina kunskaper om nordisk historia och koloniala relationer! 🇩🇰🇬🇱🇸🇪</p>
+            <button class="continue-btn" id="continueBtn" type="button">Starta Quizet ➡️</button>
+        </section>
+
+        <!-- Själva quiz-innehållet renderas dynamiskt via JavaScript -->
+        <section id="quizContent" class="hidden" aria-live="polite"></section>
+    </main>
+
+    <!-- Footer med länkar till promt-filer -->
+    <footer class="quiz-footer">
+        <div class="footer-content">
+            <p class="footer-text">Quiz nr 21 i serien Fredagsquiz | Tema: Koloniala relationer och nordisk historia</p>
+            <div class="footer-links">
+                <a href="promt.md" target="_blank" rel="noopener noreferrer" class="footer-link" title="Se den ursprungliga prompten som användes för att generera detta quiz">
+                    📝 Visa prompt
+                </a>
+                <a href="promt_forklarad.html" target="_blank" rel="noopener noreferrer" class="footer-link" title="Läs en generell beskrivning av vad som kännetecknar en bra prompt för AI-assistenter">
+                    💡 Vad är en bra prompt?
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating action buttons för teknisk info och källor -->
+    <div class="floating-buttons">
+        <button class="floating-btn tech-btn" id="techBtn" title="Teknisk beskrivning">🔧</button>
+        <button class="floating-btn prompt-btn" id="promptBtn" title="Visa källor och referenser">📄</button>
+        <a href="https://controllerutangranser.wordpress.com/2026/01/23/efter-21-krig-kom-freden-men-for-vem/" class="floating-btn material-btn" title="Läs blogginlägget" target="_blank" rel="noopener noreferrer">📖</a>
+    </div>
+
+    <!-- Modal: Teknisk beskrivning -->
+    <div id="techModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="techTitle">
+        <div class="modal-content">
+            <span class="close" data-close="#techModal" aria-label="Stäng">&times;</span>
+            <h2 id="techTitle">🔧 Teknisk beskrivning</h2>
+            
+            <h3>Struktur och organisation</h3>
+            <p><strong>Filstruktur:</strong> Detta quiz är byggt med separation of concerns-principen, där HTML, CSS och JavaScript är uppdelade i separata filer:</p>
+            <ul>
+                <li><strong>index.html:</strong> Innehåller HTML-strukturen och semantisk markup</li>
+                <li><strong>styles.css:</strong> All styling och responsiv design</li>
+                <li><strong>script.js:</strong> All JavaScript-logik och interaktivitet</li>
+            </ul>
+            
+            <div class="info-box">
+                <strong>💡 Varför separata filer?</strong>
+                <p>Att dela upp kod i separata filer ger flera fördelar:</p>
+                <ul>
+                    <li><strong>Underhållbarhet:</strong> Lättare att hitta och uppdatera specifik kod</li>
+                    <li><strong>Återanvändbarhet:</strong> CSS och JavaScript kan användas i flera HTML-filer</li>
+                    <li><strong>Läsbarhet:</strong> Tydligare struktur och mindre filer att hantera</li>
+                    <li><strong>Cachning:</strong> Webbläsaren kan cacha CSS och JS separat för bättre prestanda</li>
+                </ul>
+            </div>
+            
+            <h3>Teknisk implementation</h3>
+            <ul>
+                <li><strong>HTML5:</strong> Semantisk markup med ARIA-attribut för tillgänglighet</li>
+                <li><strong>CSS3:</strong> Responsiv design med CSS-variabler och flexbox</li>
+                <li><strong>JavaScript (ES6+):</strong> Modern JavaScript med arrow functions, template literals och DOM-manipulation</li>
+                <li><strong>UI:</strong> Progressbar, sidindikator med klickbara prickar, växlande bilder</li>
+                <li><strong>Bildväxling:</strong> Automatisk växling mellan två bilder var 3:e sekund</li>
+                <li><strong>Interaktion:</strong> Val med färgkodning (grön/röd), gul bakgrund på svarsalternativ</li>
+                <li><strong>Responsivitet:</strong> Fungerar på både dator och mobil</li>
+            </ul>
+            
+            <h3>Skapad information</h3>
+            <p><strong>Skapad:</strong> 2026-01-23</p>
+            <p><strong>Quiz nr:</strong> 21 i serien Fredagsquiz</p>
+            <p><strong>Baserad på:</strong> Blogginlägg "Efter 21 krig kom freden – men för vem?" samt historiska källor om Danmark-Grönland-relationen och Sverige-Danmark-historien.</p>
+            <p><strong>Fokus:</strong> Koloniala relationer, nordisk historia och vägen mot försoning.</p>
+        </div>
+    </div>
+
+    <!-- Modal: Källor och underlag -->
+    <div id="promptModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="promptTitle">
+        <div class="modal-content">
+            <span class="close" data-close="#promptModal" aria-label="Stäng">&times;</span>
+            <h2 id="promptTitle">📄 Källor & Referenser</h2>
+            <p>Quiz nr 21: Danmark, Grönland och Sverige – Historia och Relationer</p>
+            <p><strong>Frågor och fördjupade förklaringar baserade på (i Harvard-format):</strong></p>
+            
+            <div class="info-box">
+                <strong>📚 Om detta quiz</strong>
+                <p>Detta quiz utforskar den komplexa historien mellan Danmark och Grönland – från kolonisering till självstyre – samt den långa konflikthistorien mellan Sverige och Danmark som nu förvandlats till broderskap.</p>
+                <p><strong>🌍 Fokus:</strong> Koloniala relationer, historiska trauman, självständighetssträvanden och nordisk försoning.</p>
+            </div>
+            
+            <h3>Blogginlägg med analys</h3>
+            <ul>
+                <li>Lundgren, K. (2026) <em>Efter 21 krig kom freden – men för vem?</em>. Controller utan gränser, 23 januari. Tillgänglig: <a href="https://controllerutangranser.wordpress.com/2026/01/23/efter-21-krig-kom-freden-men-for-vem/" target="_blank" rel="noopener noreferrer">controllerutangranser.wordpress.com</a> [Hämtad: 23 januari 2026].</li>
+            </ul>
+            
+            <h3>Danmarks koloniala historia</h3>
+            <ul>
+                <li>DIIS (2025) <em>Why is Greenland part of the Kingdom of Denmark? A short history</em>. Danish Institute for International Studies. Tillgänglig: <a href="https://www.diis.dk/en/research/why-is-greenland-part-of-the-kingdom-of-denmark-a-short-history" target="_blank" rel="noopener noreferrer">www.diis.dk</a> [Hämtad: 23 januari 2026].</li>
+                <li>Statsministeriet (2025) <em>Greenland</em>. Tillgänglig: <a href="https://english.stm.dk/the-prime-ministers-office/the-unity-of-the-realm/greenland/" target="_blank" rel="noopener noreferrer">english.stm.dk</a> [Hämtad: 23 januari 2026].</li>
+            </ul>
+            
+            <h3>Grönlands historia och självständighetssträvanden</h3>
+            <ul>
+                <li>Humanium (2025) <em>Denmark's experiment on Inuit children: A painful legacy of forced assimilation</em>. Tillgänglig: <a href="https://www.humanium.org/en/denmarks-experiment-on-inuit-children-a-painful-legacy-of-forced-assimilation/" target="_blank" rel="noopener noreferrer">www.humanium.org</a> [Hämtad: 23 januari 2026].</li>
+                <li>UN News (2023) <em>Rights expert urges Denmark and Greenland to examine colonial legacy's impact</em>. Tillgänglig: <a href="https://news.un.org/en/story/2023/02/1133382" target="_blank" rel="noopener noreferrer">news.un.org</a> [Hämtad: 23 januari 2026].</li>
+                <li>Wikipedia (2025) <em>Greenlandic independence</em>. Tillgänglig: <a href="https://en.wikipedia.org/wiki/Greenlandic_independence" target="_blank" rel="noopener noreferrer">en.wikipedia.org</a> [Hämtad: 23 januari 2026].</li>
+            </ul>
+            
+            <h3>Sverige-Danmark-relationer</h3>
+            <ul>
+                <li>Wikipedia (2025) <em>Denmark–Sweden relations</em>. Tillgänglig: <a href="https://en.wikipedia.org/wiki/Denmark%E2%80%93Sweden_relations" target="_blank" rel="noopener noreferrer">en.wikipedia.org</a> [Hämtad: 23 januari 2026].</li>
+                <li>Wikipedia (2025) <em>List of wars between Denmark and Sweden</em>. Tillgänglig: <a href="https://en.wikipedia.org/wiki/List_of_wars_between_Denmark_and_Sweden" target="_blank" rel="noopener noreferrer">en.wikipedia.org</a> [Hämtad: 23 januari 2026].</li>
+                <li>Britannica (2025) <em>Treaty of Roskilde</em>. Tillgänglig: <a href="https://www.britannica.com/topic/Treaty-of-Roskilde" target="_blank" rel="noopener noreferrer">www.britannica.com</a> [Hämtad: 23 januari 2026].</li>
+            </ul>
+            
+            <h3>Hans Egede och koloniseringen</h3>
+            <ul>
+                <li>Wikipedia (2025) <em>Hans Egede</em>. Tillgänglig: <a href="https://en.wikipedia.org/wiki/Hans_Egede" target="_blank" rel="noopener noreferrer">en.wikipedia.org</a> [Hämtad: 23 januari 2026].</li>
+                <li>Visit Greenland (2025) <em>300 Years: Hans Egede's Mission and Legacy in Greenland</em>. Tillgänglig: <a href="https://visitgreenland.com/articles/300-years-hans-egedes-mission-and-legacy-in-greenland/" target="_blank" rel="noopener noreferrer">visitgreenland.com</a> [Hämtad: 23 januari 2026].</li>
+            </ul>
+            
+            <h3>Spiralkampanjen</h3>
+            <ul>
+                <li>JusticeInfo (2025) <em>Denmark's apology to Greenlandic women</em>. Tillgänglig: <a href="https://www.justiceinfo.net/en/150175-denmarks-apology-to-greenlandic-women.html" target="_blank" rel="noopener noreferrer">www.justiceinfo.net</a> [Hämtad: 23 januari 2026].</li>
+            </ul>
+            
+            <div class="warning-box">
+                <strong>📚 Fördjupning</strong>
+                <p>Läs det fullständiga blogginlägget: <a href="https://controllerutangranser.wordpress.com/2026/01/23/efter-21-krig-kom-freden-men-for-vem/" target="_blank" rel="noopener noreferrer">"Efter 21 krig kom freden – men för vem?"</a></p>
+            </div>
+            
+            <h3>💡 Mer information</h3>
+            <p><strong>Läs mer på bloggen:</strong> <a href="https://controllerutangranser.wordpress.com/" target="_blank" rel="noopener noreferrer">Controller utan gränser</a></p>
+        </div>
+    </div>
+
+    <!-- JavaScript för att detektera GitHub Pages och uppdatera länkar -->
+    <script>
+        // UPPDATERING 2026-01-23: Dynamisk länkhantering för GitHub Pages
+        // Denna kod körs innan den externa script.js laddas för att säkerställa att länkarna är rätt från start
+        
+        (function() {
+            // Funktion som körs när DOM är redo
+            function updateLinksForGitHubPages() {
+                // Kontrollera om vi är på GitHub Pages (kentlundgren.github.io)
+                const isGitHubPages = window.location.hostname === 'kentlundgren.github.io';
+                
+                if (isGitHubPages) {
+                    // UPPDATERA "ALLA QUIZ"-LÄNKEN
+                    // Om vi är på GitHub Pages, peka länken till GitHub Pages-versionen av översikten
+                    const allaQuizLink = document.getElementById('allaQuizLink');
+                    if (allaQuizLink) {
+                        allaQuizLink.href = 'https://kentlundgren.github.io/quiz/0/';
+                        console.log('✓ "Alla Quiz"-länk uppdaterad till GitHub Pages-version');
+                    }
+                    
+                    // VISA GITHUB PAGES INFO-RUTA
+                    // Visa info-rutan som förklarar att man är på GitHub Pages
+                    const githubPagesInfo = document.getElementById('githubPagesInfo');
+                    if (githubPagesInfo) {
+                        githubPagesInfo.style.display = 'block';
+                        console.log('✓ GitHub Pages info-ruta visas');
+                    }
+                } else {
+                    // Om vi INTE är på GitHub Pages (t.ex. på kentlundgren.se)
+                    // Länken förblir som den är (kentlundgren.se/program/quiz/0/)
+                    console.log('ℹ️ Inte på GitHub Pages - länkar förblir oförändrade');
+                }
+            }
+            
+            // Kör funktionen när DOM är redo
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', updateLinksForGitHubPages);
+            } else {
+                // DOM är redan redo
+                updateLinksForGitHubPages();
+            }
+        })();
+    </script>
+    
+    <!-- Extern JavaScript-fil -->
+    <script src="script.js"></script>
+</body>
+</html>

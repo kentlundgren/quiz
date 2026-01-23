@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konsten att skriva bra prompts – En guide för alla</title>
+    
+    <!-- 
+    ═══════════════════════════════════════════════════════════════════════════
+    PROMPT-GUIDE: Pedagogisk förklaring av promptteknik
+    Skapad för Controller utan gränser (controllerutangranser.wordpress.com)
+    Januari 2026
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    
+    <style>
+        /* ═══════════════════════════════════════════════════════════════════
+           GRUNDLÄGGANDE STILAR
+           ═══════════════════════════════════════════════════════════════════ */
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        :root {
+            /* Färgpalett inspirerad av nordiska färger */
+            --primary-blue: #1e3a5f;      /* Djupblå - som Nordsjön */
+            --secondary-blue: #4a7c9b;    /* Mellanblå */
+            --accent-green: #2d5a47;      /* Grönlandsgrön */
+            --warm-sand: #f5f1e8;         /* Varm sandfärg - bakgrund */
+            --light-ice: #e8f4f8;         /* Ljus is - kodblock */
+            --text-dark: #2c3e50;         /* Mörkgrå text */
+            --text-light: #5d6d7e;        /* Ljusare text */
+            --highlight-yellow: #fff3cd;  /* Markering */
+            --success-green: #d4edda;     /* Framgång */
+            --border-light: #dee2e6;      /* Ljus ram */
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background-color: var(--warm-sand);
+            padding: 0;
+            margin: 0;
+        }
+        
+        /* ═══════════════════════════════════════════════════════════════════
+           HEADER OCH NAVIGATION
+           ═══════════════════════════════════════════════════════════════════ */
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        header .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        nav {
+            background: var(--primary-blue);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+        
+        nav a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        /* ═══════════════════════════════════════════════════════════════════
+           HUVUDINNEHÅLL
+           ═══════════════════════════════════════════════════════════════════ */
+        
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        
+        h2 {
+            color: var(--primary-blue);
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--secondary-blue);
+        }
+        
+        h3 {
+            color: var(--accent-green);
+            font-size: 1.2rem;
+            margin: 1.5rem 0 0.75rem 0;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+        
+        /* ═══════════════════════════════════════════════════════════════════
+           SPECIAL-BOXAR
+           ═══════════════════════════════════════════════════════════════════ */
+        
+        .principle-box {
+            background: var(--light-ice);
+            border-left: 4px solid var(--secondary-blue);
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .principle-box h4 {
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .tip-box {
+            background: var(--highlight-yellow);
+            border-left: 4px solid #ffc107;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .tip-box::before {
+            content: "💡 ";
+        }
+        
+        .claude-box {
+            background: linear-gradient(135deg, #fef3e8 0%, #fff8f0 100%);
+            border: 2px solid #e07a2f;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+        
+        .claude-box h4 {
+            color: #c56a1f;
+            margin-bottom: 0.5rem;
+        }
+        
+        .claude-box h4::before {
+            content: "🤖 ";
+        }
+        
+        /* ═══════════════════════════════════════════════════════════════════
+           KODBLOCK OCH EXEMPEL
+           ═══════════════════════════════════════════════════════════════════ */
+        
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin: 1rem 0;
+        }
+        
+        .code-block .comment {
+            color: #6a9955;
+        }
+        
+        .code-block .heading {
+            color: #569cd6;
+            font-weight: bold;
+        }
+        
+        .code-block .keyword {
+            color: #c586c0;
+        }
+        
+        .example-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        @media (max-width: 700px) {
+            .example-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .example-bad, .example-good {
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .example-bad {
+            background: #ffebee;
+            border: 2px solid #ef5350;
+        }
+        
+        .example-bad::before {
+            content: "❌ Vag prompt";
+            display: block;
+            font-weight: bold;
+            color: #c62828;
+            margin-bottom: 0.5rem;
+        }
+        
+        .example-good {
+            background: var(--success-green);
+            border: 2px solid #4caf50;
+        }
+        
+        .example-good::before {
+            content: "✅ Tydlig prompt";
+            display: block;
+            font-weight: bold;
+            color: #2e7d32;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* ═══════════════════════════════════════════════════════════════════
+           INTERAKTIVA ELEMENT
+           ═══════════════════════════════════════════════════════════════════ */
+        
+        .accordion {
+            margin: 1rem 0;
+        }
+        
+        .accordion-header {
+            background: var(--primary-blue);
+            color: white;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+        
+        .accordion-header:hover {
+            background: var(--secondary-blue);
+        }
+        
+        .accordion-header.closed {
+            border-radius: 8px;
+        }
+        
+        .accordion-arrow {
+            transition: transform 0.3s;
+        }
+        
+        .accordion-header.closed .accordion-arrow {
+            transform: rotate(-90deg);
+        }
+        
+        .accordion-content {
+            background: var(--light-ice);
+            padding: 1.5rem;
+            border: 2px solid var(--primary-blue);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            display: block;
+        }
+        
+        .accordion-content.hidden {
+            display: none;
+        }
+        
+        /* ═══════════════════════════════════════════════════════════════════
+           TABELL
+           ═══════════════════════════════════════════════════════════════════ */
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+        
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        th {
+            background: var(--primary-blue);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: var(--light-ice);
+        }
+        
+        tr:hover {
+            background: var(--highlight-yellow);
+        }
+        
+        /* ═══════════════════════════════════════════════════════════════════
+           LISTOR
+           ═══════════════════════════════════════════════════════════════════ */
+        
+        ul, ol {
+            margin: 1rem 0 1rem 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* ═══════════════════════════════════════════════════════════════════
+           FOOTER
+           ═══════════════════════════════════════════════════════════════════ */
+        
+        footer {
+            background: var(--primary-blue);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        footer a {
+            color: #a8d4e6;
+        }
+        
+        /* ═══════════════════════════════════════════════════════════════════
+           RESPONSIV DESIGN
+           ═══════════════════════════════════════════════════════════════════ */
+        
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.6rem;
+            }
+            
+            main {
+                padding: 1rem;
+            }
+            
+            section {
+                padding: 1.25rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ═══════════════════════════════════════════════════════════════════
+         HEADER
+         ═══════════════════════════════════════════════════════════════════ -->
+    
+    <header>
+        <h1>Konsten att skriva bra prompts</h1>
+        <p class="subtitle">En praktisk guide för alla som vill få ut mer av AI-verktyg</p>
+    </header>
+    
+    <!-- ═══════════════════════════════════════════════════════════════════
+         NAVIGATION
+         ═══════════════════════════════════════════════════════════════════ -->
+    
+    <nav>
+        <ul>
+            <li><a href="#introduktion">Introduktion</a></li>
+            <li><a href="#grundprinciper">Grundprinciper</a></li>
+            <li><a href="#struktur">Prompt-struktur</a></li>
+            <li><a href="#claude">Claude-specifikt</a></li>
+            <li><a href="#exempel">Fullständigt exempel</a></li>
+            <li><a href="#checklista">Checklista</a></li>
+        </ul>
+    </nav>
+    
+    <!-- ═══════════════════════════════════════════════════════════════════
+         HUVUDINNEHÅLL
+         ═══════════════════════════════════════════════════════════════════ -->
+    
+    <main>
+        
+        <!-- INTRODUKTION -->
+        <section id="introduktion">
+            <h2>Vad är en prompt – och varför spelar det roll?</h2>
+            
+            <p>En <strong>prompt</strong> är helt enkelt den text du skriver till ett AI-verktyg för att be om hjälp. Det kan vara en fråga, en instruktion, eller en beskrivning av vad du vill uppnå.</p>
+            
+            <p>Skillnaden mellan en vag och en tydlig prompt kan vara enorm. Med rätt formulering kan du få genomarbetade, relevanta och användbara svar. Med en otydlig prompt får du ofta generiska svar som missar målet.</p>
+            
+            <div class="example-comparison">
+                <div class="example-bad">
+                    "Skriv om Danmark och Grönland"
+                </div>
+                <div class="example-good">
+                    "Skriv en analyserande text om Danmarks historiska relation till Grönland, från koloniseringen 1721 till dagens självstyre. Inkludera tre perspektiv: det officiella danska, det postkoloniala kritiska, och det grönländska. Rikta texten till svenska läsare."
+                </div>
+            </div>
+            
+            <p>Den här guiden visar dig hur du bygger upp effektiva prompts – med ett konkret exempel från en verklig uppgift.</p>
+        </section>
+        
+        <!-- GRUNDPRINCIPER -->
+        <section id="grundprinciper">
+            <h2>Fem grundprinciper för bra prompts</h2>
+            
+            <div class="principle-box">
+                <h4>1. Var specifik</h4>
+                <p>Ju tydligare du beskriver vad du vill ha, desto bättre resultat. Ange ämne, omfattning, målgrupp och önskat format. "Skriv 3 000 ord" är bättre än "skriv en lång text".</p>
+            </div>
+            
+            <div class="principle-box">
+                <h4>2. Ge kontext och roll</h4>
+                <p>Berätta för AI:n vilken roll den ska anta och i vilket sammanhang svaret ska användas. "Agera som en pedagogisk historiker" ger annorlunda resultat än "agera som en journalist".</p>
+            </div>
+            
+            <div class="principle-box">
+                <h4>3. Strukturera med tydliga delar</h4>
+                <p>Dela upp komplexa uppgifter i tydliga sektioner med rubriker. Använd punktlistor för krav och önskemål. Detta gör det lättare för AI:n att följa alla instruktioner.</p>
+            </div>
+            
+            <div class="principle-box">
+                <h4>4. Ange format och leverans</h4>
+                <p>Beskriv hur du vill ha resultatet: som löpande text, punktlista, tabell, eller specifika filer. Ange även önskat språk, ton och eventuella formateringskrav.</p>
+            </div>
+            
+            <div class="principle-box">
+                <h4>5. Inkludera begränsningar och avgränsningar</h4>
+                <p>Berätta vad du <em>inte</em> vill ha. "Fokusera på historia, inte dagspolitik" eller "undvik teknisk jargong" hjälper AI:n att hålla rätt fokus.</p>
+            </div>
+        </section>
+        
+        <!-- PROMPT-STRUKTUR -->
+        <section id="struktur">
+            <h2>Så bygger du upp en prompt</h2>
+            
+            <p>En välstrukturerad prompt följer ofta detta mönster:</p>
+            
+            <table>
+                <tr>
+                    <th>Del</th>
+                    <th>Syfte</th>
+                    <th>Exempel</th>
+                </tr>
+                <tr>
+                    <td><strong>Roll</strong></td>
+                    <td>Definiera AI:ns expertis och perspektiv</td>
+                    <td>"Agera som en kunnig historiker specialiserad på nordisk historia"</td>
+                </tr>
+                <tr>
+                    <td><strong>Kontext</strong></td>
+                    <td>Förklara bakgrund och användning</td>
+                    <td>"Texten ska publiceras på min blogg om kommunalekonomi"</td>
+                </tr>
+                <tr>
+                    <td><strong>Uppgift</strong></td>
+                    <td>Beskriv vad som ska göras</td>
+                    <td>"Skapa en bloggtext på cirka 3 000 ord om..."</td>
+                </tr>
+                <tr>
+                    <td><strong>Krav</strong></td>
+                    <td>Lista specifika önskemål</td>
+                    <td>"Inkludera tre perspektiv, använd Harvard-format för källor"</td>
+                </tr>
+                <tr>
+                    <td><strong>Format</strong></td>
+                    <td>Ange hur resultatet ska se ut</td>
+                    <td>"Leverera som tre separata textfiler"</td>
+                </tr>
+                <tr>
+                    <td><strong>Avgränsningar</strong></td>
+                    <td>Förtydliga vad som inte ska ingå</td>
+                    <td>"Undvik att ta politisk ställning"</td>
+                </tr>
+            </table>
+            
+            <div class="tip-box">
+                <strong>Tips:</strong> Använd markdown-formatering (rubriker med #, punktlistor med -, fetstil med **) för att göra prompten lättläst. De flesta AI-verktyg förstår och uppskattar denna struktur.
+            </div>
+        </section>
+        
+        <!-- CLAUDE-SPECIFIKT -->
+        <section id="claude">
+            <h2>Vad som fungerar särskilt bra med Claude</h2>
+            
+            <p>Även om grundprinciperna fungerar med de flesta AI-verktyg, finns det vissa saker som Claude hanterar särskilt väl:</p>
+            
+            <div class="claude-box">
+                <h4>Claude gillar tydlig struktur</h4>
+                <p>Claude är tränad att följa strukturerade instruktioner noggrant. Använd gärna rubriker, numrerade listor och tydliga avgränsningar mellan olika delar av uppgiften.</p>
+            </div>
+            
+            <div class="claude-box">
+                <h4>Claude kan hantera komplexa, flerstegade uppgifter</h4>
+                <p>Du kan be Claude om flera sammanhängande produkter i samma prompt – exempelvis "skapa en bloggtext, fem slides och ett quiz". Claude håller reda på alla delar och levererar dem sammanhängande.</p>
+            </div>
+            
+            <div class="claude-box">
+                <h4>Claude uppskattar rollbeskrivningar</h4>
+                <p>Att ge Claude en roll ("agera som en pedagogisk historiker") hjälper verktyget att välja rätt ton, detaljnivå och perspektiv. Detta fungerar bättre än att bara beskriva uppgiften.</p>
+            </div>
+            
+            <div class="claude-box">
+                <h4>Claude kan söka och verifiera information</h4>
+                <p>Claude kan använda webbsökning för att hitta aktuella källor och verifiera fakta. Be explicit om detta: "Sök efter trovärdiga källor och ange dem i Harvard-format".</p>
+            </div>
+            
+            <div class="claude-box">
+                <h4>Claude hanterar nyanser väl</h4>
+                <p>Du kan be Claude presentera flera perspektiv på samma fråga utan att verktyget tar ställning. Formuleringar som "beskriv tre perspektiv" eller "visa komplexiteten" fungerar bra.</p>
+            </div>
+            
+            <h3>Skillnaden mot andra AI-verktyg</h3>
+            
+            <p>Jämfört med andra AI-verktyg tenderar Claude att:</p>
+            <ul>
+                <li>Vara mer noggrann med att följa alla delar av komplexa instruktioner</li>
+                <li>Producera längre, mer genomarbetade texter när det efterfrågas</li>
+                <li>Vara mer benägen att fråga om förtydliganden när något är oklart</li>
+                <li>Vara försiktigare med påståenden och tydligare med osäkerhet</li>
+                <li>Hantera känsliga ämnen med större nyansering</li>
+            </ul>
+            
+            <div class="tip-box">
+                <strong>Praktiskt tips:</strong> Om Claude ställer följdfrågor istället för att svara direkt, är det ofta ett tecken på att din prompt kunde vara tydligare. Använd följdfrågorna för att förbättra prompten till nästa gång!
+            </div>
+        </section>
+        
+        <!-- FULLSTÄNDIGT EXEMPEL -->
+        <section id="exempel">
+            <h2>Fullständigt exempel: En prompt som fungerar</h2>
+            
+            <p>Nedan visas en komplett prompt som användes för att skapa en bloggtext, slides och quiz om Danmark, Grönland och Sverige. Klicka på rubrikerna för att se varje del:</p>
+            
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>📋 Roll och perspektiv</span>
+                    <span class="accordion-arrow">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="code-block">
+<span class="heading">## Roll och perspektiv</span>
+
+Agera som en kunnig och pedagogisk historiker, kulturvetare 
+och sociolog med specialisering på Danmarks och Grönlands 
+historia, kultur och sociala förhållanden.
+
+Utgå från ett svenskt perspektiv – hur en vanlig svensk kan 
+förhålla sig till och förstå denna historia. Använd Sverige-
+Danmarks krigshistoria som en ingång för att ge perspektiv 
+på maktrelationer och territoriella förändringar.
+                    </div>
+                    <p><strong>Varför detta fungerar:</strong> Prompten definierar både expertis (historiker, kulturvetare, sociolog) och perspektiv (svenskt). Detta hjälper AI:n att välja rätt ton och vinkel.</p>
+                </div>
+            </div>
+            
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>📝 Uppgiftsbeskrivning</span>
+                    <span class="accordion-arrow">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="code-block">
+<span class="heading">## Uppgift</span>
+
+Skapa tre sammanhängande produkter för min blogg 
+<span class="keyword">Controller utan gränser</span>:
+
+<span class="heading">### 1. Bloggtext (cirka 3 000 ord)</span>
+
+<span class="keyword">**Innehåll:**</span>
+- Danmarks relation till Grönland ur tre perspektiv:
+  1. Neutralt-deskriptivt (officiella narrativet)
+  2. Postkolonialt kritiskt (akademiskt perspektiv)
+  3. Grönländskt självbestämmandeperspektiv
+- Sverige-Danmarks krigshistoria som jämförande perspektiv
+
+<span class="keyword">**Ton och koppling:**</span>
+- Anknyt till bloggens ekonomifokus
+- Inkludera danska och grönländska nyckelord
+- Pedagogisk men inte förenklad ton
+                    </div>
+                    <p><strong>Varför detta fungerar:</strong> Uppgiften är uppdelad i tydliga delar med specifika krav för varje del. Antalet ord anges, perspektiven listas explicit, och kopplingen till sammanhanget (ekonomibloggen) förtydligas.</p>
+                </div>
+            </div>
+            
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>📚 Krav på källor</span>
+                    <span class="accordion-arrow">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="code-block">
+<span class="heading">## Krav på källor</span>
+
+- Använd trovärdiga externa källor (universitet, 
+  forskningsinstitut, etablerade uppslagsverk)
+- Prioritera svenska och engelska källor
+- Ange alla källor i <span class="keyword">**Harvard-format**</span> med 
+  fungerande länkar
+- Verifiera att länkarna fungerar
+- Inkludera referenslista i slutet av bloggtexten
+                    </div>
+                    <p><strong>Varför detta fungerar:</strong> Källkraven är explicita – vilken typ av källor, vilket språk, vilket referensformat, och att länkar ska verifieras. Detta minskar risken för felaktiga eller trasiga referenser.</p>
+                </div>
+            </div>
+            
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>🚫 Avgränsningar</span>
+                    <span class="accordion-arrow">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="code-block">
+<span class="heading">## Viktiga avgränsningar</span>
+
+- Fokusera på historisk utveckling, inte dagsaktuell 
+  politik i detalj
+- Balansera perspektiven – visa att frågan är komplex
+- Undvik att ta ställning politiskt, men var inte rädd 
+  för att beskriva dokumenterade orättvisor
+                    </div>
+                    <p><strong>Varför detta fungerar:</strong> Avgränsningarna förhindrar att AI:n går vilse i dagspolitik eller tar oönskad ställning. Samtidigt ges utrymme att beskriva svåra ämnen sakligt.</p>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <strong>Notera:</strong> Den fullständiga prompten finns i filen <code>prompt.md</code> – ren och klar att använda direkt.
+            </div>
+        </section>
+        
+        <!-- CHECKLISTA -->
+        <section id="checklista">
+            <h2>Checklista: Innan du skickar din prompt</h2>
+            
+            <p>Gå igenom dessa punkter för att förbättra din prompt:</p>
+            
+            <div id="checklist-container">
+                <label class="checklist-item">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span>Har jag definierat en roll eller expertis?</span>
+                </label>
+                
+                <label class="checklist-item">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span>Har jag förklarat sammanhanget och syftet?</span>
+                </label>
+                
+                <label class="checklist-item">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span>Är uppgiften tydligt beskriven?</span>
+                </label>
+                
+                <label class="checklist-item">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span>Har jag angett önskad längd eller omfattning?</span>
+                </label>
+                
+                <label class="checklist-item">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span>Har jag specificerat målgrupp och ton?</span>
+                </label>
+                
+                <label class="checklist-item">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span>Har jag angett önskat format för leveransen?</span>
+                </label>
+                
+                <label class="checklist-item">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span>Har jag inkluderat eventuella källkrav?</span>
+                </label>
+                
+                <label class="checklist-item">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span>Har jag avgränsat vad som INTE ska ingå?</span>
+                </label>
+                
+                <label class="checklist-item">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span>Är prompten strukturerad med rubriker eller listor?</span>
+                </label>
+                
+                <label class="checklist-item">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span>Har jag läst igenom och förtydligat otydligheter?</span>
+                </label>
+            </div>
+            
+            <div id="progress-bar-container">
+                <div id="progress-bar"></div>
+            </div>
+            <p id="progress-text">0 av 10 punkter checkade</p>
+            
+            <style>
+                .checklist-item {
+                    display: flex;
+                    align-items: center;
+                    padding: 0.75rem;
+                    margin: 0.5rem 0;
+                    background: var(--light-ice);
+                    border-radius: 6px;
+                    cursor: pointer;
+                    transition: background 0.2s;
+                }
+                
+                .checklist-item:hover {
+                    background: var(--highlight-yellow);
+                }
+                
+                .checklist-item input {
+                    margin-right: 1rem;
+                    width: 20px;
+                    height: 20px;
+                    cursor: pointer;
+                }
+                
+                .checklist-item input:checked + span {
+                    text-decoration: line-through;
+                    color: var(--text-light);
+                }
+                
+                #progress-bar-container {
+                    background: var(--border-light);
+                    border-radius: 10px;
+                    height: 20px;
+                    margin: 1.5rem 0 0.5rem 0;
+                    overflow: hidden;
+                }
+                
+                #progress-bar {
+                    background: linear-gradient(90deg, var(--accent-green), #4caf50);
+                    height: 100%;
+                    width: 0%;
+                    transition: width 0.3s ease;
+                    border-radius: 10px;
+                }
+                
+                #progress-text {
+                    text-align: center;
+                    color: var(--text-light);
+                    font-size: 0.9rem;
+                }
+            </style>
+        </section>
+        
+        <!-- AVSLUTNING -->
+        <section>
+            <h2>Sammanfattning</h2>
+            
+            <p>Att skriva bra prompts är en färdighet som utvecklas med övning. De viktigaste lärdomarna är:</p>
+            
+            <ol>
+                <li><strong>Var specifik</strong> – vaga instruktioner ger vaga svar</li>
+                <li><strong>Ge kontext</strong> – förklara varför och för vem</li>
+                <li><strong>Strukturera</strong> – använd rubriker och listor</li>
+                <li><strong>Ange format</strong> – beskriv hur du vill ha resultatet</li>
+                <li><strong>Avgränsa</strong> – förtydliga vad som inte ska ingå</li>
+            </ol>
+            
+            <p>Med dessa principer i åtanke kommer du att få betydligt bättre resultat från AI-verktyg – oavsett om du använder Claude, ChatGPT eller andra alternativ.</p>
+            
+            <div class="tip-box">
+                <strong>Slutligen:</strong> Det är helt okej att ha en dialog med AI:n! Om första svaret inte träffar rätt, förtydliga och be om justeringar. De bästa resultaten kommer ofta från ett samarbete där du successivt förfinar din förfrågan.
+            </div>
+        </section>
+        
+    </main>
+    
+    <!-- ═══════════════════════════════════════════════════════════════════
+         FOOTER
+         ═══════════════════════════════════════════════════════════════════ -->
+    
+    <footer>
+        <p>Skapad för <a href="https://controllerutangranser.wordpress.com" target="_blank">Controller utan gränser</a></p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">Januari 2026</p>
+    </footer>
+    
+    <!-- ═══════════════════════════════════════════════════════════════════
+         JAVASCRIPT
+         ═══════════════════════════════════════════════════════════════════ -->
+    
+    <script>
+        // ═══════════════════════════════════════════════════════════════════
+        // ACCORDION-FUNKTIONALITET
+        // Öppnar och stänger de hopfällbara sektionerna
+        // ═══════════════════════════════════════════════════════════════════
+        
+        function toggleAccordion(header) {
+            // Hämta innehållsdelen som hör till denna rubrik
+            const content = header.nextElementSibling;
+            
+            // Växla mellan öppen och stängd
+            content.classList.toggle('hidden');
+            header.classList.toggle('closed');
+        }
+        
+        // ═══════════════════════════════════════════════════════════════════
+        // PROGRESS-BAR FÖR CHECKLISTAN
+        // Uppdaterar progress-baren baserat på antal checkade rutor
+        // ═══════════════════════════════════════════════════════════════════
+        
+        function updateProgress() {
+            // Räkna antal checkade rutor
+            const checkboxes = document.querySelectorAll('#checklist-container input[type="checkbox"]');
+            const total = checkboxes.length;
+            let checked = 0;
+            
+            checkboxes.forEach(function(checkbox) {
+                if (checkbox.checked) {
+                    checked++;
+                }
+            });
+            
+            // Beräkna procent och uppdatera progress-bar
+            const percent = (checked / total) * 100;
+            document.getElementById('progress-bar').style.width = percent + '%';
+            
+            // Uppdatera texten
+            document.getElementById('progress-text').textContent = 
+                checked + ' av ' + total + ' punkter checkade';
+            
+            // Ändra färg när alla är checkade
+            if (checked === total) {
+                document.getElementById('progress-text').textContent = 
+                    '🎉 Alla punkter checkade – din prompt är redo!';
+            }
+        }
+        
+        // ═══════════════════════════════════════════════════════════════════
+        // SMOOTH SCROLL FÖR NAVIGATION
+        // Gör att klick på navigeringslänkar scrollar mjukt
+        // ═══════════════════════════════════════════════════════════════════
+        
+        document.querySelectorAll('nav a').forEach(function(anchor) {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    // Beräkna position med offset för sticky nav
+                    const navHeight = document.querySelector('nav').offsetHeight;
+                    const targetPosition = targetElement.offsetTop - navHeight - 20;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // ═══════════════════════════════════════════════════════════════════
+        // INITIERING
+        // Stänger alla accordions vid sidladdning
+        // ═══════════════════════════════════════════════════════════════════
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Stäng alla accordion-content vid start
+            document.querySelectorAll('.accordion-content').forEach(function(content) {
+                content.classList.add('hidden');
+            });
+            
+            document.querySelectorAll('.accordion-header').forEach(function(header) {
+                header.classList.add('closed');
+            });
+        });
+    </script>
+    
+</body>
+</html>

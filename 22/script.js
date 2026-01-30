@@ -531,7 +531,7 @@ const quizData = [
             </div>
             
             <h3>👔 Ny verksamhetsledare 2025</h3>
-            <p>För att hantera den ökade komplexiteten i badverksamheten och för att säkerställa professionell drift året runt tillsatte kommunen 2025 en <strong>ny verksamhetsledare</strong> specifikt för badverksamheten. Detta är ett tecken på att kommunen tar simhallsdriften på allvar och är beredd att investera i rätt kompetens för att säkerställa god kvalitet och drift.</p>
+            <p>För att hantera den ökade komplexiteten i badverksamheten och för att säkerställa professionell drift året runt tillsatte kommunen 2025 en ny verksamhetsledare specifikt för badverksamheten. Detta är ett tecken på att kommunen tar simhallsdriften på allvar och är beredd att investera i rätt kompetens för att säkerställa god kvalitet och drift.</p>
             
             <p>Enligt Sveriges Kommuner och Regioner (2016) satsar kommunerna allt mer på utbyggnad och drift av idrottsanläggningar, men detta innebär också ökade driftkostnader och underhållsbehov. Simrishamns kommuns erfarenheter med Tobisviksbadet är ett exempel på hur även väl planerade renoveringar kan möta oförutsedda utmaningar.</p>
             

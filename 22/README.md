@@ -74,7 +74,11 @@ Quizet baseras på blogginlägget [När verksamheten växer](https://controlleru
 ## 🚀 Användning
 
 ### Online (rekommenderat)
-Besök quizet direkt: [kentlundgren.se/program/quiz/22/](https://kentlundgren.se/program/quiz/22/)
+
+Quizet finns tillgängligt på två platser:
+
+- **Officiell hemsida:** [kentlundgren.se/program/quiz/22/](https://kentlundgren.se/program/quiz/22/)
+- **GitHub Pages:** [kentlundgren.github.io/quiz/22/](https://kentlundgren.github.io/quiz/22/)
 
 ### Lokalt
 1. Klona detta repository:
@@ -162,7 +166,13 @@ Detta projekt är en del av en utbildningsserie om kommunal verksamhetsutvecklin
 
 <div align="center">
 
-**[🎮 Starta quizet](https://kentlundgren.se/program/quiz/22/)** | **[📝 Visa prompten](promt.md)** | **[💡 Om bra prompts](promt_bra.html)**
+### 🔗 Snabblänkar
+
+**[🎮 Spela på kentlundgren.se](https://kentlundgren.se/program/quiz/22/)** | **[🌐 Spela på GitHub Pages](https://kentlundgren.github.io/quiz/22/)**
+
+**[📝 Visa prompten](promt.md)** | **[💡 Om bra prompts](promt_bra.html)** | **[📦 GitHub Repository](https://github.com/kentlundgren/quiz/tree/main/22)**
+
+---
 
 *Skapad med passion för kommunal verksamhetsutveckling och digital pedagogik* 💙
 

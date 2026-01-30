@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git & GitHub - Så fungerar det tillsammans</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 50px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #64748b;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #667eea;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            color: #764ba2;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        .scenario-box {
+            background: linear-gradient(135deg, #fff7ed 0%, #fffbeb 100%);
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .scenario-box strong {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            color: #f59e0b;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%);
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .info-box strong {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            color: #667eea;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #d1fae5 0%, #ecfdf5 100%);
+            border-left: 4px solid #10b981;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .success-box strong {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            color: #10b981;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fee2e2 0%, #fef2f2 100%);
+            border-left: 4px solid #ef4444;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .warning-box strong {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            color: #ef4444;
+        }
+
+        code {
+            background: #1e293b;
+            color: #10b981;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.95rem;
+            overflow-x: auto;
+            border-left: 4px solid #10b981;
+        }
+
+        .code-block .comment {
+            color: #64748b;
+        }
+
+        .code-block .command {
+            color: #10b981;
+        }
+
+        .code-block .output {
+            color: #fbbf24;
+        }
+
+        .timeline {
+            margin: 30px 0;
+            padding-left: 30px;
+            border-left: 3px solid #667eea;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding-left: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -36px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            background: #667eea;
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+
+        .timeline-item h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        strong {
+            color: #667eea;
+        }
+
+        .back-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            h3 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 Git & GitHub</h1>
+        <p class="subtitle">Så fungerar de tillsammans - förklarat genom Quiz 22-scenariot</p>
+
+        <div class="scenario-box">
+            <strong>📋 Vad hände med Quiz 22?</strong>
+            <p>Den 30 januari 2026 skapades Quiz 22 och committades med meddelandet "initial commit". Senare ville vi ändra commit-meddelandet till "Add Quiz 22 - initial commit" för att vara mer beskrivande. Detta ledde till ett problem när vi skulle pusha till GitHub.</p>
+        </div>
+
+        <h2>1. Git vs GitHub - Vad är skillnaden?</h2>
+
+        <h3>🔧 Git (lokal versionskontroll)</h3>
+        <p><strong>Git</strong> är ett versionskontrollsystem som körs på <strong>din dator</strong>. Det spårar ändringar i dina filer och låter dig:</p>
+        <ul>
+            <li>Spara "snapshots" (commits) av ditt projekt vid olika tidpunkter</li>
+            <li>Gå tillbaka till tidigare versioner</li>
+            <li>Experimentera med nya funktioner i branches</li>
+            <li>Se vem som ändrade vad och när</li>
+        </ul>
+
+        <div class="info-box">
+            <strong>💡 Viktigt att förstå:</strong>
+            <p>Git är helt <strong>lokalt</strong> på din dator. Du kan arbeta med Git utan internet och utan GitHub!</p>
+        </div>
+
+        <h3>☁️ GitHub (fjärr-repository i molnet)</h3>
+        <p><strong>GitHub</strong> är en <strong>molntjänst</strong> där du kan lagra dina Git-repositories online. Det gör det möjligt att:</p>
+        <ul>
+            <li>Backup av ditt projekt i molnet</li>
+            <li>Samarbeta med andra utvecklare</li>
+            <li>Dela ditt projekt med världen</li>
+            <li>Ha en professionell portfölj</li>
+            <li>Använda funktioner som Issues, Pull Requests, GitHub Pages</li>
+        </ul>
+
+        <h2>2. Hur Git och GitHub kommunicerar</h2>
+
+        <p>Git och GitHub "pratar" med varandra genom fyra huvudkommandon:</p>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <h4>📤 git push - Skicka ändringar till GitHub</h4>
+                <p>Skickar dina lokala commits till GitHub så andra kan se dem.</p>
+                <div class="code-block">
+<span class="command">git push origin main</span>
+<span class="comment"># Skickar commits från din lokala "main"-branch till GitHub</span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h4>📥 git pull - Hämta ändringar från GitHub</h4>
+                <p>Hämtar senaste ändringarna från GitHub till din lokala dator.</p>
+                <div class="code-block">
+<span class="command">git pull origin main</span>
+<span class="comment"># Hämtar och integrerar ändringar från GitHub</span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h4>🔍 git fetch - Kolla vad som finns på GitHub</h4>
+                <p>Kollar vad som finns på GitHub utan att ändra dina lokala filer.</p>
+                <div class="code-block">
+<span class="command">git fetch origin</span>
+<span class="comment"># Laddar ner info om vad som finns på GitHub, men ändrar inget lokalt</span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h4>📋 git clone - Kopiera ett helt projekt från GitHub</h4>
+                <p>Skapar en lokal kopia av ett GitHub-repository.</p>
+                <div class="code-block">
+<span class="command">git clone https://github.com/kentlundgren/quiz.git</span>
+<span class="comment"># Kopierar hela projektet från GitHub till din dator</span>
+                </div>
+            </div>
+        </div>
+
+        <h2>3. Vad hände med Quiz 22? (Steg för steg)</h2>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <h4>Steg 1: Skapade filerna lokalt (Git)</h4>
+                <p>Vi skapade alla filer för Quiz 22 (index.html, script.js, styles.css, bilder, etc.) och la till dem i Git:</p>
+                <div class="code-block">
+<span class="command">git add .</span>
+<span class="command">git commit -m "initial commit"</span>
+<span class="comment"># Commit-hash: 847568f</span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h4>Steg 2: Pushade till GitHub</h4>
+                <p>Vi skickade commiten till GitHub:</p>
+                <div class="code-block">
+<span class="command">git push origin main</span>
+<span class="output">✓ GitHub fick commit 847568f med meddelandet "initial commit"</span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h4>Steg 3: Insåg att commit-meddelandet var dåligt</h4>
+                <p>"initial commit" var inte beskrivande nog. Vi ville ändra det till "Add Quiz 22 - initial commit".</p>
+            </div>
+
+            <div class="timeline-item">
+                <h4>Steg 4: Ändrade commit-meddelandet (Git)</h4>
+                <p>Vi använde <code>git commit --amend</code> för att ändra meddelandet:</p>
+                <div class="code-block">
+<span class="command">git commit --amend -m "Add Quiz 22 - initial commit"</span>
+<span class="output">✓ Ny commit-hash: 280f3e6</span>
+<span class="comment"># Git skapade en HELT NY commit (med nytt hash)</span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h4>Steg 5: Försökte pusha igen (PROBLEM!)</h4>
+                <p>När vi försökte pusha fick vi ett felmeddelande:</p>
+                <div class="code-block">
+<span class="command">git push origin main</span>
+<span class="output">❌ ERROR: Can't push refs to remote. Try running "Pull" first to integrate your changes.</span>
+                </div>
+            </div>
+        </div>
+
+        <h2>4. Varför uppstod problemet?</h2>
+
+        <div class="warning-box">
+            <strong>⚠️ Konflikten:</strong>
+            <ul>
+                <li><strong>GitHub tror:</strong> Den senaste commiten är 847568f ("initial commit")</li>
+                <li><strong>Din lokala Git tror:</strong> Den senaste commiten är 280f3e6 ("Add Quiz 22 - initial commit")</li>
+                <li><strong>Problemet:</strong> Git och GitHub har olika historik!</li>
+            </ul>
+        </div>
+
+        <h3>🤔 Varför skapas en ny commit-hash?</h3>
+        <p>En commit-hash (som 847568f) beräknas från:</p>
+        <ul>
+            <li>Alla filernas innehåll</li>
+            <li>Commit-meddelandet</li>
+            <li>Tidpunkten</li>
+            <li>Författaren</li>
+            <li>Den föregående commitens hash</li>
+        </ul>
+        <p>När du ändrar commit-meddelandet med <code>--amend</code>, ändras dessa data → nytt hash skapas!</p>
+
+        <div class="info-box">
+            <strong>💡 Visualisering:</strong>
+            <p><strong>GitHub's vy:</strong></p>
+            <div class="code-block">
+main → 847568f (initial commit)
+            </div>
+            <p><strong>Din lokala Git's vy:</strong></p>
+            <div class="code-block">
+main → 280f3e6 (Add Quiz 22 - initial commit)
+            </div>
+            <p>Git ser att dessa är <strong>olika commits</strong> och vägrar pusha för att inte förstöra GitHubs historik.</p>
+        </div>
+
+        <h2>5. Lösningen: Force Push</h2>
+
+        <p>När du är säker på att du vill <strong>skriva över</strong> GitHubs version med din lokala version, använder du <code>git push --force</code>.</p>
+
+        <h3>🔒 Två varianter av force push</h3>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <h4>Alternativ 1: --force (farlig!)</h4>
+                <div class="code-block">
+<span class="command">git push --force origin main</span>
+<span class="comment"># Skriver ALLTID över GitHubs version, oavsett vad</span>
+<span class="comment"># ⚠️ Risk: Om någon annan pushat något, förstör du deras arbete!</span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h4>Alternativ 2: --force-with-lease (säkrare!) ✅</h4>
+                <div class="code-block">
+<span class="command">git push --force-with-lease origin main</span>
+<span class="comment"># Skriver bara över om GitHub's version är samma som du tror</span>
+<span class="comment"># ✓ Säkrare: Om någon pushat något, får du ett fel istället</span>
+                </div>
+                <p><strong>Detta är vad vi använde för Quiz 22!</strong></p>
+            </div>
+        </div>
+
+        <div class="success-box">
+            <strong>✅ Resultatet efter force push:</strong>
+            <p>Nu har både Git och GitHub samma commit:</p>
+            <div class="code-block">
+main → 280f3e6 (Add Quiz 22 - initial commit)
+            </div>
+            <p>Den gamla commiten (847568f) är borta från GitHubs historik.</p>
+        </div>
+
+        <h2>6. När ska man använda Force Push?</h2>
+
+        <div class="info-box">
+            <strong>✅ OK att använda force push när:</strong>
+            <ul>
+                <li>Du arbetar ensam på en branch</li>
+                <li>Du ändrar något i den senaste commiten (t.ex. commit-meddelande)</li>
+                <li>Du fixar ett misstag som du just gjorde</li>
+                <li>Du är säker på att ingen annan har pushat något</li>
+            </ul>
+        </div>
+
+        <div class="warning-box">
+            <strong>❌ Använd ALDRIG force push när:</strong>
+            <ul>
+                <li>Andra utvecklare arbetar på samma branch</li>
+                <li>Det är en delad branch (som main i ett team-projekt)</li>
+                <li>Du inte är säker på vad som kommer hända</li>
+                <li>Projektet är i produktion och andra använder koden</li>
+            </ul>
+        </div>
+
+        <h2>7. Sammanfattning: Git & GitHub workflow</h2>
+
+        <div class="info-box">
+            <strong>📋 Typisk workflow:</strong>
+            <ol>
+                <li><strong>Lokalt arbete (Git):</strong>
+                    <div class="code-block">
+<span class="command">git add .</span>               <span class="comment"># Förbered ändringar</span>
+<span class="command">git commit -m "message"</span>   <span class="comment"># Spara snapshot</span>
+                    </div>
+                </li>
+                <li><strong>Synka med GitHub:</strong>
+                    <div class="code-block">
+<span class="command">git pull origin main</span>     <span class="comment"># Hämta senaste från GitHub först</span>
+<span class="command">git push origin main</span>     <span class="comment"># Skicka dina ändringar</span>
+                    </div>
+                </li>
+                <li><strong>Om det blir problem:</strong>
+                    <div class="code-block">
+<span class="command">git status</span>               <span class="comment"># Kolla vad som är fel</span>
+<span class="command">git log --oneline</span>        <span class="comment"># Se commit-historik</span>
+                    </div>
+                </li>
+            </ol>
+        </div>
+
+        <h2>8. Viktiga kommandon att komma ihåg</h2>
+
+        <div class="code-block">
+<span class="comment"># === STATUS OCH INFO ===</span>
+<span class="command">git status</span>                          <span class="comment"># Vad har ändrats?</span>
+<span class="command">git log --oneline</span>                   <span class="comment"># Se commit-historik</span>
+<span class="command">git log -1</span>                          <span class="comment"># Se senaste commit</span>
+
+<span class="comment"># === LOKALT ARBETE ===</span>
+<span class="command">git add .</span>                           <span class="comment"># Lägg till alla ändringar</span>
+<span class="command">git commit -m "meddelande"</span>          <span class="comment"># Spara snapshot</span>
+<span class="command">git commit --amend -m "nytt meddelande"</span> <span class="comment"># Ändra senaste commit</span>
+
+<span class="comment"># === SYNKA MED GITHUB ===</span>
+<span class="command">git pull origin main</span>                <span class="comment"># Hämta och integrera ändringar</span>
+<span class="command">git push origin main</span>                <span class="comment"># Skicka ändringar till GitHub</span>
+<span class="command">git push --force-with-lease origin main</span> <span class="comment"># Force push (säker variant)</span>
+
+<span class="comment"># === FEL OCH ÅTERSTÄLLNING ===</span>
+<span class="command">git reset --soft HEAD~1</span>             <span class="comment"># Ångra senaste commit (behåll ändringar)</span>
+<span class="command">git reset --hard HEAD~1</span>             <span class="comment"># Ångra senaste commit (ta bort allt)</span>
+        </div>
+
+        <h2>9. Varför är detta viktigt att förstå?</h2>
+
+        <p>Genom att förstå skillnaden mellan Git (lokal) och GitHub (molnet) kan du:</p>
+        <ul>
+            <li>Förstå varför vissa kommandon funkar eller inte funkar</li>
+            <li>Felsöka problem när de uppstår</li>
+            <li>Arbeta mer effektivt med versionskontroll</li>
+            <li>Samarbeta bättre med andra utvecklare</li>
+            <li>Undvika att förstöra projekt-historiken</li>
+        </ul>
+
+        <div class="success-box">
+            <strong>🎓 Lärdomen från Quiz 22:</strong>
+            <p>När du ändrar något som redan är pushat till GitHub (som ett commit-meddelande), skapar Git en ny version av historiken. GitHub och din lokala Git har då olika versioner, och du måste explicit säga åt Git att "jag vet vad jag gör, skriv över GitHubs version" med force push.</p>
+            <p>Använd alltid <code>--force-with-lease</code> istället för <code>--force</code> för säkerhets skull!</p>
+        </div>
+
+        <h2>10. Ytterligare läsning</h2>
+        <ul>
+            <li><a href="https://git-scm.com/book/sv/v2" target="_blank">Pro Git Book (svenska)</a> - Officiell Git-dokumentation</li>
+            <li><a href="https://docs.github.com/sv" target="_blank">GitHub Docs (svenska)</a> - GitHubs officiella guide</li>
+            <li><a href="https://learngitbranching.js.org/?locale=sv" target="_blank">Learn Git Branching</a> - Interaktiv tutorial</li>
+            <li><a href="index.html">Tillbaka till Quiz 22</a></li>
+        </ul>
+
+        <div class="footer">
+            <p><strong>Detta dokument skapades:</strong> 2026-01-30</p>
+            <p><strong>I samband med:</strong> Quiz 22 - Force push-scenario</p>
+            <p><strong>Verktyg:</strong> Git, GitHub, Cursor IDE med Claude AI-assistent</p>
+            <p style="margin-top: 20px;"><a href="index.html" class="back-link">⬅️ Tillbaka till quizet</a></p>
+        </div>
+    </div>
+</body>
+</html>

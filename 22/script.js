@@ -316,6 +316,29 @@ const introPages = [
             
             <p>Sommarboken är ett exempel på hur kommunala bibliotek kan göra konkret skillnad för barns läsutveckling genom väl genomförda, evidensbaserade projekt som både är roliga och pedagogiskt värdefulla.</p>
             
+            <div class="success-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; margin: 25px 0;">
+                <h3 style="color: white; margin-top: 0;">🎧 Nyhet: Lyssna på podden!</h3>
+                <p>Vill du <strong>lyssna</strong> istället för att läsa? Nu finns innehållet i detta quiz även som <strong>podd på Spotify</strong>! Perfekt för promenaden, pendlingen eller när du vill fördjupa dig i kommunal verksamhetsutveckling på ett nytt sätt.</p>
+                
+                <p style="text-align: center; margin: 15px 0;">
+                    <a href="https://open.spotify.com/episode/5QFsGGTluGS1oQE7XKwRvN?si=ab3d0a8560c145d1" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       style="display: inline-block; background: #1DB954; color: white; padding: 12px 24px; border-radius: 25px; text-decoration: none; font-weight: bold; transition: transform 0.2s;"
+                       onmouseover="this.style.transform='scale(1.05)'"
+                       onmouseout="this.style.transform='scale(1)'">
+                        🎧 Lyssna på Spotify
+                    </a>
+                </p>
+                
+                <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 8px; margin-top: 15px;">
+                    <p style="margin: 0; font-size: 0.95em;"><strong>💡 Skapad med NotebookLM</strong></p>
+                    <p style="margin: 10px 0 0 0; font-size: 0.9em;">
+                        Podden är framtagen tillsammans med <a href="https://notebooklm.google/" target="_blank" rel="noopener noreferrer" style="color: #FFD700; text-decoration: underline;"><strong>NotebookLM</strong></a> – Googles AI-forskningsverktyg som kan omvandla texter till engagerande poddsamtal. Ett spännande exempel på hur AI kan göra kommunal information mer tillgänglig!
+                    </p>
+                </div>
+            </div>
+            
             <p><strong>Nu är du redo för quizet!</strong> Fem frågor väntar om Simrishamns kultur- och fritidsförvaltning. Lycka till! 🎯</p>
             
             <p><em>Källor: Kulturrådet (2021-2023) <a href="https://www.kulturradet.se/i-fokus/bibliotek/" target="_blank" rel="noopener noreferrer">Läsfrämjandelyft för folkbibliotekarier</a> | Kulturrådet (2025) <a href="https://www.kulturradet.se/i-fokus/bibliotek/" target="_blank" rel="noopener noreferrer">Bibliotek – tillsammans lyfter vi läsandet!</a></em></p>

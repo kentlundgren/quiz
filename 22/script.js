@@ -79,12 +79,6 @@ const introPages = [
     {
         title: "🎭 Funka-dí – när inkludering blir verklighet",
         body: `
-            <div class="read-material-box">
-                <p><strong>📖 Läs underlaget först!</strong></p>
-                <p>För att få ut maximalt av detta quiz kan du läsa blogginlägget:</p>
-                <a href="https://controllerutangranser.wordpress.com/2026/01/30/nar-verksamheten-vaxer/" target="_blank" rel="noopener noreferrer">När verksamheten växer</a>
-            </div>
-            
             <p>Under 2025 startade Simrishamn en helt ny verksamhet: <strong>Funka-dí</strong>. Namnet är en kreativ ordlek som anknyter till det befintliga ungdomshuset Bénka-dí, och verksamheten riktar sig till barn och ungdomar med funktionsnedsättningar.</p>
             
             <h3>🤝 Samverkan över förvaltningsgränser</h3>

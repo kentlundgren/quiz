@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vad kännetecknar en bra prompt?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans Pro', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #1e293b;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 50px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #64748b;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.8rem;
+            color: #667eea;
+            margin-top: 35px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            color: #764ba2;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        li {
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%);
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .info-box strong {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            color: #667eea;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fffbeb 100%);
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        .warning-box strong {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            color: #f59e0b;
+        }
+
+        .example-box {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+
+        code {
+            background: #f1f5f9;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            color: #764ba2;
+        }
+
+        strong {
+            color: #667eea;
+        }
+
+        a {
+            color: #667eea;
+            text-decoration: underline;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: #764ba2;
+            text-decoration: none;
+        }
+
+        .back-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            h3 {
+                font-size: 1.2rem;
+            }
+
+            p, li {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 Vad kännetecknar en bra prompt?</h1>
+        <p class="subtitle">En guide till effektiv kommunikation med AI-assistenter</p>
+
+        <div class="info-box">
+            <strong>📖 Om detta dokument</strong>
+            <p>Detta dokument förklarar vad som kännetecknar en bra prompt när man arbetar med AI-assistenter som Claude, ChatGPT eller Cursor. Längst ner finns ett konkret exempel från Quiz nr 22.</p>
+        </div>
+
+        <h2>1. Vad är en prompt?</h2>
+        <p>En <strong>prompt</strong> är den instruktion eller fråga du ger till en AI-assistent för att få hjälp med en uppgift. En bra prompt är tydlig, specifik och ger AI:n rätt kontext för att leverera ett användbart resultat.</p>
+
+        <h2>2. De sex grundpelarna i en bra prompt</h2>
+
+        <h3>2.1 Tydlighet och specificitet</h3>
+        <p>En bra prompt är <strong>tydlig och specifik</strong> om vad du vill ha hjälp med. Undvik vaga formuleringar som "gör något coolt" eller "fixa detta".</p>
+
+        <div class="warning-box">
+            <strong>❌ Dåligt exempel:</strong>
+            <p>"Skapa ett quiz."</p>
+            <p><em>Problem: Oklart vilken typ av quiz, vilket ämne, vilket format.</em></p>
+        </div>
+
+        <div class="info-box">
+            <strong>✅ Bra exempel:</strong>
+            <p>"Skapa ett quiz i HTML, CSS och JavaScript om Simrishamns kultur- och fritidsverksamhet 2024-2025, med 5 introduktionsslides och 5 frågor med fyra svarsalternativ vardera."</p>
+            <p><em>Bra: Specifikt format, tydligt ämne, exakt antal frågor och struktur.</em></p>
+        </div>
+
+        <h3>2.2 Kontext och bakgrundsinformation</h3>
+        <p>Ge AI:n rätt <strong>kontext</strong>. Om du vill att den ska återanvända en befintlig struktur, referera till den. Om det finns underlag att utgå från, ange det.</p>
+
+        <div class="info-box">
+            <strong>✅ Exempel på god kontext:</strong>
+            <ul>
+                <li>"Jag vill att du återanvänder samma programmeringsteknik som finns i quiz.html filen."</li>
+                <li>"I detta quiz kommer texten på [URL] utgöra 'grunden' till quizet."</li>
+                <li>"Filerna quiz.html, script_quiz.js och styles_quiz.css ska hela tiden vara oförändrade."</li>
+            </ul>
+        </div>
+
+        <h3>2.3 Strukturerade krav och begränsningar</h3>
+        <p>Lista tydligt alla <strong>krav och begränsningar</strong>. Detta hjälper AI:n att förstå ramarna för uppgiften.</p>
+
+        <div class="info-box">
+            <strong>✅ Exempel från Quiz nr 22:</strong>
+            <ul>
+                <li>Separata filer: index.html, script.js, styles.css</li>
+                <li>Extern länkning mellan filer</li>
+                <li>Kommenterad kod</li>
+                <li>Semantisk HTML5</li>
+                <li>Responsiv design (fungerar på dator och mobil)</li>
+                <li>Gul bakgrund på svarsalternativ</li>
+                <li>Fem bilder som växlar var 3:e sekund</li>
+            </ul>
+        </div>
+
+        <h3>2.4 Exempel och referenser</h3>
+        <p>Om möjligt, ge <strong>exempel</strong> på vad du vill ha. Det kan vara en länk till ett liknande projekt, en beskrivning av önskat resultat, eller konkreta exempel.</p>
+
+        <div class="info-box">
+            <strong>💡 Tips:</strong>
+            <ul>
+                <li>Länka till källor och underlag</li>
+                <li>Referera till befintliga filer som ska användas som mall</li>
+                <li>Ge exempel på önskad stilnivå och ton</li>
+            </ul>
+        </div>
+
+        <h3>2.5 Önskade förbättringar och flexibilitet</h3>
+        <p>En bra prompt ger inte bara strikta instruktioner, utan ger också AI:n <strong>utrymme att tänka själv och förbättra</strong>.</p>
+
+        <div class="info-box">
+            <strong>✅ Exempel:</strong>
+            <p>"Förslag på fem frågor finns nedan (men jag vill att du analyserar frågorna, och om du finner det möjligt och önskvärt ska du göra frågorna än bättre, tydligare och roligare)."</p>
+        </div>
+
+        <p>Detta ger AI:n möjlighet att använda sin förmåga att förbättra innehållet samtidigt som du behåller kontrollen över huvudriktningen.</p>
+
+        <h3>2.6 Instruktioner om osäkerhet</h3>
+        <p>Säg tydligt vad AI:n ska göra om något är <strong>oklart eller osäkert</strong>.</p>
+
+        <div class="info-box">
+            <strong>✅ Exempel:</strong>
+            <p>"Fråga om något är oklart!"</p>
+        </div>
+
+        <p>Detta uppmuntrar AI:n att ställa frågor istället för att gissa, vilket leder till bättre resultat.</p>
+
+        <h2>3. Ytterligare tips för bra prompts</h2>
+
+        <h3>3.1 Använd strukturerade format</h3>
+        <ul>
+            <li>Använd <strong>punktlistor</strong> för krav och önskemål</li>
+            <li>Använd <strong>rubriker</strong> för att dela upp stora prompts i sektioner</li>
+            <li>Använd <strong>numrering</strong> för steg-för-steg-instruktioner</li>
+        </ul>
+
+        <h3>3.2 Var konsekvent med terminologi</h3>
+        <p>Använd samma termer genom hela prompten. Om du kallar något för "quiz" i början, fortsätt kalla det "quiz" – inte "test" eller "frågesport" senare.</p>
+
+        <h3>3.3 Ange önskad ton och stil</h3>
+        <p>Om det är viktigt hur resultatet ska låta eller se ut, ange det:</p>
+        <ul>
+            <li>"Använd en pedagogisk och välkomnande ton"</li>
+            <li>"Håll förklaringarna kortfattade och tydliga"</li>
+            <li>"Använd emojis för att göra texten mer levande" (eller tvärtom: "Undvik emojis")</li>
+        </ul>
+
+        <h3>3.4 Referera till källor med korrekt format</h3>
+        <p>Om du vill att AI:n ska använda ett specifikt referensformat (t.ex. Harvard-stil), ange det tydligt och ge exempel:</p>
+
+        <div class="example-box">Referenser och källor ska anges med Harvardstil, dvs i Harvardformat.
+Se till att källorna är aktuella och relevanta och i största 
+möjliga mån är länkade, dvs är klickbara.</div>
+
+        <h2>4. Konkret exempel: Prompten för Quiz nr 22</h2>
+
+        <p>Här är ett utdrag från den faktiska prompten som användes för att skapa Quiz nr 22 om Simrishamns kultur- och fritidsverksamhet:</p>
+
+        <div class="example-box">Jag vill att du i princip återanvänder samma 
+programmeringsteknik som finns i quiz.html filen. 
+Men jag vill ha hela det nya programmet i en ny 
+index.html fil.
+
+Använd på samma sätt html, JavaScript och CSS för 
+att skapa ett snyggt och lättnavigerat quiz. Du 
+skapar ett nytt quiz i en index.html fil, i en 
+script.js fil, samt i en styles.css fil.
+
+I detta quiz kommer texten på 
+https://controllerutangranser.wordpress.com/2026/01/30/nar-verksamheten-vaxer/ 
+utgöra "grunden" till quizet. Dvs det ska anges 
+diskret i index.html filen att man kan läsa den 
+texten först.
+
+Filerna quiz.html, script_quiz.js och styles_quiz.css, 
+ska hela tiden vara oförändrad.
+
+[...fortsättning med fler detaljer...]</div>
+
+        <div class="info-box">
+            <strong>💡 Vad gör denna prompt bra?</strong>
+            <ul>
+                <li><strong>Tydlighet:</strong> Specificerar exakt vilka filer som ska skapas och hur de ska heta</li>
+                <li><strong>Kontext:</strong> Refererar till befintliga filer som mall</li>
+                <li><strong>Begränsningar:</strong> Anger tydligt att vissa filer ska förbli oförändrade</li>
+                <li><strong>Källor:</strong> Ger länk till underlagsmaterial</li>
+                <li><strong>Struktur:</strong> Listar konkreta krav på funktionalitet och design</li>
+                <li><strong>Flexibilitet:</strong> Ger utrymme för AI:n att förbättra frågorna</li>
+            </ul>
+        </div>
+
+        <h2>5. Vanliga misstag att undvika</h2>
+
+        <div class="warning-box">
+            <strong>⚠️ Undvik dessa misstag:</strong>
+            <ul>
+                <li><strong>För vaga instruktioner:</strong> "Gör något bra" ger inte tillräcklig vägledning</li>
+                <li><strong>Motstridiga krav:</strong> "Gör det enkelt men med många avancerade funktioner"</li>
+                <li><strong>För långa strömmande texter:</strong> Dela upp i sektioner med rubriker</li>
+                <li><strong>Orealistiska förväntningar:</strong> "Skapa ett helt socialt nätverk i en fil"</li>
+                <li><strong>Oklar prioritering:</strong> Om allt är "viktigt" är inget viktigt – prioritera!</li>
+            </ul>
+        </div>
+
+        <h2>6. Sammanfattning: Checklista för bra prompts</h2>
+
+        <div class="info-box">
+            <strong>✅ Checklista innan du skickar din prompt:</strong>
+            <ul>
+                <li>☐ Är målet tydligt beskrivet?</li>
+                <li>☐ Har jag gett tillräcklig kontext?</li>
+                <li>☐ Har jag listat alla specifika krav?</li>
+                <li>☐ Har jag gett exempel där det är relevant?</li>
+                <li>☐ Har jag angett vilka begränsningar som finns?</li>
+                <li>☐ Har jag bett AI:n fråga om något är oklart?</li>
+                <li>☐ Är terminologin konsekvent genom hela prompten?</li>
+                <li>☐ Har jag strukturerat prompten med rubriker och listor?</li>
+            </ul>
+        </div>
+
+        <h2>7. Ytterligare läsning</h2>
+        <ul>
+            <li><a href="promt.md" target="_blank">📝 Visa den fullständiga prompten för Quiz nr 22</a></li>
+            <li><a href="index.html">🎮 Tillbaka till quizet</a></li>
+            <li><a href="https://www.promptingguide.ai/" target="_blank">🔗 Prompt Engineering Guide (engelska)</a></li>
+        </ul>
+
+        <div class="footer">
+            <p><strong>Detta dokument skapades:</strong> 2026-01-30</p>
+            <p><strong>I samband med:</strong> Quiz nr 22 - När verksamheten växer</p>
+            <p><strong>Verktyg:</strong> Cursor IDE med Claude AI-assistent</p>
+            <p style="margin-top: 20px;"><a href="index.html" class="back-link">⬅️ Tillbaka till quizet</a></p>
+        </div>
+    </div>
+</body>
+</html>

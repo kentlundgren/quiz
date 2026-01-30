@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Simrishamns kultur- och fritidsverksamhet 2024-2025</title>
+    <!-- 
+        Quiz nr 22: När verksamheten växer - Simrishamns kultur- och fritidsförvaltning
+        Skapad: 2026-01-30
+        
+        Detta quiz handlar om utvecklingen av Simrishamns kultur- och fritidsförvaltning
+        under åren 2024-2025, med fokus på nya projekt, ökade besökssiffror och
+        inkluderande verksamheter.
+        
+        Quizet innehåller:
+        - 5 informationsslides om verksamhetens utveckling
+        - 5 frågor för att testa kunskaper
+        
+        VIKTIGT: Innan du gör quizet kan du läsa igenom blogginlägget:
+        https://controllerutangranser.wordpress.com/2026/01/30/nar-verksamheten-vaxer/
+        
+        Baserat på:
+        - Blogginlägg "När verksamheten växer"
+        - Simrishamns kommuns årsbokslut för Kultur- och fritidsnämnden 2024-2025
+        - Kulturrådet, Regeringen och SKR:s rapporter
+    -->
+    
+    <!-- Typsnitt: Elegant kombination för läsbarhet -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Extern CSS-fil -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="quiz-container" role="main">
+        <!-- Header med titel och progressbar -->
+        <header class="quiz-header">
+            <div class="quiz-header-content">
+                <div class="quiz-header-text">
+                    <h1 class="quiz-title">När verksamheten växer</h1>
+                    <p class="quiz-subtitle">Simrishamns kultur- och fritidsförvaltning 2024-2025</p>
+                </div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <a href="https://controllerutangranser.wordpress.com/2026/01/30/nar-verksamheten-vaxer/" class="all-quiz-btn" target="_blank" rel="noopener noreferrer" title="Läs blogginlägget som quizet baseras på">
+                        📖 Läs underlaget
+                    </a>
+                </div>
+            </div>
+            <div class="progress-bar" aria-hidden="true">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </header>
+
+        <!-- Inledande texter i fem sidor före quizet -->
+        <section id="introSection" class="intro-section" aria-live="polite">
+            <div class="intro-card">
+                <!-- Sidindikator med text och visuella prickar -->
+                <div class="page-indicator">
+                    <div class="page-number" id="pageNumber">Sida 1 av 5</div>
+                    <div class="page-dots" id="pageDots"></div>
+                </div>
+                <h2 class="intro-title" id="introPageTitle"></h2>
+                <div class="intro-body" id="introPageBody"></div>
+                <div class="intro-nav">
+                    <button class="secondary-btn" id="introPrevBtn" type="button" aria-label="Föregående" disabled>⬅️ Föregående</button>
+                    <button class="primary-btn" id="introNextBtn" type="button" aria-label="Nästa">Nästa ➡️</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Startskärm med växlande bilder och knapp för att gå vidare till quizet -->
+        <!-- UPPDATERING 2026-01-30: Bilderna från Simrishamns verksamhet växlar automatiskt var 3:e sekund -->
+        <!-- Bilder: basta_biennalen.jpg, ekan.jpg, Livsvikig_lasning.jpg, bokslut_2025.jpg, vikingatiden.jpg -->
+        <section id="imageSection" class="image-section hidden" aria-labelledby="introTitle">
+            <div class="quiz-image-container">
+                <img id="img1" src="basta_biennalen.jpg" alt="Båstad Biennalen - kultur och konst" class="quiz-image active">
+                <img id="img2" src="ekan.jpg" alt="Ekan - symbolbild för Österlen" class="quiz-image">
+                <img id="img3" src="Livsvikig_lasning.jpg" alt="Livsviktig läsning - biblioteksprojekt" class="quiz-image">
+                <img id="img4" src="bokslut_2025.jpg" alt="Bokslut 2025 - verksamhetsåret" class="quiz-image">
+                <img id="img5" src="vikingatiden.jpg" alt="Vikingatiden - historisk anknytning" class="quiz-image">
+            </div>
+            <p class="image-caption">
+                Bilder från Simrishamns kultur- och fritidsverksamhet
+            </p>
+            <p class="image-text" id="introTitle">Nu är du redo! Testa dina kunskaper om kommunal verksamhetsutveckling! 📚🏊‍♂️🎨</p>
+            <button class="continue-btn" id="continueBtn" type="button">Starta Quizet ➡️</button>
+        </section>
+
+        <!-- Själva quiz-innehållet renderas dynamiskt via JavaScript -->
+        <section id="quizContent" class="hidden" aria-live="polite"></section>
+    </main>
+
+    <!-- Footer med länkar till promt-filer -->
+    <footer class="quiz-footer">
+        <div class="footer-content">
+            <p class="footer-text">Quiz nr 22: När verksamheten växer | Tema: Kommunal verksamhetsutveckling</p>
+            <div class="footer-links">
+                <a href="promt.md" target="_blank" rel="noopener noreferrer" class="footer-link" title="Se den ursprungliga prompten som användes för att generera detta quiz">
+                    📝 Visa prompt
+                </a>
+                <a href="promt_bra.html" target="_blank" rel="noopener noreferrer" class="footer-link" title="Läs en generell beskrivning av vad som kännetecknar en bra prompt för AI-assistenter">
+                    💡 Vad är en bra prompt?
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating action buttons för teknisk info och källor -->
+    <div class="floating-buttons">
+        <button class="floating-btn tech-btn" id="techBtn" title="Teknisk beskrivning">🔧</button>
+        <button class="floating-btn prompt-btn" id="promptBtn" title="Visa källor och referenser">📄</button>
+        <a href="https://controllerutangranser.wordpress.com/2026/01/30/nar-verksamheten-vaxer/" class="floating-btn material-btn" title="Läs blogginlägget" target="_blank" rel="noopener noreferrer">📖</a>
+    </div>
+
+    <!-- Modal: Teknisk beskrivning -->
+    <div id="techModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="techTitle">
+        <div class="modal-content">
+            <span class="close" data-close="#techModal" aria-label="Stäng">&times;</span>
+            <h2 id="techTitle">🔧 Teknisk beskrivning</h2>
+            
+            <h3>Struktur och organisation</h3>
+            <p><strong>Filstruktur:</strong> Detta quiz är byggt med separation of concerns-principen, där HTML, CSS och JavaScript är uppdelade i separata filer:</p>
+            <ul>
+                <li><strong>index.html:</strong> Innehåller HTML-strukturen och semantisk markup</li>
+                <li><strong>styles.css:</strong> All styling och responsiv design</li>
+                <li><strong>script.js:</strong> All JavaScript-logik och interaktivitet</li>
+            </ul>
+            
+            <div class="info-box">
+                <strong>💡 Varför separata filer?</strong>
+                <p>Att dela upp kod i separata filer ger flera fördelar:</p>
+                <ul>
+                    <li><strong>Underhållbarhet:</strong> Lättare att hitta och uppdatera specifik kod</li>
+                    <li><strong>Återanvändbarhet:</strong> CSS och JavaScript kan användas i flera HTML-filer</li>
+                    <li><strong>Läsbarhet:</strong> Tydligare struktur och mindre filer att hantera</li>
+                    <li><strong>Cachning:</strong> Webbläsaren kan cacha CSS och JS separat för bättre prestanda</li>
+                </ul>
+            </div>
+            
+            <h3>Teknisk implementation</h3>
+            <ul>
+                <li><strong>HTML5:</strong> Semantisk markup med ARIA-attribut för tillgänglighet</li>
+                <li><strong>CSS3:</strong> Responsiv design med CSS-variabler och flexbox</li>
+                <li><strong>JavaScript (ES6+):</strong> Modern JavaScript med arrow functions, template literals och DOM-manipulation</li>
+                <li><strong>UI:</strong> Progressbar, sidindikator med klickbara prickar, växlande bilder (5 st)</li>
+                <li><strong>Bildväxling:</strong> Automatisk växling mellan fem bilder var 3:e sekund</li>
+                <li><strong>Interaktion:</strong> Val med färgkodning (grön/röd), gul bakgrund på svarsalternativ</li>
+                <li><strong>Responsivitet:</strong> Fungerar på både dator och mobil</li>
+            </ul>
+            
+            <h3>Skapad information</h3>
+            <p><strong>Skapad:</strong> 2026-01-30</p>
+            <p><strong>Quiz nr:</strong> 22</p>
+            <p><strong>Baserad på:</strong> Blogginlägg "När verksamheten växer" samt Simrishamns kommuns årsbokslut för Kultur- och fritidsnämnden 2024-2025.</p>
+            <p><strong>Fokus:</strong> Kommunal verksamhetsutveckling, inkludering och tillgänglighet i kultur- och fritidsverksamhet.</p>
+        </div>
+    </div>
+
+    <!-- Modal: Källor och underlag -->
+    <div id="promptModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="promptTitle">
+        <div class="modal-content">
+            <span class="close" data-close="#promptModal" aria-label="Stäng">&times;</span>
+            <h2 id="promptTitle">📄 Källor & Referenser</h2>
+            <p>Quiz nr 22: När verksamheten växer - Simrishamns kultur- och fritidsförvaltning 2024-2025</p>
+            <p><strong>Frågor och fördjupade förklaringar baserade på (i Harvard-format):</strong></p>
+            
+            <div class="info-box">
+                <strong>📚 Om detta quiz</strong>
+                <p>Detta quiz utforskar utvecklingen av Simrishamns kultur- och fritidsförvaltning under åren 2024-2025, en period präglad av nya projekt, ökade besökssiffror och ett starkt fokus på inkludering och tillgänglighet.</p>
+                <p><strong>🎯 Fokus:</strong> Kommunal verksamhetsutveckling, inkluderande fritidsaktiviteter, läsfrämjande, museiutveckling och badverksamhet.</p>
+            </div>
+            
+            <h3>Blogginlägg med analys</h3>
+            <ul>
+                <li>Lundgren, K. (2026) <em>När verksamheten växer</em>. Controller utan gränser, 30 januari. Tillgänglig: <a href="https://controllerutangranser.wordpress.com/2026/01/30/nar-verksamheten-vaxer/" target="_blank" rel="noopener noreferrer">controllerutangranser.wordpress.com</a> [Hämtad: 30 januari 2026].</li>
+            </ul>
+            
+            <h3>Läsfrämjande och biblioteksverksamhet</h3>
+            <ul>
+                <li>Kulturrådet (2021-2023) <em>Läsfrämjandelyft för folkbibliotekarier</em>. Tillgänglig: <a href="https://www.kulturradet.se/i-fokus/bibliotek/" target="_blank" rel="noopener noreferrer">www.kulturradet.se</a> [Hämtad: 30 januari 2026].</li>
+                <li>Kulturrådet (2025) <em>Bibliotek – tillsammans lyfter vi läsandet!</em> Tillgänglig: <a href="https://www.kulturradet.se/i-fokus/bibliotek/" target="_blank" rel="noopener noreferrer">www.kulturradet.se</a> [Hämtad: 30 januari 2026].</li>
+            </ul>
+            
+            <h3>Fritidsverksamhet för ungdomar</h3>
+            <ul>
+                <li>Regeringen (2022) <em>En utvecklad öppen fritidsverksamhet för ungdomar (Kommittédirektiv 2022:96)</em>. Tillgänglig: <a href="https://www.riksdagen.se/sv/dokument-och-lagar/dokument/kommittedirektiv/en-utvecklad-oppen-fritidsverksamhet-for-ungdomar_hab196/" target="_blank" rel="noopener noreferrer">www.riksdagen.se</a> [Hämtad: 30 januari 2026].</li>
+            </ul>
+            
+            <h3>Kommunal kultur- och fritidsverksamhet</h3>
+            <ul>
+                <li>Sveriges Kommuner och Regioner (2016) <em>Kultur- och fritidsverksamhet i kommuner</em>. Tillgänglig: <a href="https://skr.se" target="_blank" rel="noopener noreferrer">skr.se</a> [Hämtad: 30 januari 2026].</li>
+                <li>Sveriges Kommuner och Regioner (2025) <em>Sveriges Kommuner och Regioner</em>. Tillgänglig: <a href="https://skr.se" target="_blank" rel="noopener noreferrer">skr.se</a> [Hämtad: 30 januari 2026].</li>
+            </ul>
+            
+            <div class="warning-box">
+                <strong>📚 Fördjupning</strong>
+                <p>Läs det fullständiga blogginlägget: <a href="https://controllerutangranser.wordpress.com/2026/01/30/nar-verksamheten-vaxer/" target="_blank" rel="noopener noreferrer">"När verksamheten växer"</a></p>
+            </div>
+            
+            <h3>💡 Mer information</h3>
+            <p><strong>Läs mer på bloggen:</strong> <a href="https://controllerutangranser.wordpress.com/" target="_blank" rel="noopener noreferrer">Controller utan gränser</a></p>
+        </div>
+    </div>
+
+    <!-- Extern JavaScript-fil -->
+    <script src="script.js"></script>
+</body>
+</html>

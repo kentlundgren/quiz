@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omdirigering - Fem Matteuppgifter</title>
+    
+    <!-- Meta refresh omdirigering - fungerar även om JavaScript är avstängt -->
+    <!-- Omdirigerar efter 0 sekunder -->
+    <meta http-equiv="refresh" content="0; url=https://kentlundgren.github.io/AI/Matematik/fem_matteuppgifter.html">
+    
+    <style>
+        /* Enkel och ren design för omdirigeringssidan */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        h1 {
+            margin: 0 0 1rem 0;
+            font-size: 1.5rem;
+        }
+        
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 1.5rem auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        a {
+            color: white;
+            text-decoration: underline;
+        }
+        
+        a:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 Omdirigerar till Fem Matteuppgifter...</h1>
+        <div class="spinner"></div>
+        <p>Om du inte omdirigeras automatiskt,<br>
+        <a href="https://kentlundgren.github.io/AI/Matematik/fem_matteuppgifter.html">klicka här</a>.</p>
+    </div>
+
+    <script>
+        // JavaScript omdirigering - körs omedelbart
+        // Detta är en backup om meta refresh inte fungerar
+        window.location.href = 'https://kentlundgren.github.io/AI/Matematik/fem_matteuppgifter.html';
+    </script>
+</body>
+</html>
